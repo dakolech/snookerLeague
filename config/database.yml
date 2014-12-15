@@ -1,0 +1,16 @@
+connection: &connection
+  adapter: postgresql
+  encoding: unicode
+  host:     localhost
+  database: snookerLeague
+  pool: 5
+  username: postgres
+  password: dako222
+
+development:
+  <<: *connection
+  database: snookerLeague_development
+
+test: &test
+  <<: *connection
+  database: snookerLeague_test
