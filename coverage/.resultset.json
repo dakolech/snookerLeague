@@ -1,12 +1,25 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/dako/SitesWWW/snookerLeague/spec/models/break_spec.rb": [
+      "/home/dako/SitesWWW/snookerLeague/spec/controllers/players_controller_spec.rb": [
+        1,
+        null,
         1,
         null,
         1,
         1,
-        2,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
         null,
         null
       ],
@@ -80,6 +93,11 @@
         null,
         1,
         1,
+        null,
+        1,
+        1,
+        1,
+        null,
         null,
         null,
         null,
@@ -291,6 +309,8 @@
       ],
       "/home/dako/SitesWWW/snookerLeague/config/routes.rb": [
         1,
+        1,
+        null,
         null,
         null,
         null,
@@ -349,6 +369,50 @@
       ],
       "/home/dako/SitesWWW/snookerLeague/app/helpers/application_helper.rb": [
         1,
+        null
+      ],
+      "/home/dako/SitesWWW/snookerLeague/app/helpers/players_helper.rb": [
+        1,
+        null
+      ],
+      "/home/dako/SitesWWW/snookerLeague/app/controllers/players_controller.rb": [
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null
+      ],
+      "/home/dako/SitesWWW/snookerLeague/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null
+      ],
+      "/home/dako/SitesWWW/snookerLeague/spec/models/break_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        2,
+        null,
         null
       ],
       "/home/dako/SitesWWW/snookerLeague/app/models/break.rb": [
@@ -527,6 +591,6 @@
         null
       ]
     },
-    "timestamp": 1418748668
+    "timestamp": 1418809887
   }
 }
