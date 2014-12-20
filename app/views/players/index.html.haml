@@ -1,8 +1,20 @@
-%tbody
+= link_to 'Add new', new_player_path
+
+%table.table
+  %tr
+    %th Firstname
+    %th Lastname
+    %th Max break
+    %th E-mail
+    %th
+    %th
+    %th
   - @players.each do |player|
     %tr
       %td= player.firstname
       %td= player.lastname
+      %td= player.max_break
+      %td= player.email
       %td= link_to 'Show', player
       %td= link_to 'Edit', edit_player_path(player)
       %td= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' }

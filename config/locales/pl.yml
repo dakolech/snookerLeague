@@ -1,0 +1,36 @@
+pl:
+  hello: "Hello world"
+  activerecord:
+      attributes:
+        player:
+          firstname: "Imię"
+          lastname: "Nazwisko"
+          email: "Adres e-mail"
+          date_of_birth: "Data urodzenia"
+          phone_number: "Numer telefonu"
+          max_break: "Najwyższy break"
+          city: "Miasto"
+      errors:
+        template:
+          header:
+            one:   "1 błąd został wykryty"
+            two:   "2 błędy zostały wykryte"
+            three: "3 błędy zostały wykryte"
+            four:  "4 błędy zostały wykryte"
+            other: "%{count} błedów zostało wykrytych:"
+          body:    "Popraw następujące pola:"
+
+        messages:
+          blank: "musi być wypełnione."
+
+        models:
+          player:
+            attributes:
+              email:
+                blank: "musi być wypełniony."
+              date_of_birth:
+                blank: "musi być wypełniona."
+              phone_number:
+                blank: "musi być wypełniony."
+              max_break:
+                blank: "musi być wypełniony."

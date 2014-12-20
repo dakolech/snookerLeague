@@ -1,3 +1,24 @@
-%h1= @player.firstname
+%h1
+  = @player.firstname + " "
+  = @player.lastname
+
+%p
+  %b E-mail:
+  = @player.email
+%p
+  %b City:
+  = @player.city
+%p
+  %b Max break:
+  = @player.max_break
+%p
+  %b Phone Number:
+  = @player.phone_number
+
+%p
+  %b Date of Birth
+  = @player.date_of_birth
+
+
 = link_to 'Edit', edit_player_path(@player)
 = link_to 'Back', players_path
