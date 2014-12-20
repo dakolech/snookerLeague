@@ -1,2 +1,3 @@
-%h1 Players#show
-%p Find me in app/views/players/show.html.haml
+%h1= @player.firstname
+= link_to 'Edit', edit_player_path(@player)
+= link_to 'Back', players_path

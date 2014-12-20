@@ -1,2 +1,8 @@
-%h1 Players#index
-%p Find me in app/views/players/index.html.haml
+%tbody
+  - @players.each do |player|
+    %tr
+      %td= player.firstname
+      %td= player.lastname
+      %td= link_to 'Show', player
+      %td= link_to 'Edit', edit_player_path(player)
+      %td= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' }
