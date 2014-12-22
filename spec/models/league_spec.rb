@@ -5,7 +5,6 @@ RSpec.describe League, :type => :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :start_date }
     it { should validate_presence_of :end_date }
-    it { should validate_presence_of :number_of_players }
     it { should validate_presence_of :number_of_winners }
     it { should validate_presence_of :number_of_dropots }
     it { should validate_presence_of :best_of }

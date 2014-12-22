@@ -1,33 +1,16 @@
 Rails.application.routes.draw do
 
-  get 'breaks/index'
-
-  get 'breaks/create'
-
-  get 'breaks/new'
-
-  get 'breaks/edit'
-
-  get 'breaks/update'
-
-  get 'matches/show'
-
-  get 'matches/edit'
-
-  get 'matches/update'
-
-  get 'rounds/index'
-
-  get 'rounds/show'
-
-  get 'rounds/edit'
-
-  get 'rounds/update'
-
   resources :players
 
   resources :leagues do
     patch :add_player
+    resources :rounds do
+      resources :matches do
+        resources :breaks do
+
+        end
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

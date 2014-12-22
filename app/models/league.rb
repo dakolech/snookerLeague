@@ -6,7 +6,6 @@ class League < ActiveRecord::Base
   validates :name, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates :number_of_players, presence: true
   validates :number_of_winners, presence: true
   validates :number_of_dropots, presence: true
   validates :best_of, presence: true
