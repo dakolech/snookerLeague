@@ -17,10 +17,10 @@
     = f.text_field :email, class: 'form-control'
   .form-group
     = f.label :date_of_birth
-    =date_field("player", "date_of_birth")
+    = date_field("player", "date_of_birth")
   .form-group
     = f.label :max_break
-    = f.text_field :max_break, class: 'form-control'
+    = f.number_field :max_break, class: 'form-control'
   .form-group
     = f.label :phone_number
     = f.text_field :phone_number, class: 'form-control'
