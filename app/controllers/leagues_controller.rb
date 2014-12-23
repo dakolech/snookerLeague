@@ -12,7 +12,7 @@ class LeaguesController < ApplicationController
   end
 
   def create
-    @league = League.new(player_params)
+    @league = League.new(league_params)
 
     if @league.save
       redirect_to @league, notice: 'League was successfully created.'
@@ -23,12 +23,16 @@ class LeaguesController < ApplicationController
 
   def edit
     @league = League.find(params[:id])
+    @players = Player.joins("LEFT OUTER JOIN leagues_players ON leagues_players.player_id = players.id
+                             LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id
+                             where leagues.id != 1 or leagues.id is null")
+    @league_players = @league.players
   end
 
   def update
     @league = League.find(params[:id])
 
-    if @league.update(player_params)
+    if @league.update(league_params)
       redirect_to @league, notice: 'League was successfully updated.'
     else
       render action: 'edit'
@@ -45,5 +49,25 @@ class LeaguesController < ApplicationController
   end
 
   def add_player
+    @league = League.find(params[:id])
+    @player = Player.find(params[:player_id])
+
+    @league.players << @player
+
+    redirect_to action: 'edit', id: params[:id]
   end
+
+  def remove_player
+    @league = League.find(params[:id])
+    @player = Player.find(params[:player_id])
+
+    @league.players.delete(@player)
+
+    redirect_to action: 'edit', id: params[:id]
+  end
+
+  private
+    def league_params
+      params.require(:league).permit(:name, :start_date, :end_date, :number_of_winners, :number_of_dropots, :best_of, :win_points, :loss_points)
+    end
 end

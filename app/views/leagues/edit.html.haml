@@ -1,2 +1,35 @@
-%h1 Leagues#edit
-%p Find me in app/views/leagues/edit.html.haml
+= render 'form'
+
+%table.table
+  %tr
+    %th Firstname
+    %th Lastname
+    %th Max break
+    %th E-mail
+    %th
+    %th
+  - @league_players.each do |player|
+    %tr
+      %td= player.firstname
+      %td= player.lastname
+      %td= player.max_break
+      %td= player.email
+      %td= link_to 'Show', player
+      %td= link_to 'Delete',  remove_player_league_path(@league, player)
+
+%table.table
+  %tr
+    %th Firstname
+    %th Lastname
+    %th Max break
+    %th E-mail
+    %th
+    %th
+  - @players.each do |player|
+    %tr
+      %td= player.firstname
+      %td= player.lastname
+      %td= player.max_break
+      %td= player.email
+      %td= link_to 'Show', player
+      %td= link_to 'Add',  add_player_league_path(@league, player)

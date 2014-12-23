@@ -1,2 +1,22 @@
-%h1 Leagues#index
-%p Find me in app/views/leagues/index.html.haml
+= link_to 'Add new', new_league_path
+
+%table.table
+  %tr
+    %th Name
+    %th Start date
+    %th End date
+    %th Players
+    %th Best of
+    %th
+    %th
+    %th
+  - @leagues.each do |league|
+    %tr
+      %td= league.name
+      %td= league.start_date
+      %td= league.end_date
+      %td= league.number_of_players
+      %td= league.best_of
+      %td= link_to 'Show', league
+      %td= link_to 'Edit', edit_league_path(league)
+      %td= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' }

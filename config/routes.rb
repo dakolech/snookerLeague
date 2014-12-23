@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   resources :players
 
   resources :leagues do
-    patch :add_player
+    member do
+      get "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player"
+      get "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player"
+    end
     resources :rounds do
       resources :matches do
         resources :breaks do
