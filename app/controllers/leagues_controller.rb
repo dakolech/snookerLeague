@@ -24,8 +24,8 @@ class LeaguesController < ApplicationController
   def edit
     @league = League.find(params[:id])
     @players = Player.joins("LEFT OUTER JOIN leagues_players ON leagues_players.player_id = players.id
-                             LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id
-                             where leagues.id != 1 or leagues.id is null")
+                             LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id")
+                            .where("leagues.id != ? or leagues.id is null", @league.id)
     @league_players = @league.players
   end
 
@@ -33,9 +33,9 @@ class LeaguesController < ApplicationController
     @league = League.find(params[:id])
 
     if @league.update(league_params)
-      redirect_to @league, notice: 'League was successfully updated.'
+      redirect_to action: 'edit', id: params[:id]
     else
-      render action: 'edit'
+      redirect_to action: 'edit', id: params[:id]
     end
   end
 

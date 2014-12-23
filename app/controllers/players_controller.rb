@@ -31,7 +31,7 @@ class PlayersController < ApplicationController
     if @player.update(player_params)
       redirect_to @player, notice: 'Player was successfully updated.'
     else
-      render action: 'edit'
+      redirect_to action: 'edit', id: params[:id]
     end
   end
 
