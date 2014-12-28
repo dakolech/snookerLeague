@@ -3,10 +3,13 @@ Rails.application.routes.draw do
   resources :players
 
   resources :leagues do
-    member do
-      get "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player"
-      get "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player"
-    end
+      member do
+        get "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player"
+        get "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player"
+        get "rounds/edit", :to => "rounds#edit_all", :as => "edit_all"
+        get "rounds/generate_empty", :to => "rounds#generate_empty", :as => "generate_empty"
+        get "rounds/generate_filled", :to => "rounds#generate_filled", :as => "generate_filled"
+      end
     resources :rounds do
       resources :matches do
         resources :breaks do

@@ -1,0 +1,9 @@
+- if @rounds.size == @players.size
+  - @rounds.each_with_index do |round, index|
+    %h2
+      = index + 1
+      Round
+
+- else
+  = link_to 'Generate empty',   generate_empty_league_path(@league), class: 'btn btn-default'
+  = link_to 'Generate filled',   generate_filled_league_path(@league), class: 'btn btn-default'

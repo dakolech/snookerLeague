@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216160905) do
+ActiveRecord::Schema.define(version: 20141228144638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20141216160905) do
     t.integer  "points"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "match_id"
   end
+
+  add_index "breaks", ["match_id"], name: "index_breaks_on_match_id", using: :btree
 
   create_table "frames", force: true do |t|
     t.integer  "player_1_points"
@@ -56,7 +59,10 @@ ActiveRecord::Schema.define(version: 20141216160905) do
     t.integer  "player_2_frames"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "round_id"
   end
+
+  add_index "matches", ["round_id"], name: "index_matches_on_round_id", using: :btree
 
   create_table "players", force: true do |t|
     t.string   "firstname"
@@ -76,7 +82,10 @@ ActiveRecord::Schema.define(version: 20141216160905) do
     t.integer  "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "league_id"
   end
+
+  add_index "rounds", ["league_id"], name: "index_rounds_on_league_id", using: :btree
 
   create_table "tables", force: true do |t|
     t.integer  "position"
@@ -90,6 +99,9 @@ ActiveRecord::Schema.define(version: 20141216160905) do
     t.integer  "number_of_lose_small_points"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "league_id"
   end
+
+  add_index "tables", ["league_id"], name: "index_tables_on_league_id", using: :btree
 
 end
