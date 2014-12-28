@@ -1,9 +1,33 @@
-- if @rounds.size == @players.size
-  - @rounds.each_with_index do |round, index|
+= link_to 'Generate empty',   generate_empty_league_path(@league), class: 'btn btn-default'
+= link_to 'Generate filled',   generate_filled_league_path(@league), class: 'btn btn-default'
+= link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
+
+%br
+Players:
+= @players.size
+%br
+Rounds:
+= @rounds.size
+%br
+Matches:
+= @matches
+%br
+
+
+
+- if @league.bye?
+  There is bye
+
+- if @rounds.size == @players.size - 1
+  - @rounds.each do |round|
     %h2
-      = index + 1
+      = round.number
       Round
+    %h3
+      = round.start_date
+      = round.end_date
+    - round.matches.each do |match|
+      %h4
+        = match.date
 
 - else
-  = link_to 'Generate empty',   generate_empty_league_path(@league), class: 'btn btn-default'
-  = link_to 'Generate filled',   generate_filled_league_path(@league), class: 'btn btn-default'
