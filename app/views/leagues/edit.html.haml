@@ -4,14 +4,18 @@
 
 %table.table
   %tr
+    %th
+    %th id
     %th Firstname
     %th Lastname
     %th Max break
     %th E-mail
     %th
     %th
-  - @league_players.each do |player|
+  - @league_players.each_with_index do |player, index|
     %tr
+      %td= index + 1
+      %td= player.id
       %td= player.firstname
       %td= player.lastname
       %td= player.max_break
@@ -21,6 +25,7 @@
 
 %table.table
   %tr
+    %th id
     %th Firstname
     %th Lastname
     %th Max break
@@ -29,6 +34,7 @@
     %th
   - @players.each do |player|
     %tr
+      %td= player.id
       %td= player.firstname
       %td= player.lastname
       %td= player.max_break

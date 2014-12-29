@@ -14,10 +14,6 @@ Matches:
 %br
 
 
-
-- if @league.bye?
-  There is bye
-
 - if @rounds.size == @players.size - 1
   - @rounds.each do |round|
     %h2
@@ -29,5 +25,9 @@ Matches:
     - round.matches.each do |match|
       %h4
         = match.date
+        - if match.player_1
+          = match.player_1.firstname
+        - if match.player_2
+          = match.player_2.firstname
 
 - else

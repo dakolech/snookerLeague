@@ -54,6 +54,9 @@ class LeaguesController < ApplicationController
 
     @league.players << @player
 
+    remove_bye(@league)
+    add_bye(@league)
+
     redirect_to action: 'edit', id: params[:id]
   end
 
@@ -63,6 +66,9 @@ class LeaguesController < ApplicationController
 
     @league.players.delete(@player)
 
+    remove_bye(@league)
+    add_bye(@league)
+
     redirect_to action: 'edit', id: params[:id]
   end
 
@@ -70,4 +76,20 @@ class LeaguesController < ApplicationController
     def league_params
       params.require(:league).permit(:name, :start_date, :end_date, :number_of_winners, :number_of_dropots, :best_of, :win_points, :loss_points)
     end
+
+    def add_bye(league)
+      if league.players.size%2 == 1
+        bye = Player.create!(firstname:     "Bye",
+                             date_of_birth: league.start_date,
+                             phone_number:  0,
+                             max_break:     0)
+        league.players << bye
+      end
+    end
+  def remove_bye(league)
+    if league.players.size%2 == 1
+      league.players.where(:firstname => "Bye").destroy_all
+    end
+    Player.where(:firstname => "Bye").destroy_all
+  end
 end

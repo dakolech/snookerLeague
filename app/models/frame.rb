@@ -1,6 +1,6 @@
 class Frame < ActiveRecord::Base
   belongs_to :match
-  has_many :breaks
+  has_many :breaks, dependent: :destroy
   has_one :player_1, :class_name => 'Player', :foreign_key => 'player_1_id'
   has_one :player_2, :class_name => 'Player', :foreign_key => 'player_2_id'
 
