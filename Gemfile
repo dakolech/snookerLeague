@@ -34,6 +34,7 @@ gem 'simplecov', :require => false, :group => :test
 gem 'ffaker'
 
 gem 'haml-rails'
+gem 'angularjs-rails'
 
 group :development, :test do
   gem 'rspec-rails'

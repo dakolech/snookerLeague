@@ -13,4 +13,8 @@ class Player < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :max_break, presence: true
 
+  def full_name
+    "#{firstname} #{lastname}"
+  end
+
 end

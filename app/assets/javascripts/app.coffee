@@ -1,0 +1,3 @@
+workshops = angular.module('snookerLeague',[
+
+])
