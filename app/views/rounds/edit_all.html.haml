@@ -1,60 +1,35 @@
-%div{"ng-controller" => "roundsEditController", "ng-init"=>"init(#{@league.id})"}
+%div{"ng-controller" => "roundsEditController","model"=>"#{@league.id}"}
   = link_to 'Generate empty',   generate_empty_league_path(@league), class: 'btn btn-default'
   = link_to 'Generate filled',   generate_filled_league_path(@league), class: 'btn btn-default'
   = link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
 
   %h1{"ng-bind"=>"league.name"}
 
-  %div{"ng-repeat"=>"round in league.rounds"}
-    %h3{"ng-bind"=>"round.number + ' Round'"}
-    %h4{"ng-bind"=>"round.start_date + ' - ' + round.end_date"}
-    %div{"ng-repeat"=>"match in round.matches"}
-      %p{"ng-bind"=>"match.date + ': ' + match.player_1.firstname + ' vs ' + match.player_2.firstname"}
+  - if @league.updated_at < @rounds.first.updated_at
 
+    %br
+    Players:
+    = @players.size
+    %br
+    Rounds:
+    = @rounds.size
+    %br
+    Matches:
+    = @matches
+    %br
 
-  %br
-  Players:
-  = @players.size
-  %br
-  Rounds:
-  = @rounds.size
-  %br
-  Matches:
-  = @matches
-  %br
-
-
-  - if @rounds.size == @players.size - 1
-    - @rounds.each do |round|
-      %h2
-        = round.number
-        Round
-      %h3
-        = round.start_date
-        = round.end_date
-      - round.matches.each do |match|
-        %h4
-          = match.date
-          - if match.player_1
-            = collection_select(:match, :player_1_id, @league.players, :id, :full_name)
-            = match.player_1.firstname
-          - if match.player_2
-            = match.player_2.firstname
+    %div{"ng-repeat"=>"round in league.rounds"}
+      %h3{"ng-bind"=>"round.number + ' Round'"}
+      %h4{"ng-bind"=>"round.start_date + ' - ' + round.end_date"}
+      %div{"ng-repeat"=>"match in round.matches"}
+        %select{"ng-model"=>"selLeague.rounds[$parent.$index].matches[$index].player_1.id",
+                "ng-options"=>"player.id as player.name for player in league.players",
+                "ng-change"=>"updatePlayer($parent.$index, $index, 1)"}
+        %select{"ng-model"=>"selLeague.rounds[$parent.$index].matches[$index].player_2.id",
+                "ng-options"=>"player.id as player.name for player in league.players",
+                "ng-change"=>"updatePlayer($parent.$index, $index, 2)"}
+        %p{"ng-bind"=>"match.id + ' ' + match.date + ': ' + match.player_1.name + ' vs ' + match.player_2.name"}
 
   - else
-    - @rounds.each do |round|
-      %h2
-        = round.number
-        Round
-      %h3
-        = round.start_date
-        = round.end_date
-      - round.matches.each do |match|
-        %h4
-          = match.date
-          - if match.player_1
-            = collection_select(:match, :player_1_id, @league.players, :id, :full_name)
-            //= match.player_1.firstname
-          - if match.player_2
-            = collection_select(:match, :player_1_id, @league.players, :id, :full_name)
-            //= match.player_2.firstname
+    %p League was updated, you mast generate rounds.
+

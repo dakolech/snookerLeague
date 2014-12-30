@@ -13,6 +13,9 @@ Rails.application.routes.draw do
       end
     resources :rounds do
       resources :matches do
+        member do
+          patch "/update_players/:which/:player", :to => "matches#update_players", :as => "update_players"
+        end
         resources :breaks do
 
         end

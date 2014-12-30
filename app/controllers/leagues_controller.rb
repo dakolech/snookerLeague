@@ -57,6 +57,8 @@ class LeaguesController < ApplicationController
     remove_bye(@league)
     add_bye(@league)
 
+    @league.update_column :updated_at, Time.now
+
     redirect_to action: 'edit', id: params[:id]
   end
 
@@ -68,6 +70,8 @@ class LeaguesController < ApplicationController
 
     remove_bye(@league)
     add_bye(@league)
+
+    @league.update_column :updated_at, Time.now
 
     redirect_to action: 'edit', id: params[:id]
   end

@@ -41,7 +41,6 @@ class RoundsController < ApplicationController
 
   def edit_all_angular
     @league = League.find(params[:id])
-    #render :json => @league.to_json(:include => {:rounds => {:include => {:matches => {:include => :player_1, :include => :player_2 }} }})
   end
 
   private
