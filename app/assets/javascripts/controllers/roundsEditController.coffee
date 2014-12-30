@@ -3,13 +3,13 @@ angular.module('snookerLeague').controller "roundsEditController", [
   ($scope, $http, $attrs) ->
 
     $scope.id = $attrs.model
-    #$scope.selectedOption
 
     $http.get('leagues/'+$scope.id+'/rounds/edit_all_angular.json')
     .success (data) ->
       $scope.league = data.league
       $scope.selLeague = data.league
       return
+
     .error (data) ->
       console.log('Error: ' + data)
       return

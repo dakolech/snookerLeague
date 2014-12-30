@@ -20,15 +20,17 @@
 
     %div{"ng-repeat"=>"round in league.rounds"}
       %h3{"ng-bind"=>"round.number + ' Round'"}
-      %h4{"ng-bind"=>"round.start_date + ' - ' + round.end_date"}
+      %input{"type"=>"date", "ng-model"=>"round.start_date"}
+      %input{"type"=>"date", "ng-model"=>"round.end_date"}
       %div{"ng-repeat"=>"match in round.matches"}
+        %p{"ng-bind"=>"match.date | date:'yyyy-MM-dd'  + ': '"}
         %select{"ng-model"=>"selLeague.rounds[$parent.$index].matches[$index].player_1.id",
                 "ng-options"=>"player.id as player.name for player in league.players",
                 "ng-change"=>"updatePlayer($parent.$index, $index, 1)"}
         %select{"ng-model"=>"selLeague.rounds[$parent.$index].matches[$index].player_2.id",
                 "ng-options"=>"player.id as player.name for player in league.players",
                 "ng-change"=>"updatePlayer($parent.$index, $index, 2)"}
-        %p{"ng-bind"=>"match.id + ' ' + match.date + ': ' + match.player_1.name + ' vs ' + match.player_2.name"}
+        %p{"ng-bind"=>"match.player_1.name + ' vs ' + match.player_2.name"}
 
   - else
     %p League was updated, you mast generate rounds.
