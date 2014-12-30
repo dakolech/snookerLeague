@@ -19,3 +19,21 @@
 form {
   width: 300px;
 }
+
+.matchesRound {
+  margin: 20px;
+  .playersMatch {
+    div {
+      display: inline;
+    }
+  }
+}
+
+.repeatedPlayer {
+  color: red;
+}
+
+.repeatedMatch {
+  color: darkred;
+  font-weight: bold;
+}

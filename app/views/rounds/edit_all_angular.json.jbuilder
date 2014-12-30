@@ -8,13 +8,16 @@ json.league do
     json.matches round.matches do |match|
       json.id match.id
       json.date match.date
+      json.class 'correct'
       if match.player_1
         json.player_1 do
+          json.class 'correct'
           json.name match.player_1.full_name
         end
       end
       if match.player_2
         json.player_2 do
+          json.class 'correct'
           json.name match.player_2.full_name
         end
       end
