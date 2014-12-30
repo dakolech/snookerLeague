@@ -24,7 +24,6 @@ angular.module('snookerLeague').controller "roundsEditController", [
       console.log "Round: " + $scope.league.rounds[round].number + " Match: " + (match+1) + " Player: " +  playerId
       $http.patch('/leagues/'+$scope.id+'/rounds/'+round+'/matches/'+matchId+'/update_players/'+player+'/'+playerId)
       .success (data) ->
-        console.log data
         if player == 1
           $scope.league.rounds[round].matches[match].player_1.id = data.id
           $scope.league.rounds[round].matches[match].player_1.name = data.firstname
@@ -36,6 +35,29 @@ angular.module('snookerLeague').controller "roundsEditController", [
         console.log('Error: ' + data)
         return
 
+    $scope.updateStartDate = (id, date) ->
+      $http.patch('/leagues/'+$scope.id+'/rounds/'+id, {round: {start_date: date, id: id}})
+       .success (data) ->
+        return
+      .error (data) ->
+        console.log('Error: ' + data)
+        return
+
+    $scope.updateEndDate = (id, date) ->
+      $http.patch('/leagues/'+$scope.id+'/rounds/'+id, {round: {end_date: date, id: id}})
+      .success (data) ->
+        return
+      .error (data) ->
+        console.log('Error: ' + data)
+        return
+
+    $scope.updateMatchDate = (id, date, roundId) ->
+      $http.patch('/leagues/'+$scope.id+'/rounds/'+roundId+'/matches/'+id, {match: {date: date, id: id}})
+      .success (data) ->
+        return
+      .error (data) ->
+        console.log('Error: ' + data)
+        return
 
     console.log $scope.id
 

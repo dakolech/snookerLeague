@@ -6,6 +6,11 @@ class MatchesController < ApplicationController
   end
 
   def update
+    match = Match.find(params[:id])
+
+    match.update(match_params)
+
+    render :json => match.to_json(:only => [:date, :player_1_frames, :player_2_frames])
   end
 
   def update_players
@@ -24,5 +29,10 @@ class MatchesController < ApplicationController
     render :json => player.to_json(:only => [ :id, :firstname ])
 
   end
+
+  private
+    def match_params
+      params.require(:match).permit(:date, :player_1_frames, :player_2_frames)
+    end
 
 end

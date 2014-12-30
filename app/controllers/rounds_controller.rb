@@ -13,6 +13,11 @@ class RoundsController < ApplicationController
   end
 
   def update
+    round = Round.find(params[:id])
+
+    round.update(round_params)
+
+    render :json => round.to_json(:only => [ :id, :start_date, :end_date, :number])
   end
 
   def generate_empty
@@ -99,5 +104,10 @@ class RoundsController < ApplicationController
 
         league.rounds << round
       end
+    end
+
+  private
+    def round_params
+      params.require(:round).permit(:start_date, :end_date)
     end
 end

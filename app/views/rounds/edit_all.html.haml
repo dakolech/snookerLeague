@@ -20,10 +20,10 @@
 
     %div{"ng-repeat"=>"round in league.rounds"}
       %h3{"ng-bind"=>"round.number + ' Round'"}
-      %input{"type"=>"date", "ng-model"=>"round.start_date"}
-      %input{"type"=>"date", "ng-model"=>"round.end_date"}
+      %input{"type"=>"date", "ng-model"=>"round.start_date", "ng-change"=>"updateStartDate(round.id, round.start_date)"}
+      %input{"type"=>"date", "ng-model"=>"round.end_date", "ng-change"=>"updateEndDate(round.id, round.end_date)"}
       %div{"ng-repeat"=>"match in round.matches"}
-        %p{"ng-bind"=>"match.date | date:'yyyy-MM-dd'  + ': '"}
+        %input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.id, match.date, round.id)"}
         %select{"ng-model"=>"selLeague.rounds[$parent.$index].matches[$index].player_1.id",
                 "ng-options"=>"player.id as player.name for player in league.players",
                 "ng-change"=>"updatePlayer($parent.$index, $index, 1)"}
