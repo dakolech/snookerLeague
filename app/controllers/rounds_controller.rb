@@ -1,4 +1,6 @@
 class RoundsController < ApplicationController
+  respond_to :html, :xml, :json
+
   def index
     @rounds = Round.where(league_id: params[:league_id])
     @players = League.find(params[:league_id]).players
@@ -35,6 +37,11 @@ class RoundsController < ApplicationController
     @rounds.each do |round|
       @matches += round.matches.size
     end
+  end
+
+  def edit_all_angular
+    @league = League.find(params[:id])
+    #render :json => @league.to_json(:include => {:rounds => {:include => {:matches => {:include => :player_1, :include => :player_2 }} }})
   end
 
   private

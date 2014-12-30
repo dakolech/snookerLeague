@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get "rounds/edit", :to => "rounds#edit_all", :as => "edit_all"
         get "rounds/generate_empty", :to => "rounds#generate_empty", :as => "generate_empty"
         get "rounds/generate_filled", :to => "rounds#generate_filled", :as => "generate_filled"
+        get "rounds/edit_all_angular", :to => "rounds#edit_all_angular", :as => "edit_all_angular"
       end
     resources :rounds do
       resources :matches do

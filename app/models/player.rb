@@ -14,7 +14,11 @@ class Player < ActiveRecord::Base
   validates :max_break, presence: true
 
   def full_name
-    "#{firstname} #{lastname}"
+    if lastname
+      "#{firstname} #{lastname}"
+    else
+      firstname
+    end
   end
 
 end

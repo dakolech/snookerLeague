@@ -1,7 +1,16 @@
-%div{"ng-controller" => "roundsEditController"}
+%div{"ng-controller" => "roundsEditController", "ng-init"=>"init(#{@league.id})"}
   = link_to 'Generate empty',   generate_empty_league_path(@league), class: 'btn btn-default'
   = link_to 'Generate filled',   generate_filled_league_path(@league), class: 'btn btn-default'
   = link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
+
+  %h1{"ng-bind"=>"league.name"}
+
+  %div{"ng-repeat"=>"round in league.rounds"}
+    %h3{"ng-bind"=>"round.number + ' Round'"}
+    %h4{"ng-bind"=>"round.start_date + ' - ' + round.end_date"}
+    %div{"ng-repeat"=>"match in round.matches"}
+      %p{"ng-bind"=>"match.date + ': ' + match.player_1.firstname + ' vs ' + match.player_2.firstname"}
+
 
   %br
   Players:
