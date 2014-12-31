@@ -1,2 +1,34 @@
-%h1 Matches#edit
-%p Find me in app/views/matches/edit.html.haml
+%div{"ng-controller" => "matchEditController","model1"=>"#{@league.id}", "model2"=>"#{@round.id}", "model3"=>"#{@match.id}"}
+  = link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
+  = link_to 'Back to edit rounds',   edit_all_league_path(@league), class: 'btn btn-default'
+
+  %br
+
+  %input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.date)"}
+
+  %table.match
+    %tr
+      %th{"ng-bind"=>"match.player_1.name"}
+      %th{"ng-bind"=>"match.player_1_frames"}
+      %th{"ng-bind"=>"' : '"}
+      %th{"ng-bind"=>"match.player_2_frames"}
+      %th{"ng-bind"=>"match.player_2.name"}
+    %tr{"ng-repeat"=>"frame in match.frames"}
+      %th
+      %th
+        %input{"type"=>"number", "ng-model"=>"frame.player_1_points"}
+      %th{"ng-bind"=>"' : '"}
+      %th
+        %input{"type"=>"number", "ng-model"=>"frame.player_2_points"}
+      %th
+        %a.btn.btn-default{"href"=>"", "ng-click"=>"saveFrame(frame.id, frame.player_1_points, frame.player_2_points)" }
+          Save
+    %tr{"ng-repeat"=>"break in frame.breaks"}
+      %th
+        %input{"type"=>"number", "ng-model"=>"break.points"}
+    %tr
+      %th
+        %a{"href"=>"", "ng-click"=>"addBreak(1)" }
+          Add break
+
+

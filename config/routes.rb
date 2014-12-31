@@ -15,9 +15,12 @@ Rails.application.routes.draw do
       resources :matches do
         member do
           patch "/update_players/:which/:player", :to => "matches#update_players", :as => "update_players"
+          get "/edit_angular", :to => "matches#edit_angular", :as => "edit_angular"
         end
-        resources :breaks do
+        resources :frames do
+          resources :breaks do
 
+          end
         end
       end
     end

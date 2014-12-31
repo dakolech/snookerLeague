@@ -1,5 +1,6 @@
 json.league do
   json.name @league.name
+  json.id @league.id
   json.rounds @league.rounds do |round|
     json.id round.id
     json.number round.number

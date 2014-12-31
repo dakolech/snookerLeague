@@ -22,10 +22,11 @@ form {
 
 .matchesRound {
   margin: 20px;
-  .playersMatch {
-    div {
-      display: inline;
-    }
+}
+
+.playersMatch {
+  div {
+    display: inline;
   }
 }
 
@@ -36,4 +37,14 @@ form {
 .repeatedMatch {
   color: darkred;
   font-weight: bold;
+}
+
+
+th {
+  text-align:center;
+  vertical-align:middle;
+  padding: 5px;
+  input {
+    width: 50px;
+  }
 }

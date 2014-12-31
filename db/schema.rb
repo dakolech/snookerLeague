@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141231123527) do
+ActiveRecord::Schema.define(version: 20141231133625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,10 +22,12 @@ ActiveRecord::Schema.define(version: 20141231123527) do
     t.datetime "updated_at"
     t.integer  "match_id"
     t.integer  "frame_id"
+    t.integer  "player_id"
   end
 
   add_index "breaks", ["frame_id"], name: "index_breaks_on_frame_id", using: :btree
   add_index "breaks", ["match_id"], name: "index_breaks_on_match_id", using: :btree
+  add_index "breaks", ["player_id"], name: "index_breaks_on_player_id", using: :btree
 
   create_table "frames", force: true do |t|
     t.integer  "player_1_points"
