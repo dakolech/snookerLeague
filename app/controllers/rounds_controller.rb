@@ -61,7 +61,12 @@ class RoundsController < ApplicationController
                               number: number + 1)
 
         number_of_matches.times do |number2|
-          match = Match.create!(date: league.start_date)
+          match = Match.create!(date: league.start_date,
+                                player_1_frames: 0,
+                                player_2_frames: 0)
+
+          generate_frames(match, league.best_of)
+
           round.matches << match
         end
 
@@ -84,7 +89,9 @@ class RoundsController < ApplicationController
                               number: number + 1)
 
         number_of_matches.times do |number2|
-          match = Match.create!(date: league.start_date)
+          match = Match.create!(date: league.start_date,
+                                player_1_frames: 0,
+                                player_2_frames: 0)
 
           if number <= number_of_rounds/2 && number2 == 0
             match.player_1 = second_array[number2]
@@ -93,6 +100,8 @@ class RoundsController < ApplicationController
             match.player_1 = first_array[number2]
             match.player_2 = second_array[number2]
           end
+
+          generate_frames(match, league.best_of)
 
           round.matches << match
         end
@@ -106,7 +115,15 @@ class RoundsController < ApplicationController
       end
     end
 
-  private
+    def generate_frames (match, best_of)
+      best_of.times do |number3|
+        frame = Frame.create!(player_1_points: 0,
+                              player_2_points: 0)
+
+        match.frames << frame
+      end
+    end
+
     def round_params
       params.require(:round).permit(:start_date, :end_date)
     end

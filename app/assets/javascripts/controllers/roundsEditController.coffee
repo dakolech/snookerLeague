@@ -65,10 +65,11 @@ angular.module('snookerLeague').controller "roundsEditController", [
         for player in $scope.league.players
           count = 0
           for match in round.matches
-            if match.player_1.name == player.name
-              count++
-            if match.player_2.name == player.name
-              count++
+            if match && match.player_1 && match.player_2
+              if match.player_1.name == player.name
+                count++
+              if match.player_2.name == player.name
+                count++
           if count > 1
             changePlayerClass(round.matches, 'repeatedPlayer', player.name)
           else
@@ -76,33 +77,38 @@ angular.module('snookerLeague').controller "roundsEditController", [
 
     changePlayerClass = (matches, className, playerName) ->
       for match in matches
-        if match.player_1.name == playerName
-          match.player_1.class = className
-        if match.player_2.name == playerName
-          match.player_2.class = className
+        if match && match.player_1 && match.player_2
+          if match.player_1.name == playerName
+            match.player_1.class = className
+          if match.player_2.name == playerName
+            match.player_2.class = className
 
     checkMatches = ->
       matches = []
       for round in $scope.league.rounds
         for match in round.matches
-          matches.push(match.player_1.name+" "+match.player_2.name)
+          if match && match.player_1 && match.player_2
+            matches.push(match.player_1.name+" "+match.player_2.name)
       for matchArr in matches
         count = 0
         for round in $scope.league.rounds
           for match in round.matches
-            string = match.player_1.name+" "+match.player_2.name
-            if matchArr == match.player_1.name+" "+match.player_2.name
-              count++
+            if match && match.player_1 && match.player_2
+              string = match.player_1.name+" "+match.player_2.name
+              if matchArr == match.player_1.name+" "+match.player_2.name
+                count++
         if count > 1
           for round in $scope.league.rounds
             for match in round.matches
-              string = match.player_1.name+" "+match.player_2.name
-              if matchArr == match.player_1.name+" "+match.player_2.name
-                match.class = 'repeatedMatch'
+              if match && match.player_1 && match.player_2
+                string = match.player_1.name+" "+match.player_2.name
+                if matchArr == match.player_1.name+" "+match.player_2.name
+                  match.class = 'repeatedMatch'
         else
           for round in $scope.league.rounds
             for match in round.matches
-              string = match.player_1.name+" "+match.player_2.name
-              if matchArr == match.player_1.name+" "+match.player_2.name
-                match.class = 'correct'
+              if match && match.player_1 && match.player_2
+                string = match.player_1.name+" "+match.player_2.name
+                if matchArr == match.player_1.name+" "+match.player_2.name
+                  match.class = 'correct'
 ]

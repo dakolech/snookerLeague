@@ -5,36 +5,36 @@
 
   %h1{"ng-bind"=>"league.name"}
 
-  - if @league.updated_at < @rounds.first.updated_at
+  - if @league.updated_at > @rounds.first.updated_at
+    %p League was updated.
 
-    %br
-    Players:
-    = @players.size
-    %br
-    Rounds:
-    = @rounds.size
-    %br
-    Matches:
-    = @matches
-    %br
+  %br
+  Players:
+  = @players.size
+  %br
+  Rounds:
+  = @rounds.size
+  %br
+  Matches:
+  = @matches
+  %br
 
-    %div{"ng-repeat"=>"round in league.rounds"}
-      %h3{"ng-bind"=>"round.number + ' Round'"}
-      %input{"type"=>"date", "ng-model"=>"round.start_date", "ng-change"=>"updateStartDate(round.id, round.start_date)"}
-      %input{"type"=>"date", "ng-model"=>"round.end_date", "ng-change"=>"updateEndDate(round.id, round.end_date)"}
-      .matchesRound{"ng-repeat"=>"match in round.matches"}
-        %input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.id, match.date, round.id)"}
-        %select{"ng-model"=>"match.player_1.id",
-                "ng-options"=>"player.id as player.name for player in league.players",
-                "ng-change"=>"updatePlayer($parent.$index, $index, 1)"}
-        %select.success{"ng-model"=>"match.player_2.id",
-                "ng-options"=>"player.id as player.name for player in league.players",
-                "ng-change"=>"updatePlayer($parent.$index, $index, 2)"}
-        .playersMatch{"ng-class"=>"match.class"}
-          %div{"ng-bind"=>"match.player_1.name", "ng-class"=>"match.player_1.class"}
-          %div{"ng-bind"=>"' vs '"}
-          %div{"ng-bind"=>"match.player_2.name", "ng-class"=>"match.player_2.class"}
+  %div{"ng-repeat"=>"round in league.rounds"}
+    %h3{"ng-bind"=>"round.number + ' Round'"}
+    %input{"type"=>"date", "ng-model"=>"round.start_date", "ng-change"=>"updateStartDate(round.id, round.start_date)"}
+    %input{"type"=>"date", "ng-model"=>"round.end_date", "ng-change"=>"updateEndDate(round.id, round.end_date)"}
+    .matchesRound{"ng-repeat"=>"match in round.matches"}
+      %input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.id, match.date, round.id)"}
+      %select{"ng-model"=>"match.player_1.id",
+              "ng-options"=>"player.id as player.name for player in league.players",
+              "ng-change"=>"updatePlayer($parent.$index, $index, 1)"}
+      %select.success{"ng-model"=>"match.player_2.id",
+              "ng-options"=>"player.id as player.name for player in league.players",
+              "ng-change"=>"updatePlayer($parent.$index, $index, 2)"}
+      .playersMatch{"ng-class"=>"match.class"}
+        %div{"ng-bind"=>"match.player_1.name", "ng-class"=>"match.player_1.class"}
+        %div{"ng-bind"=>"' vs '"}
+        %div{"ng-bind"=>"match.player_2.name", "ng-class"=>"match.player_2.class"}
 
-  - else
-    %p League was updated, you mast generate rounds.
+
 
