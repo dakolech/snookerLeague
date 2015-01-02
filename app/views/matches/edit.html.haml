@@ -13,22 +13,36 @@
       %th{"ng-bind"=>"' : '"}
       %th{"ng-bind"=>"match.player_2_frames"}
       %th{"ng-bind"=>"match.player_2.name"}
+      %th
     %tr{"ng-repeat"=>"frame in match.frames"}
       %th
+        %ul
+          %li
+            %a{"href"=>"", "ng-click"=>"addBreak(match.player_1.id, frame.id, 1, $index)" }
+              Add break
+          %li{"ng-repeat"=>"break in frame.breaks_1"}
+            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)"}
+            %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 1, $parent.$index)" }
+              x
       %th
         %input{"type"=>"number", "ng-model"=>"frame.player_1_points"}
+
       %th{"ng-bind"=>"' : '"}
       %th
         %input{"type"=>"number", "ng-model"=>"frame.player_2_points"}
       %th
+        %ul
+          %li
+            %a{"href"=>"", "ng-click"=>"addBreak(match.player_2.id, frame.id, 2, $index)" }
+              Add break
+          %li{"ng-repeat"=>"break in frame.breaks_2"}
+            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)"}
+            %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 2, $parent.$index)" }
+              x
+      %th
         %a.btn.btn-default{"href"=>"", "ng-click"=>"saveFrame(frame.id, frame.player_1_points, frame.player_2_points)" }
           Save
-    %tr{"ng-repeat"=>"break in frame.breaks"}
-      %th
-        %input{"type"=>"number", "ng-model"=>"break.points"}
-    %tr
-      %th
-        %a{"href"=>"", "ng-click"=>"addBreak(1)" }
-          Add break
+
+
 
 
