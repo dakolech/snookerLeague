@@ -5,8 +5,9 @@
 
   %h1{"ng-bind"=>"league.name"}
 
-  - if @league.updated_at > @rounds.first.updated_at
-    %p League was updated.
+  - if @rounds.first
+    - if @league.updated_at > @rounds.first.updated_at
+      %p League was updated.
 
   %br
   Players:
@@ -18,6 +19,8 @@
   Matches:
   = @matches
   %br
+
+  = render 'shared/table'
 
   %div{"ng-repeat"=>"round in league.rounds"}
     %h3{"ng-bind"=>"round.number + ' Round'"}

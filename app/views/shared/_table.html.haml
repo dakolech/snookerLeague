@@ -1,0 +1,36 @@
+%table
+  %tr
+    %th
+      Pos
+    %th
+      Name
+    %th
+      Pld
+    %th
+      Pts
+    %th
+      W
+    %th
+      L
+    %th
+      WF
+    %th
+      LF
+    %th
+      WSP
+    %th
+      LSP
+    %th
+      DIFF
+  %tr{"ng-repeat"=>"table in league.tables | orderBy:'position'"}
+    %th{"ng-bind"=>"table.position"}
+    %th{"ng-bind"=>"table.name"}
+    %th{"ng-bind"=>"table.number_of_matches"}
+    %th{"ng-bind"=>"table.points"}
+    %th{"ng-bind"=>"table.number_of_wins"}
+    %th{"ng-bind"=>"table.number_of_loss"}
+    %th{"ng-bind"=>"table.number_of_win_frames"}
+    %th{"ng-bind"=>"table.number_of_lose_frames"}
+    %th{"ng-bind"=>"table. number_of_win_small_points"}
+    %th{"ng-bind"=>"table.number_of_lose_small_points"}
+    %th{"ng-bind"=>"table.diff_small_points"}

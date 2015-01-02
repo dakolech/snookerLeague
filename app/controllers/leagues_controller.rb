@@ -15,7 +15,7 @@ class LeaguesController < ApplicationController
     @league = League.new(league_params)
 
     if @league.save
-      redirect_to @league, notice: 'League was successfully created.'
+      redirect_to action: 'edit', id: params[:id]
     else
       render action: 'new'
     end
