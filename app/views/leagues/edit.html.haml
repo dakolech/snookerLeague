@@ -3,6 +3,8 @@
 
   = render 'form'
 
+  %flash:messages
+
   %table.table
     %tr
       %th
@@ -21,10 +23,10 @@
         %td{"ng-bind"=>"player.max_break"}
         %td{"ng-bind"=>"player.email"}
         %td
-          %a{"ng-href"=>"players/{{player.id}}" }
+          %a{"ng-href"=>"players/{{player.id}}", "ng-hide"=>"player.firstname == 'Bye'"}
             Show
         %td
-          %a{"ng-click"=>"removePlayer(player.id)", "href"=>""}
+          %a{"ng-click"=>"removePlayer(player.id)", "href"=>"", "ng-hide"=>"player.firstname == 'Bye'"}
             Remove
 
   %table.table
@@ -45,7 +47,7 @@
         %td{"ng-bind"=>"player.max_break"}
         %td{"ng-bind"=>"player.email"}
         %td
-          %a{"ng-href"=>"players/{{player.id}}" }
+          %a{"ng-href"=>"players/{{player.id}}"}
             Show
         %td
           %a{"ng-click"=>"addPlayer(player.id)", "href"=>""}

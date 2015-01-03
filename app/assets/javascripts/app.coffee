@@ -1,5 +1,5 @@
 app = angular.module('snookerLeague',[
-
+  'flash'
 ])
 
 app.config [

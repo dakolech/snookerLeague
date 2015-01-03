@@ -55,3 +55,26 @@ table {
     margin-bottom: 0px;
   }
 }
+
+#flash-messages {
+  li {
+    list-style-type: none;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .success {
+    color: #56964C;
+    background-color: #E1FBCC;
+    border: #56964C;
+    border-width: 2px;
+    border-style: solid;
+  }
+  .warning {
+    color: #FF6F6C;
+    background-color: #FFF0F0;
+    border: #FF6F6C;
+    border-width: 2px;
+    border-style: solid;
+  }
+}
