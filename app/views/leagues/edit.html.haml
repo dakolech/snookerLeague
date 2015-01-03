@@ -1,45 +1,52 @@
-= link_to 'Rounds', edit_all_league_path(@league), class: 'btn btn-default'
+%div{"ng-controller" => "leagueEditController","model"=>"#{@league.id}"}
+  = link_to 'Rounds', edit_all_league_path(@league), class: 'btn btn-default'
 
-= render 'form'
+  = render 'form'
 
-= @league.updated_at
-
-%table.table
-  %tr
-    %th
-    %th id
-    %th Firstname
-    %th Lastname
-    %th Max break
-    %th E-mail
-    %th
-    %th
-  - @league_players.each_with_index do |player, index|
+  %table.table
     %tr
-      %td= index + 1
-      %td= player.id
-      %td= player.firstname
-      %td= player.lastname
-      %td= player.max_break
-      %td= player.email
-      %td= link_to 'Show', player
-      %td= link_to 'Delete',  remove_player_league_path(@league, player)
+      %th
+      %th id
+      %th Firstname
+      %th Lastname
+      %th Max break
+      %th E-mail
+      %th
+      %th
+      %tr{"ng-repeat"=>"player in league_players"}
+        %td{"ng-bind"=>"$index + 1"}
+        %td{"ng-bind"=>"player.id"}
+        %td{"ng-bind"=>"player.firstname"}
+        %td{"ng-bind"=>"player.lastname"}
+        %td{"ng-bind"=>"player.max_break"}
+        %td{"ng-bind"=>"player.email"}
+        %td
+          %a{"ng-href"=>"players/{{player.id}}" }
+            Show
+        %td
+          %a{"ng-click"=>"removePlayer(player.id)", "href"=>""}
+            Remove
 
-%table.table
-  %tr
-    %th id
-    %th Firstname
-    %th Lastname
-    %th Max break
-    %th E-mail
-    %th
-    %th
-  - @players.each do |player|
+  %table.table
     %tr
-      %td= player.id
-      %td= player.firstname
-      %td= player.lastname
-      %td= player.max_break
-      %td= player.email
-      %td= link_to 'Show', player
-      %td= link_to 'Add',  add_player_league_path(@league, player)
+      %th
+      %th id
+      %th Firstname
+      %th Lastname
+      %th Max break
+      %th E-mail
+      %th
+      %th
+      %tr{"ng-repeat"=>"player in players | orderBy:'id' | unique:'id'"}
+        %td{"ng-bind"=>"$index + 1"}
+        %td{"ng-bind"=>"player.id"}
+        %td{"ng-bind"=>"player.firstname"}
+        %td{"ng-bind"=>"player.lastname"}
+        %td{"ng-bind"=>"player.max_break"}
+        %td{"ng-bind"=>"player.email"}
+        %td
+          %a{"ng-href"=>"players/{{player.id}}" }
+            Show
+        %td
+          %a{"ng-click"=>"addPlayer(player.id)", "href"=>""}
+            Add

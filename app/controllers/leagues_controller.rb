@@ -23,10 +23,19 @@ class LeaguesController < ApplicationController
 
   def edit
     @league = League.find(params[:id])
-    @players = Player.joins("LEFT OUTER JOIN leagues_players ON leagues_players.player_id = players.id
-                             LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id")
-                            .where("leagues.id != ? or leagues.id is null", @league.id)
-    @league_players = @league.players
+
+  end
+
+  def edit_angular
+    @league = League.find(params[:id])
+
+    @players = Player.all
+
+    @players -= @league.players
+
+    #@players = Player.joins("LEFT OUTER JOIN leagues_players ON leagues_players.player_id = players.id
+     #                        LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id")
+     #                .where("leagues.id != ? or leagues.id is null", @league.id)
   end
 
   def update
@@ -59,7 +68,7 @@ class LeaguesController < ApplicationController
 
     @league.update_column :updated_at, Time.now
 
-    redirect_to action: 'edit', id: params[:id]
+    render :json => @league.players.to_json(:only => [ :id, :firstname, :lastname, :max_break, :email ])
   end
 
   def remove_player
@@ -73,7 +82,7 @@ class LeaguesController < ApplicationController
 
     @league.update_column :updated_at, Time.now
 
-    redirect_to action: 'edit', id: params[:id]
+    render :json => @league.players.to_json(:only => [ :id, :firstname, :lastname, :max_break, :email ])
   end
 
   private
