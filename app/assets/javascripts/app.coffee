@@ -1,5 +1,6 @@
 app = angular.module('snookerLeague',[
-  'flash'
+  'flash',
+  'ngDialog'
 ])
 
 app.config [

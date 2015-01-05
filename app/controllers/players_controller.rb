@@ -48,11 +48,10 @@ class PlayersController < ApplicationController
 
   def destroy
     @player = Player.find(params[:id])
-    if @player.destroy
-      redirect_to players_url, notice: 'Player was successfully destroyed.'
-    else
-      redirect_to players_url
-    end
+    @player1 = @player
+    @player.destroy
+
+    render :json => @player1.to_json(:only => [:id])
 
   end
 
