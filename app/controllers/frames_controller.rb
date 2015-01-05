@@ -82,7 +82,7 @@ class FramesController < ApplicationController
             table.number_of_matches += 1
             table.number_of_wins += 1
             table.points += league.win_points
-          elsif match.player_2_frames > match.player_1_frames
+          elsif match.player_1_frames > match.player_2_frames
             table.number_of_matches += 1
             table.number_of_loss += 1
             table.points += league.loss_points
@@ -106,14 +106,10 @@ class FramesController < ApplicationController
     end
 
     def update_positions(league)
-      #league.tables.sort! { |a,b| a.points <=> b.points }
 
       league.tables.order(points: :desc, diff_small_points: :desc).each_with_index do |table, i|
         table.position = i + 1
 
-        #if i != 0 && league.tables[i-1].points == table.points
-        #  table.position = league.tables[i-1].position
-        #end
         table.save
       end
 

@@ -1,6 +1,20 @@
 angular.module('snookerLeague').controller "leagueEditController", [
-  '$scope', '$http', '$attrs', 'flash'
-  ($scope, $http, $attrs, flash) ->
+  '$scope', '$http', '$attrs', 'flash', '$filter'
+  ($scope, $http, $attrs, flash, $filter) ->
+
+    $scope.reverse = true
+    $scope.reverseL = true
+
+    orderBy = $filter('orderBy');
+
+    $scope.order = (predicate, reverse) ->
+      $scope.players = orderBy($scope.players, predicate, reverse)
+      return
+
+    $scope.orderLeague = (predicate, reverse) ->
+      $scope.league_players = orderBy($scope.league_players, predicate, reverse)
+      return
+
 
     $scope.leagueId = $attrs.model
 
@@ -8,6 +22,9 @@ angular.module('snookerLeague').controller "leagueEditController", [
     .success (data) ->
       $scope.league_players = data.league_players
       $scope.players = data.players
+
+      $scope.order "id", false
+      $scope.orderLeague "id", false
       return
     .error (data) ->
       console.log('Error: ' + data)

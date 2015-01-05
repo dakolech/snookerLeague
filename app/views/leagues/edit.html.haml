@@ -8,11 +8,21 @@
   %table.table
     %tr
       %th
-      %th id
-      %th Firstname
-      %th Lastname
-      %th Max break
-      %th E-mail
+      %th
+        %a{"ng-click"=>"reverseL=!reverseL;orderLeague('id',reverseL)", "href"=>""}
+          Id
+      %th
+        %a{"ng-click"=>"reverseL=!reverseL;orderLeague('firstname',reverseL)", "href"=>""}
+          Firstname
+      %th
+        %a{"ng-click"=>"reverseL=!reverseL;orderLeague('lastname',reverseL)", "href"=>""}
+          Lastname
+      %th
+        %a{"ng-click"=>"reverseL=!reverseL;orderLeague('max_break',reverseL)", "href"=>""}
+          Max Break
+      %th
+        %a{"ng-click"=>"reverseL=!reverseL;orderLeague('email',reverseL)", "href"=>""}
+          E-mail
       %th
       %th
       %tr{"ng-repeat"=>"player in league_players"}
@@ -32,14 +42,24 @@
   %table.table
     %tr
       %th
-      %th id
-      %th Firstname
-      %th Lastname
-      %th Max break
-      %th E-mail
+      %th
+        %a{"ng-click"=>"reverse=!reverse;order('id',reverse)", "href"=>""}
+          Id
+      %th
+        %a{"ng-click"=>"reverse=!reverse;order('firstname',reverse)", "href"=>""}
+          Firstname
+      %th
+        %a{"ng-click"=>"reverse=!reverse;order('lastname',reverse)", "href"=>""}
+          Lastname
+      %th
+        %a{"ng-click"=>"reverse=!reverse;order('max_break',reverse)", "href"=>""}
+          Max Break
+      %th
+        %a{"ng-click"=>"reverse=!reverse;order('email',reverse)", "href"=>""}
+          E-mail
       %th
       %th
-      %tr{"ng-repeat"=>"player in players | orderBy:'id' | unique:'id'"}
+      %tr{"ng-repeat"=>"player in players | unique:'id'"}
         %td{"ng-bind"=>"$index + 1"}
         %td{"ng-bind"=>"player.id"}
         %td{"ng-bind"=>"player.firstname"}

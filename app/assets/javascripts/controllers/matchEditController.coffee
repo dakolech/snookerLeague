@@ -6,6 +6,8 @@ angular.module('snookerLeague').controller "matchEditController", [
     $scope.roundId = $attrs.model2
     $scope.matchId = $attrs.model3
 
+
+
     $http.get('leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/edit_angular.json')
     .success (data) ->
       $scope.match = data.match
