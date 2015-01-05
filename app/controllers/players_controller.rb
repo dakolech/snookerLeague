@@ -1,6 +1,17 @@
 class PlayersController < ApplicationController
   def index
-    @players = Player.all
+  end
+
+  def index_angular
+    if params[:search_query]
+      search_query = "%#{params[:search_query]}%"
+      @players = Player.where("firstname like ? or lastname like ?", search_query, search_query)
+    else
+      @players = Player.all
+    end
+
+    #@players = Player.all
+    @players.where(:firstname => "Bye").destroy_all
   end
 
   def show

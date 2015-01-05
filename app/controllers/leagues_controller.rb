@@ -33,9 +33,6 @@ class LeaguesController < ApplicationController
 
     @players -= @league.players
 
-    #@players = Player.joins("LEFT OUTER JOIN leagues_players ON leagues_players.player_id = players.id
-     #                        LEFT OUTER JOIN leagues ON leagues.id = leagues_players.league_id")
-     #                .where("leagues.id != ? or leagues.id is null", @league.id)
   end
 
   def update

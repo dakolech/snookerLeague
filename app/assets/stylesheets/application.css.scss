@@ -16,6 +16,9 @@
 
 @import "bootstrap";
 
+$blue: #03a9f4;
+
+
 form {
   width: 300px;
 }
@@ -76,5 +79,67 @@ table {
     border: #FF6F6C;
     border-width: 2px;
     border-style: solid;
+  }
+}
+
+$nav-center-width: 700px;
+
+nav {
+  .container {
+    position:relative;
+    height:50px;
+    width:100%;
+    background-color: $blue;
+    color: white;
+    //margin-bottom: 20px;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow:    1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    box-shadow:         1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    div {
+      //background:grey;
+      //width:200px;
+    }
+    .left {
+      position:absolute;
+      left: 0px;
+      bottom:0px;
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+    .center {
+      position: absolute;
+      left: 50%;
+      margin-left: -$nav-center-width/2;
+      bottom: 0px;
+      text-align: center;
+      width: $nav-center-width;
+      h1.navbar-brand {
+        float: none;
+        font-size: 30px;
+        margin: 0px;
+      }
+    }
+    .right {
+      position: absolute;
+      right: 20px;
+      bottom: 0px;
+      ul {
+        li {
+          a {
+            color: white;
+            text-decoration: none;
+          }
+        }
+        li:hover {
+          background-color: #EDEDED;
+          a {
+            color: $blue;
+          }
+        }
+      }
+    }
+
   }
 }

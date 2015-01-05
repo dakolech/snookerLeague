@@ -9,18 +9,11 @@
         = full_title(yield(:title))
     .right
       %ul.nav.navbar-nav.navbar-right
-        - if current_user
-          %li
-            =link_to "Home", root_path
-          %li
-            - if current_user.admin?
-              =link_to "Admin profile", user_path(current_user)
-            - else
-              =link_to "My profile", user_path(current_user)
-          %li
-            =link_to "Sign out", destroy_user_session_path, method: :delete
-        - else
-          %li
-            =link_to "Sign in", new_user_session_path
-          %li
-            =link_to "Sign up", new_user_registration_path
+        %li
+          =link_to "Home", root_path
+        %li
+          =link_to "Leagues", leagues_path
+        %li
+          =link_to "Players", players_path
+        %li
+          =link_to "Statistics", root_path
