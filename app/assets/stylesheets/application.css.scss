@@ -143,3 +143,13 @@ nav {
 
   }
 }
+
+form.dialog {
+  width: 100%;
+}
+
+form {
+  .error {
+    color: red;
+  }
+}
