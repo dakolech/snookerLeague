@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     get "index_angular", :to => "players#index_angular", :as => "index_angular"
   end
 
-  resources :players
+  resources :players do
+    get "show_angular", :to => "players#show_angular", :as => "show_angular"
+  end
 
   resources :leagues do
       member do

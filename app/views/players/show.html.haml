@@ -1,24 +1,29 @@
-%h1
-  = @player.firstname + " "
-  = @player.lastname
+%div{"ng-controller" => "playerController", "model"=>"#{@player.id}"}
 
-%p
-  %b E-mail:
-  = @player.email
-%p
-  %b City:
-  = @player.city
-%p
-  %b Max break:
-  = @player.max_break
-%p
-  %b Phone Number:
-  = @player.phone_number
+  = render 'formPlayer', locals: {title: 'Edit ', button: 'Edit'}
 
-%p
-  %b Date of Birth
-  = @player.date_of_birth
+  %flash:messages
 
+  %a{"ng-click"=>"editPlayer()", "href"=>""}
+    Edit Player
 
-= link_to 'Edit', edit_player_path(@player)
-= link_to 'Back', players_path
+  %h1{"ng-bind"=>"player.firstname + ' ' + player.lastname"}
+
+  %p
+    %b E-mail:
+    %div{"ng-bind"=>"player.email"}
+  %p
+    %b City:
+    %div{"ng-bind"=>"player.city"}
+  %p
+    %b Max break:
+    %div{"ng-bind"=>"player.max_break"}
+  %p
+    %b Phone Number:
+    %div{"ng-bind"=>"player.phone_number"}
+
+  %p
+    %b Date of Birth
+    %div{"ng-bind"=>"player.date_of_birth"}
+
+  = link_to 'Back', players_path

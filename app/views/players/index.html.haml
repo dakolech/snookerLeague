@@ -1,6 +1,6 @@
 %div{"ng-controller" => "playersIndexController"}
 
-  = render 'newPlayer'
+  = render 'formPlayer', locals: {title: 'Create new ', button: 'Create'}
 
   %flash:messages
 
@@ -36,7 +36,7 @@
         %a{"ng-click"=>"reverse=!reverse;sort('email',reverse)", "href"=>""}
           E-mail
       %th
-      %th
+      //%th
       %th
       %tr{"ng-repeat"=>"player in players | unique:'id'"}
         %td{"ng-bind"=>"$index + 1"}
@@ -48,9 +48,9 @@
         %td
           %a{"ng-href"=>"players/{{player.id}}"}
             Show
-        %td
-          %a{"ng-href"=>"players/{{player.id}}/edit", "href"=>""}
-            Edit
+        //%td
+        //%a{"ng-href"=>"players/{{player.id}}/edit", "href"=>""}
+        //Edit
         %td
           %a{"ng-show"=>"player.delete", "ng-click"=>"deletePlayer(player.id)", "href"=>""}
             Delete

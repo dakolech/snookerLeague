@@ -18,6 +18,10 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
   end
 
+  def show_angular
+    @player = Player.find(params[:player_id])
+  end
+
   def new
     @player = Player.new
   end
@@ -25,11 +29,9 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
 
-    if @player.save
-      redirect_to @player, notice: 'Player was successfully created.'
-    else
-      render action: 'new'
-    end
+    @player.save
+
+    render :json => @player.to_json(:only => [:id])
   end
 
   def edit
