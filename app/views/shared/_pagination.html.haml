@@ -1,0 +1,7 @@
+%ul.pagination
+  %li.prev{"ng-class"=>"prevClass"}
+    %a{"rel"=>"prev", "href"=>"", "ng-click"=>"prevPage()"} ← Previous
+  %li{"ng-repeat"=>"a in range() track by $index", "ng-class"=>"pageClass[$index]"}
+    %a{"href"=>"", "ng-click"=>"changePage($index + 1)"}  {{ $index + 1}}
+  %li.next{"ng-class"=>"nextClass"}
+    %a{"rel"=>"next", "href"=>"", "ng-click"=>"nextPage()"} Next →
