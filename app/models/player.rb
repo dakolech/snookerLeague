@@ -15,10 +15,6 @@ class Player < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :max_break, presence: true
 
-  before_save { |player| player.firstname = player.firstname.capitalize }
-  before_save { |player| player.lastname = player.lastname.capitalize }
-  before_save { |player| player.email = player.email.downcase }
-
   def full_name
     if lastname
       "#{firstname} #{lastname}"

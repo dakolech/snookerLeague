@@ -1,7 +1,12 @@
 %div{"ng-controller" => "leagueEditController", "model"=>"#{@league.id}"}
   = link_to 'Rounds', edit_all_league_path(@league), class: 'btn btn-default'
 
-  = render 'form'
+  = render 'formLeague', locals: {title: 'Edit ', button: 'Edit'}
+
+  %a{"ng-click"=>"editLeague()", "href"=>""}
+    Edit League
+
+  //= render 'form'
 
   %flash:messages
 

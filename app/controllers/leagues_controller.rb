@@ -3,6 +3,11 @@ class LeaguesController < ApplicationController
     @leagues = League.all
   end
 
+  def index_angular
+    @leagues = League.all
+
+  end
+
   def show
     @league = League.find(params[:id])
   end
@@ -14,11 +19,9 @@ class LeaguesController < ApplicationController
   def create
     @league = League.new(league_params)
 
-    if @league.save
-      redirect_to action: 'edit', id: params[:id]
-    else
-      render action: 'new'
-    end
+    @league.save
+
+    render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
 
   def edit
@@ -29,7 +32,12 @@ class LeaguesController < ApplicationController
   def edit_angular
     @league = League.find(params[:id])
 
-    @players = Player.all
+    if params[:search_query]
+      search_query = "%#{params[:search_query]}%"
+      @players = Player.where("firstname like ? or lastname like ?", search_query, search_query)
+    else
+      @players = Player.all
+    end
 
     @players -= @league.players
 
@@ -38,20 +46,17 @@ class LeaguesController < ApplicationController
   def update
     @league = League.find(params[:id])
 
-    if @league.update(league_params)
-      redirect_to action: 'edit', id: params[:id]
-    else
-      redirect_to action: 'edit', id: params[:id]
-    end
+    @league.update(league_params)
+
+    render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
 
   def destroy
     @league = League.find(params[:id])
-    if @league.destroy
-      redirect_to leagues_index_url, notice: 'League was successfully destroyed.'
-    else
-      redirect_to leagues_index_url
-    end
+    @league1 = @league
+    @league.destroy
+
+      render :json => @league.to_json(:only => [:id])
   end
 
   def add_player

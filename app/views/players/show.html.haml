@@ -24,6 +24,6 @@
 
   %p
     %b Date of Birth
-    %div{"ng-bind"=>"player.date_of_birth"}
+    %div{"ng-bind"=>"player.date_of_birth | date:'yyyy-MM-dd'"}
 
   = link_to 'Back', players_path

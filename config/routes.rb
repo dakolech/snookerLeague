@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   root 'leagues#index'
 
+  resource :leagues, :only => [] do
+    get "index_angular", :to => "leagues#index_angular", :as => "index_angular"
+  end
+
   resource :players, :only => [] do
     get "index_angular", :to => "players#index_angular", :as => "index_angular"
   end

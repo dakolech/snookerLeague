@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "leagueEditController", [
-  '$scope', '$http', '$attrs', 'flash', '$filter'
-  ($scope, $http, $attrs, flash, $filter) ->
+  '$scope', '$http', '$attrs', 'flash', '$filter', 'ngDialog'
+  ($scope, $http, $attrs, flash, $filter, ngDialog) ->
 
     $scope.leagueId = $attrs.model
     $scope.reverseL = true
@@ -18,7 +18,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
       $http.get('leagues/'+$scope.leagueId+'/edit_angular.json')
       .success (data) ->
         $scope.league_players = data.league_players
-        #$scope.players = data.players
+        $scope.league = data.league
 
         Allplayers = data.players
         $scope.changePage(1)
@@ -35,29 +35,18 @@ angular.module('snookerLeague').controller "leagueEditController", [
       $scope.league_players = orderBy($scope.league_players, predicate, reverse)
       return
 
-    $http.get('leagues/'+$scope.leagueId+'/edit_angular.json')
-    .success (data) ->
-      $scope.league_players = data.league_players
-      $scope.players = data.players
-
-      $scope.order "id", false
-      $scope.orderLeague "id", false
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
-
     $scope.addPlayer = (playerId) ->
       $http.patch('/leagues/'+$scope.leagueId+'/add_player/'+playerId,{})
       .success (data) ->
         $scope.league_players = data
         indexPlayer = -1
-        for player, index in $scope.players
+        for player, index in Allplayers
           if player.id == playerId
             indexPlayer = index
 
-        flash('Player ' + $scope.players[indexPlayer].firstname + ' ' + $scope.players[indexPlayer].lastname + ' was successfully added to league')
-        $scope.players.splice(indexPlayer, 1)
+        flash('Player ' + Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + ' was successfully added to league')
+        Allplayers.splice(indexPlayer, 1)
+        $scope.changePage(page)
         return
       .error (data) ->
         console.log('Error: ' + data)
@@ -70,9 +59,10 @@ angular.module('snookerLeague').controller "leagueEditController", [
         for player, index in $scope.league_players
           if player.id == playerId
             indexPlayer = index
-        $scope.players.push($scope.league_players[indexPlayer])
+        Allplayers.push($scope.league_players[indexPlayer])
         flash('warning', 'Player ' + $scope.league_players[indexPlayer].firstname + ' ' + $scope.league_players[indexPlayer].lastname + ' was successfully removed from league')
         $scope.league_players = data
+        $scope.changePage(page)
         return
       .error (data) ->
         console.log('Error: ' + data)
@@ -108,7 +98,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
         $scope.nextClass = "disabled"
 
     $scope.searchClick = ->
-      $http.get('/players/index_angular.json?search_query='+$scope.query)
+      $http.get('/leagues/'+$scope.leagueId+'/edit_angular.json?search_query='+$scope.query)
       .success (data) ->
         Allplayers = data.players
         $scope.changePage(1)
@@ -150,5 +140,46 @@ angular.module('snookerLeague').controller "leagueEditController", [
         sortBy = '-' + sortBy
       Allplayers.sort(dynamicSort(sortBy))
       $scope.changePage(1)
+
+    $scope.editLeague = ->
+      dialog = ngDialog.open
+        template: "newLeague"
+        scope: $scope
+        controller: [
+          "$scope"
+          "$http"
+          ($scope, $http) ->
+            $scope.league
+            $scope.formClicked = false
+
+            $scope.createForm = () ->
+              $http.patch "/leagues/"+$scope.league.id,
+                league:
+                  name: $scope.league.name
+                  start_date: $scope.league.start_date
+                  end_date: $scope.league.end_date
+                  number_of_winners: $scope.league.number_of_winners
+                  number_of_dropots: $scope.league.number_of_dropots
+                  win_points: $scope.league.win_points
+                  loss_points: $scope.league.loss_points
+                  best_of: $scope.league.best_of
+              .success (data) ->
+                $scope.league.id = data.id
+                $scope.league.name = data.name
+                $scope.league.start_date = data.start_date
+                $scope.league.end_date = data.end_date
+                $scope.league.number_of_players = 0
+                $scope.league.best_of = data.best_of
+                return
+              .error (data) ->
+                console.log('Error: ' + data)
+                return
+              $scope.closeThisDialog($scope.league)
+        ]
+
+      dialog.closePromise.then (data) ->
+        if data.value.name
+          flash('League ' + data.value.name + ' was successfully edited.')
+          return
 
 ]
