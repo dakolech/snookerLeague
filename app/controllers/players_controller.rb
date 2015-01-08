@@ -31,7 +31,7 @@ class PlayersController < ApplicationController
 
     @player.save
 
-    render :json => @player.to_json(:only => [:id])
+    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
   def edit
@@ -41,11 +41,9 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(params[:id])
 
-    if @player.update(player_params)
-      redirect_to @player, notice: 'Player was successfully updated.'
-    else
-      redirect_to action: 'edit', id: params[:id]
-    end
+    @player.update(player_params)
+
+    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
   def destroy

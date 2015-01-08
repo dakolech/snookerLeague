@@ -35,6 +35,10 @@ angular.module('snookerLeague').controller "playerController", [
                   city: $scope.player.city
               .success (data) ->
                 $scope.player.id = data.id
+                $scope.player.firstname = data.firstname
+                $scope.player.lastname = data.lastname
+                $scope.player.email = data.email
+                $scope.player.max_break = data.max_break
                 return
               .error (data) ->
                 console.log('Error: ' + data)

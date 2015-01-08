@@ -39,23 +39,31 @@
           %a{"ng-click"=>"removePlayer(player.id)", "href"=>"", "ng-hide"=>"player.firstname == 'Bye'"}
             Remove
 
+  %form.text-center
+    %input.search-input{"type"=>"text", "placeholder"=>"Search for players",
+                        "name"=>"query", "ng-model"=>"query", "ng-change"=>"searchClick()"}
+    %p
+      %a{"href"=>"", "ng-click"=>"getAll()"} Show all players
+
+  = render "shared/pagination"
+
   %table.table
     %tr
       %th
       %th
-        %a{"ng-click"=>"reverse=!reverse;order('id',reverse)", "href"=>""}
+        %a{"ng-click"=>"reverse=!reverse;sort('id',reverse)", "href"=>""}
           Id
       %th
-        %a{"ng-click"=>"reverse=!reverse;order('firstname',reverse)", "href"=>""}
+        %a{"ng-click"=>"reverse=!reverse;sort('firstname',reverse)", "href"=>""}
           Firstname
       %th
-        %a{"ng-click"=>"reverse=!reverse;order('lastname',reverse)", "href"=>""}
+        %a{"ng-click"=>"reverse=!reverse;sort('lastname',reverse)", "href"=>""}
           Lastname
       %th
-        %a{"ng-click"=>"reverse=!reverse;order('max_break',reverse)", "href"=>""}
+        %a{"ng-click"=>"reverse=!reverse;sort('max_break',reverse)", "href"=>""}
           Max Break
       %th
-        %a{"ng-click"=>"reverse=!reverse;order('email',reverse)", "href"=>""}
+        %a{"ng-click"=>"reverse=!reverse;sort('email',reverse)", "href"=>""}
           E-mail
       %th
       %th

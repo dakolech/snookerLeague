@@ -2,21 +2,38 @@ angular.module('snookerLeague').controller "leagueEditController", [
   '$scope', '$http', '$attrs', 'flash', '$filter'
   ($scope, $http, $attrs, flash, $filter) ->
 
-    $scope.reverse = true
+    $scope.leagueId = $attrs.model
     $scope.reverseL = true
 
     orderBy = $filter('orderBy');
 
-    $scope.order = (predicate, reverse) ->
-      $scope.players = orderBy($scope.players, predicate, reverse)
-      return
+    $scope.reverse = true
+
+    Allplayers = []
+    totalPages = 0
+    page = 0
+    perPage = 20
+
+    $scope.getAll = ->
+      $http.get('leagues/'+$scope.leagueId+'/edit_angular.json')
+      .success (data) ->
+        $scope.league_players = data.league_players
+        #$scope.players = data.players
+
+        Allplayers = data.players
+        $scope.changePage(1)
+        $scope.pageClass[0] = 'active'
+        $scope.orderLeague "id", false
+        return
+      .error (data) ->
+        console.log('Error: ' + data)
+        return
+
+    $scope.getAll()
 
     $scope.orderLeague = (predicate, reverse) ->
       $scope.league_players = orderBy($scope.league_players, predicate, reverse)
       return
-
-
-    $scope.leagueId = $attrs.model
 
     $http.get('leagues/'+$scope.leagueId+'/edit_angular.json')
     .success (data) ->
@@ -60,5 +77,78 @@ angular.module('snookerLeague').controller "leagueEditController", [
       .error (data) ->
         console.log('Error: ' + data)
         return
+
+    $scope.range = () ->
+      new Array(totalPages)
+
+    $scope.changePage = (number) ->
+      page = number
+      $scope.updatePages()
+      $scope.pageClass[number-1] = 'active'
+
+
+    $scope.updatePages = ->
+      totalEntries = Allplayers.length
+      totalPages = Math.ceil(Allplayers.length/perPage)
+      start = (page-1)*perPage
+      end = (page)*perPage
+      $scope.players = Allplayers.slice(start, end);
+      $scope.pageClass = new Array(totalPages)
+      if (page < totalPages)
+        $scope.prevClass = ""
+      else
+        $scope.nextClass = "disabled"
+      if (page >= 1)
+        $scope.nextClass = ""
+      else
+        $scope.prevClass = "disabled"
+      if (page == 1)
+        $scope.prevClass = "disabled"
+      if (page == totalPages || totalPages < 1)
+        $scope.nextClass = "disabled"
+
+    $scope.searchClick = ->
+      $http.get('/players/index_angular.json?search_query='+$scope.query)
+      .success (data) ->
+        Allplayers = data.players
+        $scope.changePage(1)
+        $scope.pageClass[0] = 'active'
+        return
+      .error (data) ->
+        console.log('Error: ' + data)
+        return
+
+    $scope.nextPage = ->
+      if (page < totalPages)
+        $scope.changePage(page+1)
+        $scope.prevClass = ""
+      else
+        $scope.nextClass = "disabled"
+      if (page == totalPages)
+        $scope.nextClass = "disabled"
+
+    $scope.prevPage = ->
+      if (page > 1)
+        $scope.changePage(page-1)
+        $scope.nextClass = ""
+      else
+        $scope.prevClass = "disabled"
+      if (page == 1)
+        $scope.prevClass = "disabled"
+
+    dynamicSort = (property) ->
+      sortOrder = 1
+      if property[0] is "-"
+        sortOrder = -1
+        property = property.substr(1)
+      (a, b) ->
+        result = (if (a[property] < b[property]) then -1 else (if (a[property] > b[property]) then 1 else 0))
+        result * sortOrder
+
+    $scope.sort = (sortBy, reverse) ->
+      if reverse
+        sortBy = '-' + sortBy
+      Allplayers.sort(dynamicSort(sortBy))
+      $scope.changePage(1)
 
 ]
