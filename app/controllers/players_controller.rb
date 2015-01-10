@@ -29,9 +29,7 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
 
-    @player.firstname = @player.firstname.capitalize
-    @player.lastname = @player.lastname.capitalize
-    @player.email = @player.email.downcase
+    @player.nice_formating
 
     @player.save
 
@@ -46,11 +44,9 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(params[:id])
 
-    @player.firstname = @player.firstname.capitalize
-    @player.lastname = @player.lastname.capitalize
-    @player.email = @player.email.downcase
-
     @player.update(player_params)
+
+    @player.nice_formating
 
     render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end

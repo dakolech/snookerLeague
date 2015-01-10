@@ -23,4 +23,11 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def nice_formating
+    self.firstname = self.firstname.capitalize
+    self.lastname = self.lastname.capitalize
+    self.email = self.email.downcase
+    self.save
+  end
+
 end
