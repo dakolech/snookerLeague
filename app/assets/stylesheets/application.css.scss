@@ -17,6 +17,12 @@
 @import "bootstrap";
 
 $blue: #03a9f4;
+$white: white;
+
+main {
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.73);
+}
 
 
 form {
@@ -155,5 +161,110 @@ form.dialog {
 form {
   .error {
     color: red;
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.showTables {
+  position: fixed;
+  z-index: -1;
+  top: 100px;
+  width: 50%;
+  margin: 0 0 0 -40%;
+  left: 50%;
+  .container {
+  }
+}
+
+.showRounds {
+  z-index: 2;
+  width: 50%;
+  float: right;
+  .container {
+    float: left;
+    width: 500px;
+    .round {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      .roundTitle {
+        background-color: $blue;
+        color: $white;
+        padding: 10px;
+        h3.number {
+          text-align: center;
+          font-weight: bold;
+          margin: 0;
+        }
+        .date {
+          text-align: center;
+          span {
+            margin: 5px;
+          }
+        }
+      }
+      .match {
+        text-align: center;
+        border-color: #d7d7d7;
+        border-style: solid;
+        border-width: 1px;
+        border-top-style: none;
+        padding: 10px;
+        .date {
+          color: grey;
+        }
+        table {
+          margin-left: auto;
+          margin-right: auto;
+          tr.score {
+            font-weight: bold;
+            th {
+              padding-top: 0px;
+            }
+          }
+          tr.frame {
+            ul.breaks {
+              list-style: none;
+              padding: 0px;
+              font-size: 12px;
+              color: grey;
+
+              li {
+                display: inline;
+              }
+
+              li:first-child:before {
+                content: "(";
+              }
+
+              li:after {
+                content: ", ";
+              }
+
+              li:last-child:after {
+                content: ")";
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.two-column-table {
+  display: table;
+  //width: 100%;
+  min-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  .cell {
+    display: inline-table;
+    padding: 20px;
+    width: 50%;
+    width: 600px;
   }
 }
