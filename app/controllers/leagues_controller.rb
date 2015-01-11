@@ -1,6 +1,6 @@
 class LeaguesController < ApplicationController
   def index
-    @leagues = League.all
+
   end
 
   def index_angular
@@ -9,6 +9,11 @@ class LeaguesController < ApplicationController
   end
 
   def show
+    @league = League.find(params[:id])
+  end
+
+
+  def show_angular
     @league = League.find(params[:id])
   end
 

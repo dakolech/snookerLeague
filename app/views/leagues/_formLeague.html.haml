@@ -1,8 +1,8 @@
 %script#newLeague{"type"=>"text/ng-template"}
   %h2
     = locals[:title]
-    player
-  %form.dialog{"name"=>"create_form", "ng-submit"=>"formClicked = true; create_form.$valid && createForm()", "novalidate"=>"novalidate"}
+    league
+  %form.dialog{"name"=>"create_form", "ng-submit"=>"formClicked = true; create_form.$valid && league.best_of%2 == 1 && createForm()", "novalidate"=>"novalidate"}
     .form-group
       %label Name
       %input{"type"=>"text", "name"=>"name", "ng-model"=>"league.name", "required"=>""}
@@ -21,11 +21,11 @@
     .form-group
       %label Best Of
       %input{"type"=>"number", "name"=>"best_of", "ng-model"=>"league.best_of", "required"=>"", "min"=>"1"}
-      .error{"ng-show" => "formClicked && create_form.best_of.$invalid"}
-        %small Best is required. Break must be more than 1.
+      .error{"ng-show" => "formClicked && create_form.best_of.$invalid || league.best_of%2 == 0"}
+        %small Best is required. Best Of must be more than 1 and odd.
     .form-group
       %label Number of winners
-      %input{"type"=>"number", "name"=>"number_of_winners", "ng-model"=>"league.number_of_winners", "required"=>""}
+      %input{"type"=>"number", "name"=>"number_of_winners", "ng-model"=>"league.number_of_winners", "required"=>"", "min"=>"1"}
       .error{"ng-show" => "formClicked && create_form.number_of_winners.$invalid"}
         %small Number of winner is required.
     .form-group
@@ -35,7 +35,7 @@
         %small Number of dropots is required.
     .form-group
       %label Win points
-      %input{"type"=>"number", "name"=>"win_points", "ng-model"=>"league.win_points", "required"=>""}
+      %input{"type"=>"number", "name"=>"win_points", "ng-model"=>"league.win_points", "required"=>"", "min"=>"1"}
       .error{"ng-show" => "formClicked && create_form.win_points.$invalid"}
         %small Win points is required.
     .form-group

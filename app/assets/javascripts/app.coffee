@@ -58,3 +58,8 @@ app.filter "unique", ->
 
       items = newItems
     items
+
+app.filter "joinBy", ->
+  (input, delimiter) ->
+    (input or []).join delimiter or ","
+

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :leagues do
       member do
+        get "show_angular", :to => "leagues#show_angular", :as => "show_angular"
         get "edit_angular", :to => "leagues#edit_angular", :as => "edit_angular"
         patch "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player"
         patch "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player"
