@@ -18,10 +18,14 @@
 
 $blue: #03a9f4;
 $white: white;
+$navbar: 50px;
 
 main {
   padding: 10px;
   color: rgba(0, 0, 0, 0.73);
+  top: $navbar;
+  position: absolute;
+  width: 100%;
 }
 
 
@@ -96,8 +100,9 @@ $nav-center-width: 700px;
 
 nav {
   .container {
-    position:relative;
-    height:50px;
+    z-index: 3;
+    position:fixed;
+    height: $navbar;
     width:100%;
     background-color: $blue;
     color: white;
@@ -182,7 +187,11 @@ form {
 .showRounds {
   z-index: 2;
   width: 50%;
-  float: right;
+  //top: 100px;
+  //right: 0px;
+  //position: fixed;
+  margin-left: 50%;
+  position: inherit;
   .container {
     float: left;
     width: 500px;
