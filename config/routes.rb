@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :players do
     get "show_angular", :to => "players#show_angular", :as => "show_angular"
+    get "number_of_breaks_angular/:border", :to => "players#number_of_breaks_angular", :as => "number_of_breaks_angular"
   end
 
   resources :leagues do
