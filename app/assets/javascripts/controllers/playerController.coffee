@@ -38,6 +38,15 @@ angular.module('snookerLeague').controller "playerController", [
             $scope.player
             $scope.formClicked = false
 
+            $scope.updateBreak = () ->
+              $http.get('players/'+$scope.playerId+'/update_break_angular/')
+              .success (data) ->
+                $scope.player.max_break = data.max_break
+                return
+              .error (data) ->
+                console.log('Error: ' + data)
+                return
+
             $scope.createForm = () ->
               $http.patch "/players/"+$scope.player.id,
                 player:

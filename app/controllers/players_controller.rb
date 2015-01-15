@@ -65,6 +65,14 @@ class PlayersController < ApplicationController
     render :json => number.to_json
   end
 
+  def update_break_angular
+    number =  ActiveRecord::Base.connection.execute("select * from updateBreak(#{params[:player_id]});")
+
+    @player = Player.find(params[:player_id])
+
+    render :json => @player.to_json(:only => [:max_break])
+  end
+
   private
     def player_params
       params.require(:player).permit(:firstname, :lastname, :email, :phone_number, :max_break, :date_of_birth, :city)
