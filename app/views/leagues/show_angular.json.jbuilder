@@ -21,6 +21,7 @@ json.league do
     json.number_of_win_small_points table.number_of_win_small_points
     json.number_of_lose_small_points table.number_of_lose_small_points
     json.diff_small_points table.diff_small_points
+    json.player_id table.player_id
   end
 
   json.rounds @league.rounds do |round|
@@ -31,14 +32,17 @@ json.league do
       json.date match.date
       json.player_1_frames match.player_1_frames
       json.player_2_frames match.player_2_frames
+      json.class 'unhidden'
 
       if match.player_1
         json.player_1 do
+          json.id match.player_1.id
           json.name match.player_1.full_name
         end
       end
       if match.player_2
         json.player_2 do
+          json.id match.player_2.id
           json.name match.player_2.full_name
         end
       end

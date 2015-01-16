@@ -9,6 +9,8 @@
     .showTables
       .container
         = render 'shared/table'
+      %a{"href"=>"", "ng-show"=>"showAllText", "ng-click"=>"showAll()"}
+        Show all matches
 
     .showRounds
       .container
@@ -19,7 +21,7 @@
               %span{"ng-bind"=>"round.start_date | date:'yyyy-MM-dd'"}
               %span -
               %span{"ng-bind"=>"round.end_date | date:'yyyy-MM-dd'"}
-          .match{"ng-repeat"=>"match in round.matches"}
+          .match{"ng-repeat"=>"match in round.matches", "ng-class"=>"match.class"}
             %span.date{"ng-bind"=>"match.date | date:'yyyy-MM-dd'"}
             %table
               %tr.score

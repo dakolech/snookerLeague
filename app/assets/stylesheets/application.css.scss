@@ -176,12 +176,13 @@ form {
 
 .showTables {
   position: fixed;
-  z-index: -1;
+  z-index: 0;
   top: 100px;
   width: 50%;
   margin: 0 0 0 -40%;
   left: 50%;
   .container {
+    width:  100%;
   }
 }
 
@@ -299,6 +300,10 @@ form {
       font-weight: bold;
     }
   }
+}
+
+.hidden {
+  display: none;
 }
 
 /*
