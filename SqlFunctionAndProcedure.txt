@@ -1,0 +1,30 @@
+CREATE OR REPLACE FUNCTION countBreaks(brejk integer, player integer)
+  RETURNS integer AS
+$$
+Declare
+numberOfBreaks integer;
+BEGIN
+	select count(*) from breaks where player_id = player and points >= brejk INTO numberOfBreaks;
+	RETURN numberOfBreaks;
+END
+$$
+LANGUAGE plpgsql;
+
+SELECT * FROM countBreaks(100, 2);
+
+CREATE OR REPLACE FUNCTION updateBreak(player integer)
+  RETURNS integer AS
+$$
+Declare
+brejk integer;
+BEGIN
+	select max(points) from breaks where player_id = player INTO brejk;
+	UPDATE players SET max_break=brejk WHERE id=player;
+	RETURN 1;
+END
+$$
+LANGUAGE plpgsql;
+
+select * from updateBreak(2);
+
+

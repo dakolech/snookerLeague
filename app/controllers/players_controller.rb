@@ -57,7 +57,20 @@ class PlayersController < ApplicationController
     @player.destroy
 
     render :json => @player1.to_json(:only => [:id])
+  end
 
+  def number_of_breaks_angular
+    number =  ActiveRecord::Base.connection.execute("SELECT * FROM countBreaks(#{params[:border]}, #{params[:player_id]});")
+
+    render :json => number.to_json
+  end
+
+  def update_break_angular
+    number =  ActiveRecord::Base.connection.execute("select * from updateBreak(#{params[:player_id]});")
+
+    @player = Player.find(params[:player_id])
+
+    render :json => @player.to_json(:only => [:max_break])
   end
 
   private

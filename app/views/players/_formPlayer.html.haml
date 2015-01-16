@@ -28,6 +28,9 @@
       %input{"type"=>"number", "name"=>"max_break", "ng-model"=>"player.max_break", "required"=>"", "min"=>"1", "max"=>"155"}
       .error{"ng-show" => "formClicked && create_form.max_break.$invalid"}
         %small Max break is required. Break must be between 1 and 155.
+      .info{"ng-show"=>"player.max_break < player.league_break"}
+        Player made bigger break in league.
+        %a{"href"=>"", "ng-click"=>"updateBreak()"} Update
     .form-group
       %label Phone Number
       %input{"type"=>"number", "name"=>"phone_number", "ng-model"=>"player.phone_number", "required"=>""}
