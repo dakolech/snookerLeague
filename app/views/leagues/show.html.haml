@@ -25,11 +25,11 @@
             %span.date{"ng-bind"=>"match.date | date:'yyyy-MM-dd'"}
             %table
               %tr.score
-                %th{"ng-bind"=>"match.player_1.name"}
+                %th.name{"ng-bind"=>"match.player_1.name"}
                 %th{"ng-bind"=>"match.player_1_frames"}
                 %th{"ng-bind"=>"' : '"}
                 %th{"ng-bind"=>"match.player_2_frames"}
-                %th{"ng-bind"=>"match.player_2.name"}
+                %th.name{"ng-bind"=>"match.player_2.name"}
               %tr.frame{"ng-repeat"=>"frame in match.frames"}
                 %td
                   %ul.breaks

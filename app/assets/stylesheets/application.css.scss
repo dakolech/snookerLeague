@@ -178,7 +178,7 @@ form {
   position: fixed;
   z-index: 0;
   top: 100px;
-  width: 50%;
+  //width: 50%;
   margin: 0 0 0 -40%;
   left: 50%;
   .container {
@@ -186,12 +186,29 @@ form {
   }
 }
 
+.showRounds.edit {
+  width: 100%;
+  margin-left: 0px;
+  .container {
+    width: 600px;
+    display: block;
+    margin: 10px auto 10px auto;
+    padding: 3px;
+    float: none;
+    .round .roundTitle {
+      h3.number {
+        margin: 5px;
+      }
+      .date {
+        color: black;
+      }
+    }
+  }
+}
+
 .showRounds {
   z-index: 2;
   width: 50%;
-  //top: 100px;
-  //right: 0px;
-  //position: fixed;
   margin-left: 50%;
   position: inherit;
   .container {
@@ -233,6 +250,9 @@ form {
             font-weight: bold;
             th {
               padding-top: 0px;
+            }
+            th.name {
+              width: 175px;
             }
           }
           tr.frame {
