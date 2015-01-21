@@ -12,16 +12,16 @@ end
 
 json.league_players @league.players do |player|
   json.id player.id
-  json.firstname player.firstname
-  json.lastname player.lastname
+  json.firstname player.firstname.capitalize
+  json.lastname player.lastname.capitalize
   json.max_break player.max_break
   json.email player.email
 end
 
 json.players @players do |player|
   json.id player.id
-  json.firstname player.firstname
-  json.lastname player.lastname
+  json.firstname player.firstname.capitalize
+  json.lastname player.lastname.capitalize
   json.max_break player.max_break
   json.email player.email
 end

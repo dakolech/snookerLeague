@@ -15,19 +15,21 @@ class Player < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :max_break, presence: true
 
+  before_save :downcasing
+
   def full_name
     if lastname
-      "#{firstname} #{lastname}"
+      "#{firstname.capitalize} #{lastname.capitalize}"
     else
-      firstname
+      firstname.capitalize
     end
   end
 
-  def nice_formating
-    self.firstname = self.firstname.capitalize
-    self.lastname = self.lastname.capitalize
+  def downcasing
+    self.firstname = self.firstname.downcase
+    self.lastname = self.lastname.downcase
     self.email = self.email.downcase
-    self.save
+    self.city = self.city.downcase if self.city
   end
 
 end
