@@ -30,5 +30,17 @@
 
   %div{"ng-bind"=>"player.firstname + ' has '+ breaks + ' breaks above ' + border"}
 
+  %table
+    %tr
+      %th
+        Break
+      %th
+        League
+      %th
+        Date
+    %tr{"ng-repeat"=>"break in player.breaks"}
+      %td{"ng-bind"=>"break.points"}
+      %td{"ng-bind"=>"break.league"}
+      %td{"ng-bind"=>"break.date | date:'yyyy-MM-dd'"}
 
   = link_to 'Back', players_path

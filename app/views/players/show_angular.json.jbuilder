@@ -8,4 +8,10 @@ json.player do
   json.date_of_birth @player.date_of_birth
   json.city @player.city.titleize
   json.phone_number @player.phone_number
+
+  json.breaks @player.breaks.sort_by(&:points).reverse do |breaK|
+    json.points breaK.points
+    json.league breaK.frame.match.round.league.name
+    json.date breaK.frame.match.date
+  end
 end

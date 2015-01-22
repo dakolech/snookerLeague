@@ -9,6 +9,11 @@ json.league do
   json.win_points @league.win_points
   json.loss_points @league.loss_points
 
+  json.breaks @breaks do |breaK|
+    json.points breaK.points
+    json.player breaK.player.full_name
+  end
+
   json.tables @league.tables do |table|
     json.position table.position
     json.name table.player.full_name
