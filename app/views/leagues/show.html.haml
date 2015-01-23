@@ -11,6 +11,13 @@
         = render 'shared/table'
       %a{"href"=>"", "ng-show"=>"showAllText", "ng-click"=>"showAll()"}
         Show all matches
+      %table
+        %tr{"ng-repeat"=>"player in league.playersBreaks | orderBy:'breaks[0]':true"}
+          %td{"ng-bind"=>"player.name"}
+          %td
+            = render 'breaks'
+            //%div{"ng-repeat"=>"break in player.breaks track by $index"}
+            //%div{"ng-bind"=>"break + ', '"}
 
     .showRounds
       .container
@@ -32,18 +39,14 @@
                 %th.name{"ng-bind"=>"match.player_2.name"}
               %tr.frame{"ng-repeat"=>"frame in match.frames"}
                 %td
-                  %ul.breaks
-                    %li{"ng-repeat"=>"break in frame.breaks_1 "}
-                      %span{"ng-bind"=>"break.points"}
+                  = render 'breaks1InFrame'
                 %td
                   %div{"ng-bind"=>"frame.player_1_points"}
                 %td{"ng-bind"=>"' : '"}
                 %td
                   %div{"ng-bind"=>"frame.player_2_points"}
                 %td
-                  %ul.breaks
-                    %li{"ng-repeat"=>"break in frame.breaks_2"}
-                      %span{"ng-bind"=>"break.points"}
+                  = render 'breaks2InFrame'
 
 
   = link_to 'Back', players_path

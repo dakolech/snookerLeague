@@ -81,7 +81,7 @@ json.league do
         playerBreak << breaK.points
       end
     end
-    json.breaks playerBreak
+    json.breaks playerBreak.sort.reverse
   end
 
 end
