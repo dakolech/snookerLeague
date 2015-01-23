@@ -1,3 +1,5 @@
+@breaks = []
+
 json.league do
   json.id @league.id
   json.name @league.name
@@ -9,10 +11,7 @@ json.league do
   json.win_points @league.win_points
   json.loss_points @league.loss_points
 
-  json.breaks @breaks do |breaK|
-    json.points breaK.points
-    json.player breaK.player.full_name
-  end
+
 
   json.tables @league.tables do |table|
     json.position table.position
@@ -61,14 +60,28 @@ json.league do
           json.breaks_1 frame.breaks.where(player_id: match.player_1.id) do |breaK|
             json.id breaK.id
             json.points breaK.points
+            @breaks << breaK
           end
 
           json.breaks_2 frame.breaks.where(player_id: match.player_2.id) do |breaK|
             json.id breaK.id
             json.points breaK.points
+            @breaks << breaK
           end
         end
       end
     end
   end
+
+  json.playersBreaks @league.players do |player|
+    json.name player.full_name
+    playerBreak = []
+    @breaks.each do |breaK|
+      if breaK.player.full_name == player.full_name
+        playerBreak << breaK.points
+      end
+    end
+    json.breaks playerBreak
+  end
+
 end

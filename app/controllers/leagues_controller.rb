@@ -15,17 +15,6 @@ class LeaguesController < ApplicationController
 
   def show_angular
     @league = League.find(params[:id])
-
-    #@league.rounds.each do |round|
-     # round.matches.each do |match|
-      #  match.frames.each do |frame|
-       #   frame.breaks do |breaK|
-        #    puts breaK
-         #   @breaks << breaK
-         # end
-       # end
-     # end
-   # end
   end
 
   def new
