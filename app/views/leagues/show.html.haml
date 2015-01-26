@@ -11,7 +11,7 @@
         = render 'shared/table'
       %a{"href"=>"", "ng-show"=>"showAllText", "ng-click"=>"showAll()"}
         Show all matches
-      %table
+      %table.leagueBreaks
         %tr{"ng-repeat"=>"player in league.playersBreaks | orderBy:'breaks[0]':true"}
           %td{"ng-bind"=>"player.name"}
           %td

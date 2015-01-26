@@ -349,6 +349,19 @@ form {
   display: none;
 }
 
+table {
+  margin: 10px;
+}
+
+table.leagueBreaks {
+  td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px;
+    font-size: 12px;
+  }
+}
+
 /*
 @-webkit-keyframes opacity {
   0%   { opacity: 0; }
