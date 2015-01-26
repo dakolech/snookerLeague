@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   root 'leagues#index'
 
+  get "statistics", :to => "static_pages#statistics", :as => "statistics"
+  get "statistics_angular", :to => "static_pages#statistics_angular", :as => "statistics_angular"
+
   resource :leagues, :only => [] do
     get "index_angular", :to => "leagues#index_angular", :as => "index_angular"
   end
