@@ -4,7 +4,7 @@ $$
 Declare
 numberOfBreaks integer;
 BEGIN
-	select count(*) from breaks where player_id = player and points >= brejk INTO numberOfBreaks;
+	select count(*) from breaks where player_id = player and points > brejk INTO numberOfBreaks;
 	RETURN numberOfBreaks;
 END
 $$

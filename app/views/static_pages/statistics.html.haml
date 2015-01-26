@@ -1,1 +1,39 @@
 %div{"ng-controller" => "statisticsController"}
+
+  %table.statistics
+    %tr
+      %td
+        .text
+          Number of players:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfPlayers"}
+    %tr
+      %td
+        .text
+          Number of leagues:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfLeagues"}
+    %tr
+      %td
+        .text
+          Number of rounds:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfRounds"}
+    %tr
+      %td
+        .text
+          Number of matches:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfMatches"}
+    %tr
+      %td
+        .text
+          Number of frames:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfFrames"}
+    %tr
+      %td
+        .text
+          Number of breaks:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfBreaks"}
