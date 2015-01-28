@@ -26,9 +26,9 @@ class Player < ActiveRecord::Base
   end
 
   def downcasing
-    self.firstname = self.firstname.downcase
-    self.lastname = self.lastname.downcase
-    self.email = self.email.downcase
+    self.firstname = self.firstname.downcase if self.firstname
+    self.lastname = self.lastname.downcase if self.lastname
+    self.email = self.email.downcase if self.email
     self.city = self.city.downcase if self.city
   end
 

@@ -4,6 +4,8 @@
 
   %br
 
+  %flash:messages
+
   %input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.date)"}
 
   %table.match
@@ -21,22 +23,24 @@
             %a{"href"=>"", "ng-click"=>"addBreak(match.player_1.id, frame.id, 1, $index)" }
               Add break
           %li{"ng-repeat"=>"break in frame.breaks_1"}
-            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)"}
+            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)",
+             "min"=>"0", "max"=>"155"}
             %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 1, $parent.$index)" }
               x
       %th
-        %input{"type"=>"number", "ng-model"=>"frame.player_1_points"}
+        %input{"type"=>"number", "ng-model"=>"frame.player_1_points", "min"=>"0", "max"=>"155"}
 
       %th{"ng-bind"=>"' : '"}
       %th
-        %input{"type"=>"number", "ng-model"=>"frame.player_2_points"}
+        %input{"type"=>"number", "ng-model"=>"frame.player_2_points", "min"=>"0", "max"=>"155"}
       %th
         %ul
           %li
             %a{"href"=>"", "ng-click"=>"addBreak(match.player_2.id, frame.id, 2, $index)" }
               Add break
           %li{"ng-repeat"=>"break in frame.breaks_2"}
-            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)"}
+            %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)",
+            "min"=>"0", "max"=>"155"}
             %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 2, $parent.$index)" }
               x
       %th

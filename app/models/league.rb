@@ -192,17 +192,18 @@ class League < ActiveRecord::Base
 
   def add_bye
     if self.players.size%2 == 1
-      bye = Player.create!(firstname:     "Bye",
+      bye = Player.create!(firstname:     "bye",
                            date_of_birth: self.start_date,
                            phone_number:  0,
                            max_break:     0)
       self.players << bye
     end
   end
+
   def remove_bye
     if self.players.size%2 == 1
-      self.players.where(:firstname => "Bye").destroy_all
+      self.players.where(:firstname => "bye").destroy_all
     end
-    Player.where(:firstname => "Bye").destroy_all
+    Player.where(:firstname => "bye").destroy_all
   end
 end

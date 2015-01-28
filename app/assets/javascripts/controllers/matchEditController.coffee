@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "matchEditController", [
-  '$scope', '$http', '$attrs'
-  ($scope, $http, $attrs) ->
+  '$scope', '$http', '$attrs', 'flash'
+  ($scope, $http, $attrs, flash) ->
 
     $scope.leagueId = $attrs.model1
     $scope.roundId = $attrs.model2
@@ -25,15 +25,19 @@ angular.module('snookerLeague').controller "matchEditController", [
         return
 
     $scope.saveFrame = (id, player_1_points, player_2_points) ->
-      $http.patch('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+id,
-        {frame: {player_1_points: player_1_points, player_2_points: player_2_points, id: id}})
-      .success (data) ->
-        $scope.match.player_1_frames = data.player_1_frames
-        $scope.match.player_2_frames = data.player_2_frames
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
+      if player_1_points >=0 && player_1_points<=155 && player_2_points >=0 && player_2_points<=155
+        $http.patch('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+id,
+          {frame: {player_1_points: player_1_points, player_2_points: player_2_points, id: id}})
+        .success (data) ->
+          $scope.match.player_1_frames = data.player_1_frames
+          $scope.match.player_2_frames = data.player_2_frames
+          flash('Frame sucessfully updated')
+          return
+        .error (data) ->
+          console.log('Error: ' + data)
+          return
+      else
+        flash('warning','Wrong frame points (must be 0-155)')
 
     $scope.addBreak = (playerId, frameId, which_player, which_frame) ->
       $http.post('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks',
