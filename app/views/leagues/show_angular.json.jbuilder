@@ -26,6 +26,12 @@ json.league do
     json.number_of_lose_small_points table.number_of_lose_small_points
     json.diff_small_points table.diff_small_points
     json.player_id table.player_id
+    if table.position <= @league.number_of_winners && table.position != 0
+      json.class 'winner'
+    end
+    if table.position > @league.players.size - @league.number_of_dropots
+      json.class 'dropot'
+    end
   end
 
   json.rounds @league.rounds do |round|

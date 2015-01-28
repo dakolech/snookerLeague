@@ -22,7 +22,8 @@
       LSP
     %th
       DIFF
-  %tr{"ng-repeat"=>"table in league.tables | orderBy:'position'", "ng-click"=>"searchMatches(table.player_id)"}
+  %tr{"ng-repeat"=>"table in league.tables | orderBy:'position'", "ng-click"=>"searchMatches(table.player_id)",
+      "ng-class"=>"table.class"}
     %td{"ng-bind"=>"table.position"}
     %td{"ng-bind"=>"table.name"}
     %td{"ng-bind"=>"table.number_of_matches"}
