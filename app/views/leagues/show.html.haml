@@ -11,13 +11,14 @@
         = render 'shared/table'
       %a{"href"=>"", "ng-show"=>"showAllText", "ng-click"=>"showAll()"}
         Show all matches
-      %table.leagueBreaks
-        %tr{"ng-repeat"=>"player in league.playersBreaks | orderBy:'breaks[0]':true"}
-          %td{"ng-bind"=>"player.name"}
-          %td
-            = render 'breaks'
-            //%div{"ng-repeat"=>"break in player.breaks track by $index"}
-            //%div{"ng-bind"=>"break + ', '"}
+      .leagueBreaksContainer
+        %table.leagueBreaks
+          %tr{"ng-repeat"=>"player in league.playersBreaks | orderBy:'breaks[0]':true"}
+            %td{"ng-bind"=>"player.name"}
+            %td
+              = render 'breaks'
+              //%div{"ng-repeat"=>"break in player.breaks track by $index"}
+              //%div{"ng-bind"=>"break + ', '"}
 
     .showRounds
       .container
