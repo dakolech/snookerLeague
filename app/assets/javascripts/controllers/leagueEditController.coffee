@@ -38,7 +38,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
     $scope.addPlayer = (playerId) ->
       $http.patch('/leagues/'+$scope.leagueId+'/add_player/'+playerId,{})
       .success (data) ->
-        $scope.league_players = data
+        $scope.league_players = data.players
         indexPlayer = -1
         for player, index in Allplayers
           if player.id == playerId
@@ -61,7 +61,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
             indexPlayer = index
         Allplayers.push($scope.league_players[indexPlayer])
         flash('warning', 'Player ' + $scope.league_players[indexPlayer].firstname + ' ' + $scope.league_players[indexPlayer].lastname + ' was successfully removed from league')
-        $scope.league_players = data
+        $scope.league_players = data.players
         $scope.changePage(page)
         return
       .error (data) ->

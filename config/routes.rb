@@ -23,8 +23,8 @@ Rails.application.routes.draw do
       member do
         get "show_angular", :to => "leagues#show_angular", :as => "show_angular"
         get "edit_angular", :to => "leagues#edit_angular", :as => "edit_angular"
-        patch "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player"
-        patch "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player"
+        patch "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player",  defaults: { format: :json }
+        patch "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player",  defaults: { format: :json }
         get "rounds/edit", :to => "rounds#edit_all", :as => "edit_all"
         get "rounds/generate_empty", :to => "rounds#generate_empty", :as => "generate_empty"
         get "rounds/generate_filled", :to => "rounds#generate_filled", :as => "generate_filled"

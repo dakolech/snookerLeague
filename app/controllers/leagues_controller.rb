@@ -1,20 +1,19 @@
 class LeaguesController < ApplicationController
-  def index
+  before_action :find_league, only: [:show, :show_angular, :edit_angular, :edit, :update, :destroy, :add_player, :remove_player]
+  before_action :find_player, only: [:add_player, :remove_player]
 
+  def index
   end
 
   def index_angular
     @leagues = League.all
-
   end
 
   def show
-    @league = League.find(params[:id])
   end
 
 
   def show_angular
-    @league = League.find(params[:id])
   end
 
   def new
@@ -30,13 +29,9 @@ class LeaguesController < ApplicationController
   end
 
   def edit
-    @league = League.find(params[:id])
-
   end
 
   def edit_angular
-    @league = League.find(params[:id])
-
     if params[:search_query]
       search_query = "%#{params[:search_query]}%"
       search_query = search_query.downcase
@@ -46,56 +41,50 @@ class LeaguesController < ApplicationController
     end
 
     @players -= @league.players
-
   end
 
   def update
-    @league = League.find(params[:id])
-
     @league.update(league_params)
 
     render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
 
   def destroy
-    @league = League.find(params[:id])
     @league1 = @league
     @league.destroy
 
-      render :json => @league.to_json(:only => [:id])
+    render :json => @league.to_json(:only => [:id])
   end
 
   def add_player
-    @league = League.find(params[:id])
-    @player = Player.find(params[:player_id])
-
     @league.players << @player
 
     @league.remove_bye
     @league.add_bye
 
     @league.update_column :updated_at, Time.now
-
-    render :json => @league.players.to_json(:only => [ :id, :firstname, :lastname, :max_break, :email ])
   end
 
   def remove_player
-    @league = League.find(params[:id])
-    @player = Player.find(params[:player_id])
-
     @league.players.delete(@player)
 
     @league.remove_bye
     @league.add_bye
 
     @league.update_column :updated_at, Time.now
-
-    render :json => @league.players.to_json(:only => [ :id, :firstname, :lastname, :max_break, :email ])
   end
 
   private
     def league_params
       params.require(:league).permit(:name, :start_date, :end_date, :number_of_winners, :number_of_dropots, :best_of, :win_points, :loss_points)
+    end
+
+    def find_league
+      @league = League.find(params[:id])
+    end
+
+    def find_player
+      @player = Player.find(params[:player_id])
     end
 
 end
