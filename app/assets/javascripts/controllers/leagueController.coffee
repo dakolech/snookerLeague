@@ -1,12 +1,12 @@
 angular.module('snookerLeague').controller "leagueController", [
-  '$scope', '$http', '$attrs', 'flash', 'ngDialog'
-  ($scope, $http, $attrs, flash, ngDialog) ->
+  '$scope', '$http', '$routeParams', 'flash', 'ngDialog'
+  ($scope, $http, $routeParams, flash, ngDialog) ->
 
-    $scope.leagueId = $attrs.model
+
     $scope.loading = true
     $scope.showAllText = false
 
-    $http.get('leagues/'+$scope.leagueId+'/show_angular.json')
+    $http.get('api/leagues/'+$routeParams.id+'.json')
     .success (data) ->
       $scope.league = data.league
       $scope.loading = false

@@ -10,7 +10,7 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
       $scope.leagues = orderBy($scope.leagues, predicate, reverse)
       return
 
-    $http.get('leagues/index_angular.json')
+    $http.get('api/leagues/index.json')
     .success (data) ->
       $scope.leagues = data.leagues
       $scope.orderLeague "id", false
@@ -26,11 +26,10 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
         if league.id == leagueId
           indexLeague = index
       if confirm('Are you sure you want to delete '+ $scope.leagues[indexLeague].name + '?')
-        $http.delete('/leagues/'+ leagueId)
+        $http.delete('api/leagues/'+ leagueId)
         .success (data) ->
           flash('League ' + $scope.leagues[indexLeague].name + ' was successfully deleted.')
           $scope.leagues.splice(indexLeague, 1)
-          $scope.changePage(page)
           return
         .error (data) ->
           console.log('Error: ' + data)
@@ -48,7 +47,7 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
             $scope.formClicked = false
 
             $scope.createForm = () ->
-              $http.post "/leagues",
+              $http.post "api/leagues",
                 league:
                   name: $scope.league.name
                   start_date: $scope.league.start_date

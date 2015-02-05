@@ -6,26 +6,24 @@ Rails.application.routes.draw do
   #get "statistics1", :to => "static_pages#statistics", :as => "statistics"
   scope "api" do
     get "statistics", :to => "static_pages#statistics", :as => "statistics"
-  end
-  match "*path" => 'static_pages#home', via: :all
 
-  resource :leagues, :only => [] do
-    get "index_angular", :to => "leagues#index_angular", :as => "index_angular"
-  end
+    resource :leagues, :only => [] do
+      get "index", :to => "leagues#index", :as => "index"
+    end
 
-  resource :players, :only => [] do
-    get "index_angular", :to => "players#index_angular", :as => "index_angular"
-  end
+    resource :players, :only => [] do
+      get "index_angular", :to => "players#index_angular", :as => "index_angular"
+    end
 
-  resources :players do
-    get "show_angular", :to => "players#show_angular", :as => "show_angular"
-    get "number_of_breaks_angular/:border", :to => "players#number_of_breaks_angular", :as => "number_of_breaks_angular"
-    get "update_break_angular", :to => "players#update_break_angular", :as => "update_break_angular"
-  end
+    resources :players do
+      get "show_angular", :to => "players#show_angular", :as => "show_angular"
+      get "number_of_breaks_angular/:border", :to => "players#number_of_breaks_angular", :as => "number_of_breaks_angular"
+      get "update_break_angular", :to => "players#update_break_angular", :as => "update_break_angular"
+    end
 
-  resources :leagues do
+    resources :leagues do
       member do
-        get "show_angular", :to => "leagues#show_angular", :as => "show_angular"
+        #get "show_angular", :to => "leagues#show_angular", :as => "show_angular"
         get "edit_angular", :to => "leagues#edit_angular", :as => "edit_angular"
         patch "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player",  defaults: { format: :json }
         patch "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player",  defaults: { format: :json }
@@ -34,20 +32,25 @@ Rails.application.routes.draw do
         get "rounds/generate_filled", :to => "rounds#generate_filled", :as => "generate_filled"
         get "rounds/edit_all_angular", :to => "rounds#edit_all_angular", :as => "edit_all_angular"
       end
-    resources :rounds do
-      resources :matches do
-        member do
-          patch "/update_players/:which/:player", :to => "matches#update_players", :as => "update_players"
-          get "/edit_angular", :to => "matches#edit_angular", :as => "edit_angular"
-        end
-        resources :frames do
-          resources :breaks do
+      resources :rounds do
+        resources :matches do
+          member do
+            patch "/update_players/:which/:player", :to => "matches#update_players", :as => "update_players"
+            get "/edit_angular", :to => "matches#edit_angular", :as => "edit_angular"
+          end
+          resources :frames do
+            resources :breaks do
 
+            end
           end
         end
       end
     end
   end
+
+  match "*path" => 'static_pages#home', via: :all
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

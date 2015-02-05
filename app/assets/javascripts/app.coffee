@@ -19,6 +19,12 @@ app.config([ '$routeProvider',  '$locationProvider'
     ).when('/statistics',
       templateUrl: "statistics.html"
       controller: 'statisticsController'
+    ).when('/leagues',
+      templateUrl: "leagues/index.html"
+      controller: 'leaguesIndexController'
+    ).when('/league/:id',
+      templateUrl: "leagues/show.html"
+      controller: 'leagueController'
     ).otherwise({redirectTo:"/"})
 ])
 

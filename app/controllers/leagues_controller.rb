@@ -1,20 +1,15 @@
 class LeaguesController < ApplicationController
-  before_action :find_league, only: [:show, :show_angular, :edit_angular, :edit, :update, :destroy, :add_player, :remove_player]
+  before_action :find_league, only: [:show, :edit_angular, :edit, :update, :destroy, :add_player, :remove_player]
   before_action :find_player, only: [:add_player, :remove_player]
 
-  def index
-  end
 
-  def index_angular
+  def index
     @leagues = League.all
   end
 
   def show
   end
 
-
-  def show_angular
-  end
 
   def new
     @league = League.new
