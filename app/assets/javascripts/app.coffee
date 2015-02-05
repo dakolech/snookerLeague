@@ -1,7 +1,25 @@
 app = angular.module('snookerLeague',[
+  'ngRoute',
+  'ngResource',
+  'templates',
   'flash',
   'ngDialog',
   'ngAnimate'
+])
+
+app.config([ '$routeProvider',  '$locationProvider'
+  ($routeProvider, $locationProvider)->
+
+    $locationProvider.html5Mode(true)
+
+    $routeProvider
+    .when('/',
+      templateUrl: "index.html"
+      controller: 'homeController'
+    ).when('/statistics',
+      templateUrl: "statistics.html"
+      controller: 'statisticsController'
+    ).otherwise({redirectTo:"/"})
 ])
 
 app.config [

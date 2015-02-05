@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
-  root 'leagues#index'
+  root 'static_pages#home'
 
-  get "statistics", :to => "static_pages#statistics", :as => "statistics"
-  get "statistics_angular", :to => "static_pages#statistics_angular", :as => "statistics_angular"
+
+  #get "statistics1", :to => "static_pages#statistics", :as => "statistics"
+  scope "api" do
+    get "statistics", :to => "static_pages#statistics", :as => "statistics"
+  end
+  match "*path" => 'static_pages#home', via: :all
 
   resource :leagues, :only => [] do
     get "index_angular", :to => "leagues#index_angular", :as => "index_angular"

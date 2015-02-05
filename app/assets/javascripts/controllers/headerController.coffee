@@ -1,14 +1,14 @@
-angular.module('snookerLeague').controller "statisticsController", [
+angular.module('snookerLeague').controller "headerController", [
   '$scope', '$http',
   ($scope, $http) ->
-
-    $http.get('api/statistics.json')
+    ###
+    $http.get('statistics.json')
     .success (data) ->
       $scope.statistics = data
       return
     .error (data) ->
       console.log('Error: ' + data)
       return
-
+    ###
 ]
 
