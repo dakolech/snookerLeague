@@ -1,0 +1,58 @@
+//= link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
+//= link_to 'Back to edit rounds',   edit_all_league_path(@league), class: 'btn btn-default'
+%a{"ng-href"=>"league/{{league.id}}/edit", "href"=>""}
+  Back to edit league
+
+%a{"ng-href"=>"league/{{league.id}}/edit/rounds", "href"=>""}
+  Edit Rounds
+
+
+
+%br
+
+%flash:messages
+
+%input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.date)"}
+
+%table.match
+  %tr
+    %th{"ng-bind"=>"match.player_1.name"}
+    %th{"ng-bind"=>"match.player_1_frames"}
+    %th{"ng-bind"=>"' : '"}
+    %th{"ng-bind"=>"match.player_2_frames"}
+    %th{"ng-bind"=>"match.player_2.name"}
+    %th
+  %tr{"ng-repeat"=>"frame in match.frames"}
+    %th
+      %ul
+        %li
+          %a{"href"=>"", "ng-click"=>"addBreak(match.player_1.id, frame.id, 1, $index)" }
+            Add break
+        %li{"ng-repeat"=>"break in frame.breaks_1"}
+          %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)",
+           "min"=>"0", "max"=>"155"}
+          %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 1, $parent.$index)" }
+            x
+    %th
+      %input{"type"=>"number", "ng-model"=>"frame.player_1_points", "min"=>"0", "max"=>"155"}
+
+    %th{"ng-bind"=>"' : '"}
+    %th
+      %input{"type"=>"number", "ng-model"=>"frame.player_2_points", "min"=>"0", "max"=>"155"}
+    %th
+      %ul
+        %li
+          %a{"href"=>"", "ng-click"=>"addBreak(match.player_2.id, frame.id, 2, $index)" }
+            Add break
+        %li{"ng-repeat"=>"break in frame.breaks_2"}
+          %input{"type"=>"number", "ng-model"=>"break.points", "ng-change"=>"updateBreak(break.id, frame.id, break.points)",
+          "min"=>"0", "max"=>"155"}
+          %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 2, $parent.$index)" }
+            x
+    %th
+      %a.btn.btn-default{"href"=>"", "ng-click"=>"saveFrame(frame.id, frame.player_1_points, frame.player_2_points)" }
+        Save
+
+
+
+

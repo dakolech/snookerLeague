@@ -3,14 +3,9 @@ class MatchesController < ApplicationController
   end
 
   def edit
-    @league = League.find(params[:league_id])
-    @round = Round.find(params[:round_id])
     @match = Match.find(params[:id])
   end
 
-  def edit_angular
-    @match = Match.find(params[:id])
-  end
 
   def update
     match = Match.find(params[:id])
