@@ -60,12 +60,12 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
                   loss_points: $scope.league.loss_points
                   best_of: $scope.league.best_of
               .success (data) ->
-                $scope.league.id = data.id
-                $scope.league.name = data.name
-                $scope.league.start_date = data.start_date
-                $scope.league.end_date = data.end_date
-                $scope.league.number_of_players = 0
-                $scope.league.best_of = data.best_of
+                $scope.league.id = data.league.id
+                $scope.league.name = data.league.name
+                $scope.league.start_date = data.league.start_date
+                $scope.league.end_date = data.league.end_date
+                $scope.league.number_of_players = data.league.number_of_players
+                $scope.league.best_of = data.league.best_of
                 return
               .error (data) ->
                 console.log('Error: ' + data)

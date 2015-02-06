@@ -21,14 +21,14 @@ angular.module('snookerLeague').controller "roundsEditController", [
         playerId = $scope.league.rounds[round].matches[match].player_2.id
       roundId = $scope.league.rounds[round].number
       matchId = $scope.league.rounds[round].matches[match].id
-      $http.patch('api/leagues/'+$scope.id+'/rounds/'+round+'/matches/'+matchId+'/update_players/'+player+'/'+playerId)
+      $http.patch('api/leagues/'+$scope.id+'/rounds/'+round+'/matches/'+matchId+'/update_player/'+player+'/'+playerId)
       .success (data) ->
         if player == 1
-          $scope.league.rounds[round].matches[match].player_1.id = data.id
-          $scope.league.rounds[round].matches[match].player_1.name = data.firstname
+          $scope.league.rounds[round].matches[match].player_1.id = data.player.id
+          $scope.league.rounds[round].matches[match].player_1.name = data.player.name
         else
-          $scope.league.rounds[round].matches[match].player_2.id = data.id
-          $scope.league.rounds[round].matches[match].player_2.name = data.firstname
+          $scope.league.rounds[round].matches[match].player_2.id = data.player.id
+          $scope.league.rounds[round].matches[match].player_2.name = data.player.name
         checkPlayers()
         checkMatches()
         return

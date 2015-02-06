@@ -5,18 +5,16 @@ class FramesController < ApplicationController
 
     frame.update(frame_params)
 
-    match = Match.find(params[:match_id])
+    @match = Match.find(params[:match_id])
 
-    match.update_frames
+    @match.update_frames
 
     league = League.find(params[:league_id])
 
-    league.update_tables(match.player_1)
-    league.update_tables(match.player_2)
+    league.update_tables(@match.player_1)
+    league.update_tables(@match.player_2)
 
     league.update_positions
-
-    render :json => match.to_json(:only => [:player_1_frames, :player_2_frames])
   end
 
   private

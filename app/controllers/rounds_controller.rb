@@ -6,18 +6,12 @@ class RoundsController < ApplicationController
     @players = League.find(params[:league_id]).players
   end
 
-  def show
-  end
-
-  def edit
+  def edit_all
   end
 
   def update
-    round = Round.find(params[:id])
-
-    round.update(round_params)
-
-    render :json => round.to_json(:only => [ :id, :start_date, :end_date, :number])
+    @round = Round.find(params[:id])
+    @round.update(round_params)
   end
 
   def generate_empty
@@ -27,10 +21,6 @@ class RoundsController < ApplicationController
   def generate_filled
     @league.generate_filled_rounds
   end
-
-  def edit_all
-  end
-
 
   private
     def round_params

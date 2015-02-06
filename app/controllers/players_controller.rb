@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+  before_action :find_player, only: [:show, :update, :destroy]
 
   def index
     if params[:search_query]
@@ -12,40 +13,22 @@ class PlayersController < ApplicationController
     @players.where(:firstname => "Bye").destroy_all
   end
 
-
   def show
-    @player = Player.find(params[:id])
-  end
-
-  def new
-    @player = Player.new
   end
 
   def create
     @player = Player.new(player_params)
-
     @player.save
-
-    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
-  def edit
-    @player = Player.find(params[:id])
-
-  end
 
   def update
-    @player = Player.find(params[:id])
-
     @player.update(player_params)
   end
 
   def destroy
-    @player = Player.find(params[:id])
     @player1 = @player
     @player.destroy
-
-    render :json => @player1.to_json(:only => [:id])
   end
 
   def number_of_breaks_angular
@@ -65,5 +48,9 @@ class PlayersController < ApplicationController
   private
     def player_params
       params.require(:player).permit(:firstname, :lastname, :email, :phone_number, :max_break, :date_of_birth, :city)
+    end
+
+    def find_player
+      @player = Player.find(params[:id])
     end
 end

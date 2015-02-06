@@ -2,9 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-
-  #get "statistics1", :to => "static_pages#statistics", :as => "statistics"
-  scope "api" do
+  scope "api",  defaults: { format: :json } do
     get "statistics", :to => "static_pages#statistics", :as => "statistics"
 
     resource :leagues, :only => [] do
@@ -35,7 +33,7 @@ Rails.application.routes.draw do
       resources :rounds do
         resources :matches do
           member do
-            patch "/update_players/:which/:player", :to => "matches#update_players", :as => "update_players"
+            patch "/update_player/:which/:player", :to => "matches#update_player", :as => "update_player"
             get "/edit_angular", :to => "matches#edit_angular", :as => "edit_angular"
           end
           resources :frames do

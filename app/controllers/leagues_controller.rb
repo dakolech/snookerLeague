@@ -2,7 +2,6 @@ class LeaguesController < ApplicationController
   before_action :find_league, only: [:show, :edit, :update, :destroy, :add_player, :remove_player]
   before_action :find_player, only: [:add_player, :remove_player]
 
-
   def index
     @leagues = League.all
   end
@@ -10,19 +9,10 @@ class LeaguesController < ApplicationController
   def show
   end
 
-
-  def new
-    @league = League.new
-  end
-
   def create
     @league = League.new(league_params)
-
     @league.save
-
-    render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
-
 
   def edit
     if params[:search_query]
@@ -38,15 +28,11 @@ class LeaguesController < ApplicationController
 
   def update
     @league.update(league_params)
-
-    render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
 
   def destroy
     @league1 = @league
     @league.destroy
-
-    render :json => @league.to_json(:only => [:id])
   end
 
   def add_player

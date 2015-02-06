@@ -29,8 +29,8 @@ angular.module('snookerLeague').controller "matchEditController", [
         $http.patch('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+id,
           {frame: {player_1_points: player_1_points, player_2_points: player_2_points, id: id}})
         .success (data) ->
-          $scope.match.player_1_frames = data.player_1_frames
-          $scope.match.player_2_frames = data.player_2_frames
+          $scope.match.player_1_frames = data.match.player_1_frames
+          $scope.match.player_2_frames = data.match.player_2_frames
           flash('Frame sucessfully updated')
           return
         .error (data) ->
@@ -44,9 +44,9 @@ angular.module('snookerLeague').controller "matchEditController", [
         {break: {player_id: playerId, frame_id: frameId, match_id: $scope.matchId}})
       .success (data) ->
         if which_player == 1
-          $scope.match.frames[which_frame].breaks_1.push(data)
+          $scope.match.frames[which_frame].breaks_1.push(data.break)
         else
-          $scope.match.frames[which_frame].breaks_2.push(data)
+          $scope.match.frames[which_frame].breaks_2.push(data.break)
         return
       .error (data) ->
         console.log('Error: ' + data)

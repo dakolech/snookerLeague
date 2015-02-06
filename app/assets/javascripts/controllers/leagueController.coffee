@@ -17,6 +17,7 @@ angular.module('snookerLeague').controller "leagueController", [
       return
 
     $scope.searchMatches = (id) ->
+      $scope.showAll()
       for round in $scope.league.rounds
         for match in round.matches
           if match.player_1.id != id && match.player_2.id != id

@@ -137,11 +137,11 @@ angular.module('snookerLeague').controller "playersIndexController", [
                   phone_number: $scope.player.phone_number
                   city: $scope.player.city
               .success (data) ->
-                $scope.player.id = data.id
-                $scope.player.firstname = data.firstname
-                $scope.player.lastname = data.lastname
-                $scope.player.email = data.email
-                $scope.player.max_break = data.max_break
+                $scope.player.id = data.player.id
+                $scope.player.firstname = data.player.firstname
+                $scope.player.lastname = data.player.lastname
+                $scope.player.email = data.player.email
+                $scope.player.max_break = data.player.max_break
                 $scope.player.delete = true
                 return
               .error (data) ->

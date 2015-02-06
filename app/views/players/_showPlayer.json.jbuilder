@@ -6,7 +6,7 @@ json.player do
   json.league_break Break.where(player_id: @player.id).maximum("points")
   json.email @player.email
   json.date_of_birth @player.date_of_birth
-  json.city @player.city.titleize
+  json.city @player.city.titleize if @player.city
   json.phone_number @player.phone_number
 
   json.breaks @player.breaks.sort_by(&:points).reverse do |breaK|
