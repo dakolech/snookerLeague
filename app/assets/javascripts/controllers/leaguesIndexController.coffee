@@ -10,7 +10,7 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
       $scope.leagues = orderBy($scope.leagues, predicate, reverse)
       return
 
-    $http.get('leagues/index_angular.json')
+    $http.get('api/leagues/index.json')
     .success (data) ->
       $scope.leagues = data.leagues
       $scope.orderLeague "id", false
@@ -26,11 +26,10 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
         if league.id == leagueId
           indexLeague = index
       if confirm('Are you sure you want to delete '+ $scope.leagues[indexLeague].name + '?')
-        $http.delete('/leagues/'+ leagueId)
+        $http.delete('api/leagues/'+ leagueId)
         .success (data) ->
           flash('League ' + $scope.leagues[indexLeague].name + ' was successfully deleted.')
           $scope.leagues.splice(indexLeague, 1)
-          $scope.changePage(page)
           return
         .error (data) ->
           console.log('Error: ' + data)
@@ -46,9 +45,11 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
           ($scope, $http) ->
             $scope.league
             $scope.formClicked = false
+            $scope.tittle = 'Create new'
+            $scope.buttonTittle = 'Create'
 
             $scope.createForm = () ->
-              $http.post "/leagues",
+              $http.post "api/leagues",
                 league:
                   name: $scope.league.name
                   start_date: $scope.league.start_date
@@ -59,12 +60,12 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
                   loss_points: $scope.league.loss_points
                   best_of: $scope.league.best_of
               .success (data) ->
-                $scope.league.id = data.id
-                $scope.league.name = data.name
-                $scope.league.start_date = data.start_date
-                $scope.league.end_date = data.end_date
-                $scope.league.number_of_players = 0
-                $scope.league.best_of = data.best_of
+                $scope.league.id = data.league.id
+                $scope.league.name = data.league.name
+                $scope.league.start_date = data.league.start_date
+                $scope.league.end_date = data.league.end_date
+                $scope.league.number_of_players = data.league.number_of_players
+                $scope.league.best_of = data.league.best_of
                 return
               .error (data) ->
                 console.log('Error: ' + data)

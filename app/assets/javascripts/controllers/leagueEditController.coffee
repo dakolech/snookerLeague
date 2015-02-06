@@ -1,8 +1,7 @@
 angular.module('snookerLeague').controller "leagueEditController", [
-  '$scope', '$http', '$attrs', 'flash', '$filter', 'ngDialog'
-  ($scope, $http, $attrs, flash, $filter, ngDialog) ->
+  '$scope', '$http', '$routeParams', 'flash', '$filter', 'ngDialog'
+  ($scope, $http, $routeParams, flash, $filter, ngDialog) ->
 
-    $scope.leagueId = $attrs.model
     $scope.reverseL = true
 
     orderBy = $filter('orderBy');
@@ -15,7 +14,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
     perPage = 20
 
     $scope.getAll = ->
-      $http.get('leagues/'+$scope.leagueId+'/edit_angular.json')
+      $http.get('api/leagues/'+$routeParams.id+'/edit.json')
       .success (data) ->
         $scope.league_players = data.league_players
         $scope.league = data.league
@@ -36,7 +35,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
       return
 
     $scope.addPlayer = (playerId) ->
-      $http.patch('/leagues/'+$scope.leagueId+'/add_player/'+playerId,{})
+      $http.patch('api/leagues/'+$routeParams.id+'/add_player/'+playerId,{})
       .success (data) ->
         $scope.league_players = data.players
         indexPlayer = -1
@@ -53,7 +52,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
         return
 
     $scope.removePlayer = (playerId) ->
-      $http.patch('/leagues/'+$scope.leagueId+'/remove_player/'+playerId,{})
+      $http.patch('api/leagues/'+$routeParams.id+'/remove_player/'+playerId,{})
       .success (data) ->
         indexPlayer = -1
         for player, index in $scope.league_players
@@ -98,7 +97,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
         $scope.nextClass = "disabled"
 
     $scope.searchClick = ->
-      $http.get('/leagues/'+$scope.leagueId+'/edit_angular.json?search_query='+$scope.query)
+      $http.get('api/leagues/'+$routeParams.id+'/edit.json?search_query='+$scope.query)
       .success (data) ->
         Allplayers = data.players
         $scope.changePage(1)
@@ -151,9 +150,11 @@ angular.module('snookerLeague').controller "leagueEditController", [
           ($scope, $http) ->
             $scope.league
             $scope.formClicked = false
+            $scope.tittle = 'Edit'
+            $scope.buttonTittle = 'Update'
 
             $scope.createForm = () ->
-              $http.patch "/leagues/"+$scope.league.id,
+              $http.patch "api/leagues/"+$scope.league.id,
                 league:
                   name: $scope.league.name
                   start_date: $scope.league.start_date
@@ -164,12 +165,12 @@ angular.module('snookerLeague').controller "leagueEditController", [
                   loss_points: $scope.league.loss_points
                   best_of: $scope.league.best_of
               .success (data) ->
-                $scope.league.id = data.id
-                $scope.league.name = data.name
-                $scope.league.start_date = data.start_date
-                $scope.league.end_date = data.end_date
-                $scope.league.number_of_players = 0
-                $scope.league.best_of = data.best_of
+                $scope.league.id = data.league.id
+                $scope.league.name = data.league.name
+                $scope.league.start_date = data.league.start_date
+                $scope.league.end_date = data.league.end_date
+                $scope.league.number_of_players = data.league.number_of_players
+                $scope.league.best_of = data.league.best_of
                 return
               .error (data) ->
                 console.log('Error: ' + data)

@@ -1,8 +1,7 @@
 class PlayersController < ApplicationController
-  def index
-  end
+  before_action :find_player, only: [:show, :update, :destroy]
 
-  def index_angular
+  def index
     if params[:search_query]
       search_query = "%#{params[:search_query]}%"
       search_query = search_query.downcase
@@ -15,44 +14,21 @@ class PlayersController < ApplicationController
   end
 
   def show
-    @player = Player.find(params[:id])
-  end
-
-  def show_angular
-    @player = Player.find(params[:player_id])
-  end
-
-  def new
-    @player = Player.new
   end
 
   def create
     @player = Player.new(player_params)
-
     @player.save
-
-    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
-  def edit
-    @player = Player.find(params[:id])
-
-  end
 
   def update
-    @player = Player.find(params[:id])
-
     @player.update(player_params)
-
-    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
   def destroy
-    @player = Player.find(params[:id])
     @player1 = @player
     @player.destroy
-
-    render :json => @player1.to_json(:only => [:id])
   end
 
   def number_of_breaks_angular
@@ -72,5 +48,9 @@ class PlayersController < ApplicationController
   private
     def player_params
       params.require(:player).permit(:firstname, :lastname, :email, :phone_number, :max_break, :date_of_birth, :city)
+    end
+
+    def find_player
+      @player = Player.find(params[:id])
     end
 end

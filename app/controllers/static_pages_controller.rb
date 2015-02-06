@@ -1,10 +1,9 @@
 class StaticPagesController < ApplicationController
 
-  def statistics
-
+  def home
   end
 
-  def statistics_angular
+  def statistics
     @players = Player.all.size
     @leagues = League.all.size
     @rounds = Round.all.size

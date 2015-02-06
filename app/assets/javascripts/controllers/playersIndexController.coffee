@@ -10,7 +10,8 @@ angular.module('snookerLeague').controller "playersIndexController", [
     perPage = 20
 
     $scope.getAll = ->
-      $http.get('players/index_angular.json')
+      $scope.query = ''
+      $http.get('api/players/index.json')
       .success (data) ->
         Allplayers = data.players
         $scope.changePage(1)
@@ -52,7 +53,7 @@ angular.module('snookerLeague').controller "playersIndexController", [
         $scope.nextClass = "disabled"
 
     $scope.searchClick = ->
-      $http.get('/players/index_angular.json?search_query='+$scope.query)
+      $http.get('api/players/index.json?search_query='+$scope.query)
       .success (data) ->
         Allplayers = data.players
         $scope.changePage(1)
@@ -102,7 +103,7 @@ angular.module('snookerLeague').controller "playersIndexController", [
           indexPlayer = index
       if confirm('Are you sure you want to delete '+ Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + '?')
         console.log playerId
-        $http.delete('/players/'+ playerId)
+        $http.delete('api/players/'+ playerId)
         .success (data) ->
           flash('Player ' + Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + ' was successfully deleted.')
           Allplayers.splice(indexPlayer, 1)
@@ -122,9 +123,11 @@ angular.module('snookerLeague').controller "playersIndexController", [
           ($scope, $http) ->
             $scope.player
             $scope.formClicked = false
+            $scope.tittle = 'Create new'
+            $scope.buttonTittle = 'Create'
 
             $scope.createForm = () ->
-              $http.post "/players",
+              $http.post "api/players",
                 player:
                   firstname: $scope.player.firstname
                   lastname: $scope.player.lastname
@@ -134,11 +137,11 @@ angular.module('snookerLeague').controller "playersIndexController", [
                   phone_number: $scope.player.phone_number
                   city: $scope.player.city
               .success (data) ->
-                $scope.player.id = data.id
-                $scope.player.firstname = data.firstname
-                $scope.player.lastname = data.lastname
-                $scope.player.email = data.email
-                $scope.player.max_break = data.max_break
+                $scope.player.id = data.player.id
+                $scope.player.firstname = data.player.firstname
+                $scope.player.lastname = data.player.lastname
+                $scope.player.email = data.player.email
+                $scope.player.max_break = data.player.max_break
                 $scope.player.delete = true
                 return
               .error (data) ->

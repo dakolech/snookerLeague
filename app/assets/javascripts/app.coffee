@@ -1,8 +1,48 @@
 app = angular.module('snookerLeague',[
+  'ngRoute',
+  'ngResource',
+  'templates',
   'flash',
   'ngDialog',
   'ngAnimate'
 ])
+
+app.config([ '$routeProvider',  '$locationProvider'
+  ($routeProvider, $locationProvider)->
+
+    $locationProvider.html5Mode(true)
+
+    $routeProvider
+    .when('/',
+      templateUrl: "index.html"
+      controller: 'homeController'
+    ).when('/statistics',
+      templateUrl: "statistics.html"
+      controller: 'statisticsController'
+    ).when('/leagues',
+      templateUrl: "leagues/index.html"
+      controller: 'leaguesIndexController'
+    ).when('/league/:id',
+      templateUrl: "leagues/show.html"
+      controller: 'leagueController'
+    ).when('/league/:id/edit',
+      templateUrl: "leagues/edit.html"
+      controller: 'leagueEditController'
+    ).when('/league/:id/edit/rounds',
+      templateUrl: "rounds/edit_all.html"
+      controller: 'roundsEditController'
+    ).when('/league/:id/round/:round_id/match/:match_id/edit',
+      templateUrl: "matches/edit.html"
+      controller: 'matchEditController'
+    ).when('/players',
+      templateUrl: "players/index.html"
+      controller: 'playersIndexController'
+    ).when('/player/:id',
+      templateUrl: "players/show.html"
+      controller: 'playerController'
+    ).otherwise({redirectTo:"/"})
+])
+
 
 app.config [
   "$httpProvider"

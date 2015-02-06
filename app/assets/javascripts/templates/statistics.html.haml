@@ -1,0 +1,64 @@
+.statistics
+  %table
+    %tr
+      %td
+        .text
+          Number of players:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfPlayers"}
+    %tr
+      %td
+        .text
+          Number of leagues:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfLeagues"}
+    %tr
+      %td
+        .text
+          Number of rounds:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfRounds"}
+    %tr
+      %td
+        .text
+          Number of matches:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfMatches"}
+    %tr
+      %td
+        .text
+          Number of frames:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfFrames"}
+    %tr
+      %td
+        .text
+          Number of breaks:
+      %td
+        .number{"ng-bind"=>"statistics.numberOfBreaks"}
+      %td
+
+
+  %h2 10 highest breaks
+  %table
+    %tr
+      %th
+      %th
+        Points
+      %th
+        Player
+      %th
+        Date
+      %th
+        League name
+    %tr{"ng-repeat"=>"break in statistics.highest_breaks"}
+      %td
+        .number{"ng-bind"=>"$index+1"}
+      %td
+        .number{"ng-bind"=>"break.points"}
+      %td
+        .number{"ng-bind"=>"break.name"}
+      %td
+        .number{"ng-bind"=>"break.date | date:'yyyy-MM-dd'"}
+      %td
+        .number{"ng-bind"=>"break.league"}

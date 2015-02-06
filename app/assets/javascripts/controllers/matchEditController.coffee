@@ -1,14 +1,14 @@
 angular.module('snookerLeague').controller "matchEditController", [
-  '$scope', '$http', '$attrs', 'flash'
-  ($scope, $http, $attrs, flash) ->
+  '$scope', '$http', '$routeParams', 'flash'
+  ($scope, $http, $routeParams, flash) ->
 
-    $scope.leagueId = $attrs.model1
-    $scope.roundId = $attrs.model2
-    $scope.matchId = $attrs.model3
+    $scope.leagueId = $routeParams.id
+    $scope.roundId = $routeParams.round_id
+    $scope.matchId = $routeParams.match_id
 
 
 
-    $http.get('leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/edit_angular.json')
+    $http.get('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/edit.json')
     .success (data) ->
       $scope.match = data.match
       return
@@ -17,7 +17,7 @@ angular.module('snookerLeague').controller "matchEditController", [
       return
 
     $scope.updateMatchDate = (date) ->
-      $http.patch('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId, {match: {date: date, id: $scope.matchId}})
+      $http.patch('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId, {match: {date: date, id: $scope.matchId}})
       .success (data) ->
         return
       .error (data) ->
@@ -26,11 +26,11 @@ angular.module('snookerLeague').controller "matchEditController", [
 
     $scope.saveFrame = (id, player_1_points, player_2_points) ->
       if player_1_points >=0 && player_1_points<=155 && player_2_points >=0 && player_2_points<=155
-        $http.patch('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+id,
+        $http.patch('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+id,
           {frame: {player_1_points: player_1_points, player_2_points: player_2_points, id: id}})
         .success (data) ->
-          $scope.match.player_1_frames = data.player_1_frames
-          $scope.match.player_2_frames = data.player_2_frames
+          $scope.match.player_1_frames = data.match.player_1_frames
+          $scope.match.player_2_frames = data.match.player_2_frames
           flash('Frame sucessfully updated')
           return
         .error (data) ->
@@ -40,20 +40,20 @@ angular.module('snookerLeague').controller "matchEditController", [
         flash('warning','Wrong frame points (must be 0-155)')
 
     $scope.addBreak = (playerId, frameId, which_player, which_frame) ->
-      $http.post('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks',
+      $http.post('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks',
         {break: {player_id: playerId, frame_id: frameId, match_id: $scope.matchId}})
       .success (data) ->
         if which_player == 1
-          $scope.match.frames[which_frame].breaks_1.push(data)
+          $scope.match.frames[which_frame].breaks_1.push(data.break)
         else
-          $scope.match.frames[which_frame].breaks_2.push(data)
+          $scope.match.frames[which_frame].breaks_2.push(data.break)
         return
       .error (data) ->
         console.log('Error: ' + data)
         return
 
     $scope.updateBreak = (breakId, frameId, points) ->
-      $http.patch('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks/'+breakId,
+      $http.patch('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks/'+breakId,
         {break: {points: points}})
       .success (data) ->
         return
@@ -62,7 +62,7 @@ angular.module('snookerLeague').controller "matchEditController", [
         return
 
     $scope.deleteBreak = (breakId, frameId, which_player, which_frame) ->
-      $http.delete('/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks/'+breakId)
+      $http.delete('api/leagues/'+$scope.leagueId+'/rounds/'+$scope.roundId+'/matches/'+$scope.matchId+'/frames/'+frameId+'/breaks/'+breakId)
       .success (data) ->
         indexBreak = -1
         if which_player == 1

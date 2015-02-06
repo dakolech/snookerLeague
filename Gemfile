@@ -35,6 +35,8 @@ gem 'ffaker'
 
 gem 'haml-rails'
 gem 'angularjs-rails'
+gem 'angular-rails-templates'
+
 
 group :development, :test do
   gem 'rspec-rails'

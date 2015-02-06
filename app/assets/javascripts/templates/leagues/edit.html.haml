@@ -1,0 +1,90 @@
+//= link_to 'Rounds', edit_all_league_path(@league), class: 'btn btn-default'
+
+%form-league
+
+%a{"ng-click"=>"editLeague()", "href"=>""}
+  Edit League
+
+/league/:id/edit/rounds
+%a{"ng-href"=>"league/{{league.id}}/edit/rounds", "href"=>""}
+  Edit Rounds
+
+//= render 'form'
+
+%flash:messages
+
+%table.table
+  %tr
+    %th
+    %th
+      %a{"ng-click"=>"reverseL=!reverseL;orderLeague('id',reverseL)", "href"=>""}
+        Id
+    %th
+      %a{"ng-click"=>"reverseL=!reverseL;orderLeague('firstname',reverseL)", "href"=>""}
+        Firstname
+    %th
+      %a{"ng-click"=>"reverseL=!reverseL;orderLeague('lastname',reverseL)", "href"=>""}
+        Lastname
+    %th
+      %a{"ng-click"=>"reverseL=!reverseL;orderLeague('max_break',reverseL)", "href"=>""}
+        Max Break
+    %th
+      %a{"ng-click"=>"reverseL=!reverseL;orderLeague('email',reverseL)", "href"=>""}
+        E-mail
+    %th
+    %th
+    %tr{"ng-repeat"=>"player in league_players"}
+      %td{"ng-bind"=>"$index + 1"}
+      %td{"ng-bind"=>"player.id"}
+      %td{"ng-bind"=>"player.firstname"}
+      %td{"ng-bind"=>"player.lastname"}
+      %td{"ng-bind"=>"player.max_break"}
+      %td{"ng-bind"=>"player.email"}
+      %td
+        %a{"ng-href"=>"players/{{player.id}}", "ng-hide"=>"player.firstname == 'Bye'"}
+          Show
+      %td
+        %a{"ng-click"=>"removePlayer(player.id)", "href"=>"", "ng-hide"=>"player.firstname == 'Bye'"}
+          Remove
+
+%form.text-center
+  %input.search-input{"type"=>"text", "placeholder"=>"Search for players",
+                      "name"=>"query", "ng-model"=>"query", "ng-change"=>"searchClick()"}
+  %p
+    %a{"href"=>"", "ng-click"=>"getAll()"} Show all players
+
+%pagination
+
+%table.table
+  %tr
+    %th
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('id',reverse)", "href"=>""}
+        Id
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('firstname',reverse)", "href"=>""}
+        Firstname
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('lastname',reverse)", "href"=>""}
+        Lastname
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('max_break',reverse)", "href"=>""}
+        Max Break
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('email',reverse)", "href"=>""}
+        E-mail
+    %th
+    %th
+    %tr{"ng-repeat"=>"player in players | unique:'id'"}
+      %td{"ng-bind"=>"$index + 1"}
+      %td{"ng-bind"=>"player.id"}
+      %td{"ng-bind"=>"player.firstname"}
+      %td{"ng-bind"=>"player.lastname"}
+      %td{"ng-bind"=>"player.max_break"}
+      %td{"ng-bind"=>"player.email"}
+      %td
+        %a{"ng-href"=>"players/{{player.id}}"}
+          Show
+      %td
+        %a{"ng-click"=>"addPlayer(player.id)", "href"=>""}
+          Add

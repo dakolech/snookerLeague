@@ -1,0 +1,48 @@
+%form-league
+
+%flash:messages
+
+%a{"ng-click"=>"addNewLeague()", "href"=>""}
+  Add new League
+
+%table.table
+  %tr
+    %th
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('id',reverse)", "href"=>""}
+        Id
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('name',reverse)", "href"=>""}
+        Name
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('start_date',reverse)", "href"=>""}
+        Start date
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('edn_date',reverse)", "href"=>""}
+        End date
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('number_of_players',reverse)", "href"=>""}
+        Players
+    %th
+      %a{"ng-click"=>"reverse=!reverse;sort('best_of',reverse)", "href"=>""}
+        Best of
+    %th
+    %th
+    %th
+  %tr{"ng-repeat"=>"league in leagues | unique:'id'"}
+    %td{"ng-bind"=>"$index + 1"}
+    %td{"ng-bind"=>"league.id"}
+    %td{"ng-bind"=>"league.name"}
+    %td{"ng-bind"=>"league.start_date | date:'yyyy-MM-dd'"}
+    %td{"ng-bind"=>"league.end_date | date:'yyyy-MM-dd'"}
+    %td{"ng-bind"=>"league.number_of_players"}
+    %td{"ng-bind"=>"league.best_of"}
+    %td
+      %a{"ng-href"=>"league/{{league.id}}", "href"=>""}
+        Show
+    %td
+      %a{"ng-href"=>"league/{{league.id}}/edit", "href"=>""}
+        Edit
+    %td
+      %a{"ng-click"=>"deleteLeague(league.id)", "href"=>""}
+        Delete

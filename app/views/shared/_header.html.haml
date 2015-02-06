@@ -1,4 +1,4 @@
-%nav
+%nav{"ng-controller" => "headerController"}
   .container
     .left
       .navbar-header
@@ -12,8 +12,12 @@
         %li
           =link_to "Home", root_path
         %li
-          =link_to "Leagues", leagues_path
+          %a{"ng-href"=>"/leagues", "href"=>""}
+            Leagues
         %li
-          =link_to "Players", players_path
+          %a{"ng-href"=>"/players", "href"=>""}
+            Players
         %li
-          =link_to "Statistics", statistics_path
+          %a{"ng-href"=>"/statistics", "href"=>""}
+            Statistics
+          //=link_to "Statistics", statistics_path
