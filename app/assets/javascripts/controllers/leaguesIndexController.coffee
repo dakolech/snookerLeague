@@ -45,6 +45,8 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
           ($scope, $http) ->
             $scope.league
             $scope.formClicked = false
+            $scope.tittle = 'Create new'
+            $scope.buttonTittle = 'Create'
 
             $scope.createForm = () ->
               $http.post "api/leagues",

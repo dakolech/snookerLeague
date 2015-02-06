@@ -1,7 +1,5 @@
 %script#newLeague{"type"=>"text/ng-template"}
   %h2
-    //= locals[:title]
-    %div{"ng-bind"=>"tittle"}
     {{tittle}}
     league
   %form.dialog{"name"=>"create_form", "ng-submit"=>"formClicked = true; create_form.$valid && league.best_of%2 == 1 && createForm()", "novalidate"=>"novalidate"}
@@ -47,4 +45,4 @@
         %small Loss points is required.
     %input.hidden{"type"=>"text", "name"=>"id", "ng-model"=>"league.id"}
 
-    %input{:type => "submit", :value => "Submit"}
+    %input{:type => "submit", :value => "{{buttonTittle}}"}
