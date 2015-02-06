@@ -1,5 +1,5 @@
 class LeaguesController < ApplicationController
-  before_action :find_league, only: [:show, :edit_angular, :edit, :update, :destroy, :add_player, :remove_player]
+  before_action :find_league, only: [:show, :edit, :update, :destroy, :add_player, :remove_player]
   before_action :find_player, only: [:add_player, :remove_player]
 
 
@@ -23,10 +23,8 @@ class LeaguesController < ApplicationController
     render :json => @league.to_json(:only => [:id, :name, :start_date, :end_date, :best_of])
   end
 
-  def edit
-  end
 
-  def edit_angular
+  def edit
     if params[:search_query]
       search_query = "%#{params[:search_query]}%"
       search_query = search_query.downcase

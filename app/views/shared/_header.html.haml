@@ -12,9 +12,11 @@
         %li
           =link_to "Home", root_path
         %li
-          =link_to "Leagues", leagues_path
+          %a{"ng-href"=>"/leagues", "href"=>""}
+            Leagues
         %li
-          =link_to "Players", players_path
+          %a{"ng-href"=>"/players", "href"=>""}
+            Players
         %li
           %a{"ng-href"=>"/statistics", "href"=>""}
             Statistics

@@ -1,5 +1,3 @@
-//= render 'formLeague', locals: {title: 'Create new ', button: 'Create'}
-//%div{"%ng-include"=>"form.html"}
 %form-league
 
 %flash:messages
@@ -40,10 +38,10 @@
     %td{"ng-bind"=>"league.number_of_players"}
     %td{"ng-bind"=>"league.best_of"}
     %td
-      %a{"ng-href"=>"league/{{league.id}}"}
+      %a{"ng-href"=>"league/{{league.id}}", "href"=>""}
         Show
     %td
-      %a{"ng-href"=>"leagues/{{league.id}}/edit", "href"=>""}
+      %a{"ng-href"=>"league/{{league.id}}/edit", "href"=>""}
         Edit
     %td
       %a{"ng-click"=>"deleteLeague(league.id)", "href"=>""}
