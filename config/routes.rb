@@ -12,11 +12,11 @@ Rails.application.routes.draw do
     end
 
     resource :players, :only => [] do
-      get "index_angular", :to => "players#index_angular", :as => "index_angular"
+      get "index", :to => "players#index", :as => "index"
     end
 
     resources :players do
-      get "show_angular", :to => "players#show_angular", :as => "show_angular"
+      get "show", :to => "players#show", :as => "show"
       get "number_of_breaks_angular/:border", :to => "players#number_of_breaks_angular", :as => "number_of_breaks_angular"
       get "update_break_angular", :to => "players#update_break_angular", :as => "update_break_angular"
     end

@@ -34,8 +34,15 @@ app.config([ '$routeProvider',  '$locationProvider'
     ).when('/league/:id/round/:round_id/match/:match_id/edit',
       templateUrl: "matches/edit.html"
       controller: 'matchEditController'
+    ).when('/players',
+      templateUrl: "players/index.html"
+      controller: 'playersIndexController'
+    ).when('/player/:id',
+      templateUrl: "players/show.html"
+      controller: 'playerController'
     ).otherwise({redirectTo:"/"})
 ])
+
 
 app.config [
   "$httpProvider"

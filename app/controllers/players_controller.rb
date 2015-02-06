@@ -1,8 +1,6 @@
 class PlayersController < ApplicationController
-  def index
-  end
 
-  def index_angular
+  def index
     if params[:search_query]
       search_query = "%#{params[:search_query]}%"
       search_query = search_query.downcase
@@ -14,12 +12,9 @@ class PlayersController < ApplicationController
     @players.where(:firstname => "Bye").destroy_all
   end
 
+
   def show
     @player = Player.find(params[:id])
-  end
-
-  def show_angular
-    @player = Player.find(params[:player_id])
   end
 
   def new
@@ -43,8 +38,6 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     @player.update(player_params)
-
-    render :json => @player.to_json(:only => [:id, :firstname, :lastname, :email, :max_break])
   end
 
   def destroy

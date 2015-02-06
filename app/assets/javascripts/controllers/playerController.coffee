@@ -1,12 +1,12 @@
 angular.module('snookerLeague').controller "playerController", [
-  '$scope', '$http', '$attrs', 'flash', 'ngDialog'
-  ($scope, $http, $attrs, flash, ngDialog) ->
+  '$scope', '$http', '$routeParams', 'flash', 'ngDialog'
+  ($scope, $http, $routeParams, flash, ngDialog) ->
 
-    $scope.playerId = $attrs.model
+    $scope.playerId = $routeParams.id
 
     $scope.border = 10;
 
-    $http.get('players/'+$scope.playerId+'/show_angular.json')
+    $http.get('api/players/'+$scope.playerId+'.json')
     .success (data) ->
       $scope.player = data.player
       return
@@ -17,7 +17,7 @@ angular.module('snookerLeague').controller "playerController", [
 
     $scope.countBreaks = (border) ->
       if border > 0
-        $http.get('players/'+$scope.playerId+'/number_of_breaks_angular/'+border)
+        $http.get('api/players/'+$scope.playerId+'/number_of_breaks_angular/'+border)
         .success (data) ->
           $scope.breaks = data[0].countbreaks
           return
@@ -37,9 +37,11 @@ angular.module('snookerLeague').controller "playerController", [
           ($scope, $http) ->
             $scope.player
             $scope.formClicked = false
+            $scope.tittle = 'Edit'
+            $scope.buttonTittle = 'Update'
 
             $scope.updateBreak = () ->
-              $http.get('players/'+$scope.playerId+'/update_break_angular/')
+              $http.get('api/players/'+$scope.playerId+'/update_break_angular/')
               .success (data) ->
                 $scope.player.max_break = data.max_break
                 return
@@ -48,7 +50,7 @@ angular.module('snookerLeague').controller "playerController", [
                 return
 
             $scope.createForm = () ->
-              $http.patch "/players/"+$scope.player.id,
+              $http.patch "api/players/"+$scope.player.id,
                 player:
                   firstname: $scope.player.firstname
                   lastname: $scope.player.lastname
