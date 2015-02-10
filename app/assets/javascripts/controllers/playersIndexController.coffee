@@ -1,90 +1,47 @@
 angular.module('snookerLeague').controller "playersIndexController", [
-  '$scope', 'flash', 'ngDialog', 'httpPlayer'
-  ($scope, flash, ngDialog, httpPlayer) ->
-
+  '$scope', 'flash', 'ngDialog', 'httpPlayer', 'pagination',
+  ($scope, flash, ngDialog, httpPlayer, pagination) ->
 
     $scope.query = ''
     $scope.reverse = true
-
     Allplayers = []
-    totalPages = 0
-    page = 0
-    perPage = 20
+    perPage = 10
+
+    updateClasses = ->
+      $scope.pageClass = pagination.pageClass
+      $scope.prevClass = pagination.prevClass
+      $scope.nextClass = pagination.nextClass
 
     $scope.getAll = ->
       httpPlayer.getAll().then (dataResponse) ->
         Allplayers = dataResponse.data.players
-        $scope.changePage(1)
-
+        $scope.players = pagination.initData(Allplayers, perPage)
+        updateClasses()
 
     $scope.getAll()
-
-    $scope.range = () ->
-      new Array(totalPages)
-
-    $scope.changePage = (number) ->
-      page = number
-      $scope.updatePages()
-      $scope.pageClass[number-1] = 'active'
-
-
-    $scope.updatePages = ->
-      totalEntries = Allplayers.length
-      totalPages = Math.ceil(Allplayers.length/perPage)
-      start = (page-1)*perPage
-      end = (page)*perPage
-      $scope.players = Allplayers.slice(start, end);
-      $scope.pageClass = new Array(totalPages)
-      if (page < totalPages)
-        $scope.prevClass = ""
-      else
-        $scope.nextClass = "disabled"
-      if (page >= 1)
-        $scope.nextClass = ""
-      else
-        $scope.prevClass = "disabled"
-      if (page == 1)
-        $scope.prevClass = "disabled"
-      if (page == totalPages || totalPages < 1)
-        $scope.nextClass = "disabled"
 
     $scope.searchClick = ->
       httpPlayer.getAllWithQuery($scope.query).then (dataResponse) ->
         Allplayers = dataResponse.data.players
-      $scope.changePage(1)
+        $scope.players = pagination.initData(Allplayers, perPage)
 
+    $scope.range = () ->
+      new Array(pagination.totalPages)
+
+    $scope.changePage = (number) ->
+      $scope.players = pagination.changePage(number)
+      updateClasses()
 
     $scope.nextPage = ->
-      if (page < totalPages)
-        $scope.changePage(page+1)
-        $scope.prevClass = ""
-      else
-        $scope.nextClass = "disabled"
-      if (page == totalPages)
-        $scope.nextClass = "disabled"
+      $scope.players = pagination.changePage(pagination.page+1)
+      updateClasses()
 
     $scope.prevPage = ->
-      if (page > 1)
-        $scope.changePage(page-1)
-        $scope.nextClass = ""
-      else
-        $scope.prevClass = "disabled"
-      if (page == 1)
-        $scope.prevClass = "disabled"
-
-    dynamicSort = (property) ->
-      sortOrder = 1
-      if property[0] is "-"
-        sortOrder = -1
-        property = property.substr(1)
-      (a, b) ->
-        result = (if (a[property] < b[property]) then -1 else (if (a[property] > b[property]) then 1 else 0))
-        result * sortOrder
+      $scope.players = pagination.changePage(pagination.page-1)
+      updateClasses()
 
     $scope.sort = (sortBy, reverse) ->
-      if reverse
-        sortBy = '-' + sortBy
-      Allplayers.sort(dynamicSort(sortBy))
+      pagination.sort(sortBy, reverse)
       $scope.changePage(1)
 
     $scope.deletePlayer = (playerId) ->
