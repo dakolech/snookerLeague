@@ -4,7 +4,6 @@ angular.module('snookerLeague').controller "playersIndexController", [
 
     $scope.query = ''
     $scope.reverse = true
-    Allplayers = []
     perPage = 20
 
     updateClasses = ->
@@ -14,16 +13,15 @@ angular.module('snookerLeague').controller "playersIndexController", [
 
     $scope.getAll = ->
       httpPlayer.getAll().then (dataResponse) ->
-        Allplayers = dataResponse.data.players
-        $scope.players = pagination.initData(Allplayers, perPage)
+        $scope.players = pagination.initData(dataResponse.data.players, perPage)
         updateClasses()
 
     $scope.getAll()
 
     $scope.searchClick = ->
       httpPlayer.getAllWithQuery($scope.query).then (dataResponse) ->
-        Allplayers = dataResponse.data.players
-        $scope.players = pagination.initData(Allplayers, perPage)
+        $scope.players = pagination.initData(dataResponse.data.players, perPage)
+        updateClasses()
 
     $scope.range = () ->
       new Array(pagination.totalPages)

@@ -44,7 +44,7 @@
         %a{"ng-href"=>"players/{{player.id}}", "ng-hide"=>"player.firstname == 'Bye'"}
           Show
       %td
-        %a{"ng-click"=>"removePlayer(player.id)", "href"=>"", "ng-hide"=>"player.firstname == 'Bye'"}
+        %a{"ng-click"=>"removePlayerFromLeague(player.id)", "href"=>"", "ng-hide"=>"player.firstname == 'Bye'"}
           Remove
 
 %form.text-center
@@ -86,5 +86,5 @@
         %a{"ng-href"=>"players/{{player.id}}"}
           Show
       %td
-        %a{"ng-click"=>"addPlayer(player.id)", "href"=>""}
+        %a{"ng-click"=>"addPlayerToLeague(player.id)", "href"=>""}
           Add

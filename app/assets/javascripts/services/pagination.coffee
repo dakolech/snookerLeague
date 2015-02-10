@@ -18,10 +18,9 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
     @totalPages = Math.ceil(data.length/@perPage)
     @pageClass = []
     @pageClass[0] = 'active'
-    @prevClass = 'disabled'
+    @page = 1
 
-    if @totalPages > 1
-      @nextClass = ''
+    @updateClasses()
 
     @data = data.slice(0, @perPage);
 
@@ -33,15 +32,7 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
       @pageClass = []
       @pageClass[page-1] = 'active'
 
-      if @page > 1
-        @prevClass = ''
-      else
-        @prevClass = 'disabled'
-
-      if @page == @totalPages
-        @nextClass = 'disabled'
-      else
-        @nextClass = ''
+      @updateClasses()
 
       @data = @allData.slice(start, end);
     else
@@ -50,7 +41,7 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
   @sort = (sortBy, reverse) ->
     if reverse
       sortBy = '-' + sortBy
-    @allData.sort(dynamicSort(sortBy))
+    @allData.sort(@dynamicSort(sortBy))
 
   @findWithId = (id) ->
     find = -1
@@ -69,9 +60,18 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
   @addOne = (data) ->
     @allData.push(data)
 
+  @updateClasses = ->
+    if @page > 1
+      @prevClass = ''
+    else
+      @prevClass = 'disabled'
 
+    if @page >= @totalPages
+      @nextClass = 'disabled'
+    else
+      @nextClass = ''
 
-  dynamicSort = (property) ->
+  @dynamicSort = (property) ->
     sortOrder = 1
     if property[0] is "-"
       sortOrder = -1
@@ -79,6 +79,9 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
     (a, b) ->
       result = (if (a[property] < b[property]) then -1 else (if (a[property] > b[property]) then 1 else 0))
       result * sortOrder
+
+
+
 
 
   return

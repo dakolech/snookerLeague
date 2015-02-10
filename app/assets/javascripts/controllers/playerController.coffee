@@ -14,19 +14,18 @@ angular.module('snookerLeague').controller "playerController", [
         controller: [
           '$scope', 'httpPlayer'
           ($scope, httpPlayer) ->
-            $scope.player
             $scope.formClicked = false
             $scope.tittle = 'Edit'
             $scope.buttonTittle = 'Update'
 
             $scope.createForm = () ->
               httpPlayer.updateOne($scope.player).then (dataResponse) ->
-                $scope.player = dataResponse.data
-              $scope.closeThisDialog($scope.player)
+                $scope.closeThisDialog(dataResponse.data)
         ]
 
       dialog.closePromise.then (data) ->
         if data.value.firstname
+          $scope.player = data.value
           flash('Player ' + data.value.firstname + ' ' + data.value.lastname + ' was successfully edited.')
           return
 ]
