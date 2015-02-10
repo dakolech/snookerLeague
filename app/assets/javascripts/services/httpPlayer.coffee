@@ -1,11 +1,6 @@
 angular.module('snookerLeague').service 'httpPlayer', ($http) ->
 
-  @getAll =  ->
-    $http
-      method: 'GET'
-      url: 'api/players/index.json'
-
-  @getAllWithQuery = (query) ->
+  @getAll = (query) ->
     $http
       method: 'GET'
       url: 'api/players/index.json?search_query=' + query

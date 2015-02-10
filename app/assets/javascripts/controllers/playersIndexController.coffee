@@ -12,16 +12,11 @@ angular.module('snookerLeague').controller "playersIndexController", [
       $scope.nextClass = pagination.nextClass
 
     $scope.getAll = ->
-      httpPlayer.getAll().then (dataResponse) ->
+      httpPlayer.getAll($scope.query).then (dataResponse) ->
         $scope.players = pagination.initData(dataResponse.data.players, perPage)
         updateClasses()
 
     $scope.getAll()
-
-    $scope.searchClick = ->
-      httpPlayer.getAllWithQuery($scope.query).then (dataResponse) ->
-        $scope.players = pagination.initData(dataResponse.data.players, perPage)
-        updateClasses()
 
     $scope.range = () ->
       new Array(pagination.totalPages)

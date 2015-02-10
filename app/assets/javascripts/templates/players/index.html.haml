@@ -8,7 +8,7 @@
 
 %form.text-center
   %input.search-input{"type"=>"text", "placeholder"=>"Search for players",
-                      "name"=>"query", "ng-model"=>"query", "ng-change"=>"searchClick()"}
+                      "name"=>"query", "ng-model"=>"query", "ng-change"=>"getAll()"}
   %p
     %a{"href"=>"", "ng-click"=>"getAll()"} Show all players
 
