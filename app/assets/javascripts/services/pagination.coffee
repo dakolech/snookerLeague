@@ -16,7 +16,9 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
     @perPage = perPage
     @totalEntries = data.length
     @totalPages = Math.ceil(data.length/@perPage)
+    @pageClass = []
     @pageClass[0] = 'active'
+    @prevClass = 'disabled'
 
     if @totalPages > 1
       @nextClass = ''
@@ -49,6 +51,24 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
     if reverse
       sortBy = '-' + sortBy
     @allData.sort(dynamicSort(sortBy))
+
+  @findWithId = (id) ->
+    find = -1
+    for thing, index in @allData
+      if thing.id == id
+        find = index
+    @allData[find]
+
+  @deleteWithId = (id) ->
+    find = -1
+    for thing, index in @allData
+      if thing.id == id
+        find = index
+    @allData.splice(find, 1)
+
+  @addOne = (data) ->
+    @allData.push(data)
+
 
 
   dynamicSort = (property) ->

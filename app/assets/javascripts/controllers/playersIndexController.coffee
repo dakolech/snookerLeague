@@ -5,7 +5,7 @@ angular.module('snookerLeague').controller "playersIndexController", [
     $scope.query = ''
     $scope.reverse = true
     Allplayers = []
-    perPage = 10
+    perPage = 20
 
     updateClasses = ->
       $scope.pageClass = pagination.pageClass
@@ -33,28 +33,23 @@ angular.module('snookerLeague').controller "playersIndexController", [
       updateClasses()
 
     $scope.nextPage = ->
-      $scope.players = pagination.changePage(pagination.page+1)
-      updateClasses()
+      $scope.changePage(pagination.page+1)
 
     $scope.prevPage = ->
-      $scope.players = pagination.changePage(pagination.page-1)
-      updateClasses()
+      $scope.changePage(pagination.page-1)
 
     $scope.sort = (sortBy, reverse) ->
       pagination.sort(sortBy, reverse)
       $scope.changePage(1)
 
     $scope.deletePlayer = (playerId) ->
-      indexPlayer = -1
-      for player, index in Allplayers
-        if player.id == playerId
-          indexPlayer = index
-      if confirm('Are you sure you want to delete '+ Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + '?')
+      player = pagination.findWithId(playerId)
+      if confirm('Are you sure you want to delete '+ player.firstname + ' ' + player.lastname + '?')
         httpPlayer.deleteOne(playerId).then (dataResponse) ->
-          flash('Player ' + Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + ' was successfully deleted.')
-          Allplayers.splice(indexPlayer, 1)
-          $scope.changePage(page)
-
+          pagination.deleteWithId(playerId)
+          $scope.players = pagination.initData(pagination.allData, perPage)
+          updateClasses()
+          flash('Player ' + dataResponse.data.name + ' was successfully deleted.')
 
     $scope.addNewPlayer = ->
       dialog = ngDialog.open
@@ -76,8 +71,9 @@ angular.module('snookerLeague').controller "playersIndexController", [
 
       dialog.closePromise.then (data) ->
         if data.value.firstname
-          Allplayers.push(data.value)
-          $scope.changePage(page)
+          pagination.addOne(data.value)
+          $scope.players = pagination.initData(pagination.allData, perPage)
+          updateClasses()
           flash('Player ' + data.value.firstname + ' ' + data.value.lastname + ' was successfully created.')
           return
 
