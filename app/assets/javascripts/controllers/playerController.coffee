@@ -1,52 +1,27 @@
 angular.module('snookerLeague').controller "playerController", [
-  '$scope', '$http', '$routeParams', 'flash', 'ngDialog'
-  ($scope, $http, $routeParams, flash, ngDialog) ->
+  '$scope', '$routeParams', 'flash', 'ngDialog', 'httpPlayer'
+  ($scope, $routeParams, flash, ngDialog, httpPlayer) ->
 
-    $scope.playerId = $routeParams.id
+    $scope.player = null;
 
-    $scope.border = 10;
-
-    $http.get('api/players/'+$scope.playerId+'.json')
-    .success (data) ->
-      $scope.player = data.player
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
+    httpPlayer.getOne($routeParams.id).then (dataResponse) ->
+      $scope.player = dataResponse.data
 
     $scope.editPlayer = ->
       dialog = ngDialog.open
         template: "newPlayer"
         scope: $scope
         controller: [
-          "$scope"
-          "$http"
-          ($scope, $http) ->
+          '$scope', 'httpPlayer'
+          ($scope, httpPlayer) ->
             $scope.player
             $scope.formClicked = false
             $scope.tittle = 'Edit'
             $scope.buttonTittle = 'Update'
 
             $scope.createForm = () ->
-              $http.patch "api/players/"+$scope.player.id,
-                player:
-                  firstname: $scope.player.firstname
-                  lastname: $scope.player.lastname
-                  email: $scope.player.email
-                  date_of_birth: $scope.player.date_of_birth
-                  max_break: $scope.player.max_break
-                  phone_number: $scope.player.phone_number
-                  city: $scope.player.city
-              .success (data) ->
-                $scope.player.id = data.player.id
-                $scope.player.firstname = data.player.firstname
-                $scope.player.lastname = data.player.lastname
-                $scope.player.email = data.player.email
-                $scope.player.max_break = data.player.max_break
-                return
-              .error (data) ->
-                console.log('Error: ' + data)
-                return
+              httpPlayer.updateOne($scope.player).then (dataResponse) ->
+                $scope.player = dataResponse.data
               $scope.closeThisDialog($scope.player)
         ]
 

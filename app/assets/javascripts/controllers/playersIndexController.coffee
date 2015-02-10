@@ -1,7 +1,9 @@
 angular.module('snookerLeague').controller "playersIndexController", [
-  '$scope', '$http', 'flash', 'ngDialog'
-  ($scope, $http, flash, ngDialog) ->
+  '$scope', 'flash', 'ngDialog', 'httpPlayer'
+  ($scope, flash, ngDialog, httpPlayer) ->
 
+
+    $scope.query = ''
     $scope.reverse = true
 
     Allplayers = []
@@ -10,16 +12,10 @@ angular.module('snookerLeague').controller "playersIndexController", [
     perPage = 20
 
     $scope.getAll = ->
-      $scope.query = ''
-      $http.get('api/players/index.json')
-      .success (data) ->
-        Allplayers = data.players
+      httpPlayer.getAll().then (dataResponse) ->
+        Allplayers = dataResponse.data.players
         $scope.changePage(1)
-        $scope.pageClass[0] = 'active'
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
+
 
     $scope.getAll()
 
@@ -53,15 +49,10 @@ angular.module('snookerLeague').controller "playersIndexController", [
         $scope.nextClass = "disabled"
 
     $scope.searchClick = ->
-      $http.get('api/players/index.json?search_query='+$scope.query)
-      .success (data) ->
-        Allplayers = data.players
-        $scope.changePage(1)
-        $scope.pageClass[0] = 'active'
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
+      httpPlayer.getAllWithQuery($scope.query).then (dataResponse) ->
+        Allplayers = dataResponse.data.players
+      $scope.changePage(1)
+
 
     $scope.nextPage = ->
       if (page < totalPages)
@@ -102,52 +93,28 @@ angular.module('snookerLeague').controller "playersIndexController", [
         if player.id == playerId
           indexPlayer = index
       if confirm('Are you sure you want to delete '+ Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + '?')
-        console.log playerId
-        $http.delete('api/players/'+ playerId)
-        .success (data) ->
+        httpPlayer.deleteOne(playerId).then (dataResponse) ->
           flash('Player ' + Allplayers[indexPlayer].firstname + ' ' + Allplayers[indexPlayer].lastname + ' was successfully deleted.')
           Allplayers.splice(indexPlayer, 1)
           $scope.changePage(page)
-          return
-        .error (data) ->
-          console.log('Error: ' + data)
-          return
 
 
     $scope.addNewPlayer = ->
       dialog = ngDialog.open
         template: "newPlayer"
         controller: [
-          "$scope"
-          "$http"
-          ($scope, $http) ->
+          '$scope', 'httpPlayer'
+          ($scope, httpPlayer) ->
             $scope.player
             $scope.formClicked = false
             $scope.tittle = 'Create new'
             $scope.buttonTittle = 'Create'
 
             $scope.createForm = () ->
-              $http.post "api/players",
-                player:
-                  firstname: $scope.player.firstname
-                  lastname: $scope.player.lastname
-                  email: $scope.player.email
-                  date_of_birth: $scope.player.date_of_birth
-                  max_break: $scope.player.max_break
-                  phone_number: $scope.player.phone_number
-                  city: $scope.player.city
-              .success (data) ->
-                $scope.player.id = data.player.id
-                $scope.player.firstname = data.player.firstname
-                $scope.player.lastname = data.player.lastname
-                $scope.player.email = data.player.email
-                $scope.player.max_break = data.player.max_break
+              httpPlayer.createOne($scope.player).then (dataResponse) ->
+                $scope.player = dataResponse.data
                 $scope.player.delete = true
-                return
-              .error (data) ->
-                console.log('Error: ' + data)
-                return
-              $scope.closeThisDialog($scope.player)
+                $scope.closeThisDialog($scope.player)
         ]
 
       dialog.closePromise.then (data) ->
