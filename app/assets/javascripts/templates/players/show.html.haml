@@ -27,10 +27,6 @@
     %b Date of Birth
     %div{"ng-bind"=>"player.date_of_birth | date:'yyyy-MM-dd'"}
 
-  %input{"type"=>"number", "ng-model"=>"border", "ng-change"=>"countBreaks(border)", "min"=>"1", "max"=>"155"}
-
-  %div{"ng-bind"=>"player.firstname + ' has '+ breaks + ' breaks above ' + border"}
-
   %table
     %tr
       %th

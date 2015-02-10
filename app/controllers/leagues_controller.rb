@@ -16,8 +16,7 @@ class LeaguesController < ApplicationController
 
   def edit
     if params[:search_query]
-      search_query = "%#{params[:search_query]}%"
-      search_query = search_query.downcase
+      search_query = "%#{params[:search_query]}%".downcase
       @players = Player.where("firstname like ? or lastname like ?", search_query, search_query)
     else
       @players = Player.all

@@ -14,19 +14,6 @@ angular.module('snookerLeague').controller "playerController", [
       console.log('Error: ' + data)
       return
 
-
-    $scope.countBreaks = (border) ->
-      if border > 0
-        $http.get('api/players/'+$scope.playerId+'/number_of_breaks_angular/'+border)
-        .success (data) ->
-          $scope.breaks = data[0].countbreaks
-          return
-        .error (data) ->
-          console.log('Error: ' + data)
-          return
-
-    $scope.countBreaks($scope.border)
-
     $scope.editPlayer = ->
       dialog = ngDialog.open
         template: "newPlayer"
@@ -39,15 +26,6 @@ angular.module('snookerLeague').controller "playerController", [
             $scope.formClicked = false
             $scope.tittle = 'Edit'
             $scope.buttonTittle = 'Update'
-
-            $scope.updateBreak = () ->
-              $http.get('api/players/'+$scope.playerId+'/update_break_angular/')
-              .success (data) ->
-                $scope.player.max_break = data.max_break
-                return
-              .error (data) ->
-                console.log('Error: ' + data)
-                return
 
             $scope.createForm = () ->
               $http.patch "api/players/"+$scope.player.id,

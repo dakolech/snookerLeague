@@ -5,40 +5,33 @@ Rails.application.routes.draw do
   scope "api",  defaults: { format: :json } do
     get "statistics", :to => "static_pages#statistics", :as => "statistics"
 
-    resource :leagues, :only => [] do
+    resource :leagues do
       get "index", :to => "leagues#index", :as => "index"
     end
 
-    resource :players, :only => [] do
+    resource :players do
       get "index", :to => "players#index", :as => "index"
     end
 
     resources :players do
       get "show", :to => "players#show", :as => "show"
-      get "number_of_breaks_angular/:border", :to => "players#number_of_breaks_angular", :as => "number_of_breaks_angular"
-      get "update_break_angular", :to => "players#update_break_angular", :as => "update_break_angular"
     end
 
     resources :leagues do
       member do
-        #get "show_angular", :to => "leagues#show_angular", :as => "show_angular"
-        get "edit_angular", :to => "leagues#edit_angular", :as => "edit_angular"
         patch "/add_player/:player_id", :to => "leagues#add_player", :as => "add_player",  defaults: { format: :json }
         patch "/remove_player/:player_id", :to => "leagues#remove_player", :as => "remove_player",  defaults: { format: :json }
         get "rounds/edit_all", :to => "rounds#edit_all", :as => "edit_all"
         get "rounds/generate_empty", :to => "rounds#generate_empty", :as => "generate_empty"
         get "rounds/generate_filled", :to => "rounds#generate_filled", :as => "generate_filled"
-        get "rounds/edit_all_angular", :to => "rounds#edit_all_angular", :as => "edit_all_angular"
       end
       resources :rounds do
         resources :matches do
           member do
             patch "/update_player/:which/:player", :to => "matches#update_player", :as => "update_player"
-            get "/edit_angular", :to => "matches#edit_angular", :as => "edit_angular"
           end
           resources :frames do
             resources :breaks do
-
             end
           end
         end

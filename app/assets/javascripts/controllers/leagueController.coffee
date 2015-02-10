@@ -10,7 +10,6 @@ angular.module('snookerLeague').controller "leagueController", [
     .success (data) ->
       $scope.league = data.league
       $scope.loading = false
-      #console.log $scope.league.playersBreaks[0].breaks[0]
       return
     .error (data) ->
       console.log('Error: ' + data)
