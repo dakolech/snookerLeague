@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "matchEditController", [
-  '$scope', '$http', '$routeParams', 'flash', 'httpMatch', 'httpFrame', 'httpBreak'
-  ($scope, $http, $routeParams, flash, httpMatch, httpFrame, httpBreak) ->
+  '$scope', '$routeParams', 'flash', 'httpMatch', 'httpFrame', 'httpBreak'
+  ($scope, $routeParams, flash, httpMatch, httpFrame, httpBreak) ->
 
     $scope.leagueId = $routeParams.id
     $scope.roundId = $routeParams.round_id

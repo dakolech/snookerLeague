@@ -1,14 +1,9 @@
 angular.module('snookerLeague').controller "statisticsController", [
-  '$scope', '$http',
-  ($scope, $http) ->
+  '$scope', 'httpStaticPages',
+  ($scope, httpStaticPages) ->
 
-    $http.get('api/statistics.json')
-    .success (data) ->
-      $scope.statistics = data
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
+    httpStaticPages.getStatistics().then (dataResponse) ->
+      $scope.statistics = dataResponse.data
 
 ]
 

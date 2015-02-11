@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "headerController", [
-  '$scope', '$http',
-  ($scope, $http) ->
+  '$scope',
+  ($scope) ->
     ###
     $http.get('statistics.json')
     .success (data) ->
