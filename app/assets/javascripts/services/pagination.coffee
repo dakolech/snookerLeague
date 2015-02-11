@@ -80,8 +80,4 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
       result = (if (a[property] < b[property]) then -1 else (if (a[property] > b[property]) then 1 else 0))
       result * sortOrder
 
-
-
-
-
   return

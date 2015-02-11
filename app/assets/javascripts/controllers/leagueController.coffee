@@ -1,19 +1,13 @@
 angular.module('snookerLeague').controller "leagueController", [
-  '$scope', '$http', '$routeParams', 'flash', 'ngDialog'
-  ($scope, $http, $routeParams, flash, ngDialog) ->
-
+  '$scope', '$routeParams', 'flash', 'ngDialog', 'httpLeague'
+  ($scope, $routeParams, flash, ngDialog, httpLeague) ->
 
     $scope.loading = true
     $scope.showAllText = false
 
-    $http.get('api/leagues/'+$routeParams.id+'.json')
-    .success (data) ->
-      $scope.league = data.league
+    httpLeague.getOne($routeParams.id).then (dataResponse) ->
+      $scope.league = dataResponse.data.league
       $scope.loading = false
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
 
     $scope.searchMatches = (id) ->
       $scope.showAll()

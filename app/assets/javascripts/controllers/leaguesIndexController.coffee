@@ -1,8 +1,9 @@
 angular.module('snookerLeague').controller "leaguesIndexController", [
-  '$scope', '$http', 'flash', 'ngDialog', '$filter'
-  ($scope, $http, flash, ngDialog, $filter) ->
+  '$scope', 'flash', 'ngDialog', '$filter', 'httpLeague'
+  ($scope, flash, ngDialog, $filter, httpLeague) ->
 
     $scope.reverse = true
+    $scope.query = ''
 
     orderBy = $filter('orderBy');
 
@@ -10,15 +11,9 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
       $scope.leagues = orderBy($scope.leagues, predicate, reverse)
       return
 
-    $http.get('api/leagues/index.json')
-    .success (data) ->
-      $scope.leagues = data.leagues
+    httpLeague.getAll($scope.query).then (dataResponse) ->
+      $scope.leagues = dataResponse.data.leagues
       $scope.orderLeague "id", false
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
-
 
     $scope.deleteLeague = (leagueId) ->
       indexLeague = -1
@@ -26,51 +21,24 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
         if league.id == leagueId
           indexLeague = index
       if confirm('Are you sure you want to delete '+ $scope.leagues[indexLeague].name + '?')
-        $http.delete('api/leagues/'+ leagueId)
-        .success (data) ->
-          flash('League ' + $scope.leagues[indexLeague].name + ' was successfully deleted.')
+        httpLeague.deleteOne(leagueId).then (dataResponse) ->
           $scope.leagues.splice(indexLeague, 1)
-          return
-        .error (data) ->
-          console.log('Error: ' + data)
-          return
-
+          flash('League ' + dataResponse.data.name + ' was successfully deleted.')
 
     $scope.addNewLeague = ->
       dialog = ngDialog.open
         template: "newLeague"
         controller: [
-          "$scope"
-          "$http"
-          ($scope, $http) ->
-            $scope.league
+          '$scope', 'httpLeague'
+          ($scope, httpLeague) ->
             $scope.formClicked = false
             $scope.tittle = 'Create new'
             $scope.buttonTittle = 'Create'
 
             $scope.createForm = () ->
-              $http.post "api/leagues",
-                league:
-                  name: $scope.league.name
-                  start_date: $scope.league.start_date
-                  end_date: $scope.league.end_date
-                  number_of_winners: $scope.league.number_of_winners
-                  number_of_dropots: $scope.league.number_of_dropots
-                  win_points: $scope.league.win_points
-                  loss_points: $scope.league.loss_points
-                  best_of: $scope.league.best_of
-              .success (data) ->
-                $scope.league.id = data.league.id
-                $scope.league.name = data.league.name
-                $scope.league.start_date = data.league.start_date
-                $scope.league.end_date = data.league.end_date
-                $scope.league.number_of_players = data.league.number_of_players
-                $scope.league.best_of = data.league.best_of
-                return
-              .error (data) ->
-                console.log('Error: ' + data)
-                return
-              $scope.closeThisDialog($scope.league)
+              httpLeague.createOne($scope.league).then (dataResponse) ->
+                $scope.league = dataResponse.data
+                $scope.closeThisDialog($scope.league)
         ]
 
       dialog.closePromise.then (data) ->

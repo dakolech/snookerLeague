@@ -1,11 +1,12 @@
 angular.module('snookerLeague').controller "leagueEditController", [
-  '$scope', '$http', '$routeParams', 'flash', '$filter', 'ngDialog', 'pagination',
-  ($scope, $http, $routeParams, flash, $filter, ngDialog, pagination) ->
+  '$scope', '$routeParams', 'flash', '$filter', 'ngDialog', 'pagination', 'httpLeague'
+  ($scope, $routeParams, flash, $filter, ngDialog, pagination, httpLeague) ->
 
     $scope.reverseL = true
     orderBy = $filter('orderBy');
     $scope.reverse = true
     perPage = 20
+    $scope.query = ''
 
     updateClasses = ->
       $scope.pageClass = pagination.pageClass
@@ -13,18 +14,12 @@ angular.module('snookerLeague').controller "leagueEditController", [
       $scope.nextClass = pagination.nextClass
 
     $scope.getAll = ->
-      $http.get('api/leagues/'+$routeParams.id+'/edit.json')
-      .success (data) ->
-        $scope.league_players = data.league_players
-        $scope.league = data.league
-
-        $scope.players = pagination.initData(data.players, perPage)
+      httpLeague.getEdit($routeParams.id, $scope.query).then (dataResponse) ->
+        $scope.league_players = dataResponse.data.league_players
+        $scope.league = dataResponse.data.league
+        $scope.players = pagination.initData(dataResponse.data.players, perPage)
         updateClasses()
         $scope.orderLeague "id", false
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
 
     $scope.getAll()
 
@@ -33,47 +28,30 @@ angular.module('snookerLeague').controller "leagueEditController", [
       return
 
     $scope.addPlayerToLeague = (playerId) ->
-      $http.patch('api/leagues/'+$routeParams.id+'/add_player/'+playerId,{})
-      .success (data) ->
-        $scope.league_players = data.players
-
+      httpLeague.addPlayer($routeParams.id, playerId).then (dataResponse) ->
+        $scope.league_players = dataResponse.data.players
         player = pagination.findWithId(playerId)
         pagination.deleteWithId(playerId)
         $scope.players = pagination.initData(pagination.allData, perPage)
         updateClasses()
         flash('Player ' + player.firstname + ' ' + player.lastname + ' was successfully added to league')
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
 
     $scope.removePlayerFromLeague = (playerId) ->
-      $http.patch('api/leagues/'+$routeParams.id+'/remove_player/'+playerId,{})
-      .success (data) ->
+      httpLeague.removePlayer($routeParams.id, playerId).then (dataResponse) ->
         indexPlayer = -1
         for player, index in $scope.league_players
           if player.id == playerId
             indexPlayer = index
-
         pagination.addOne($scope.league_players[indexPlayer])
         $scope.players = pagination.initData(pagination.allData, perPage)
         updateClasses()
         flash('warning', 'Player ' + $scope.league_players[indexPlayer].firstname + ' ' + $scope.league_players[indexPlayer].lastname + ' was successfully removed from league')
-        $scope.league_players = data.players
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
+        $scope.league_players = dataResponse.data.players
 
     $scope.searchClick = ->
-      $http.get('api/leagues/'+$routeParams.id+'/edit.json?search_query='+$scope.query)
-      .success (data) ->
-        $scope.players = pagination.initData(data.players, perPage)
+      httpLeague.getEdit($routeParams.id, $scope.query).then (dataResponse) ->
+        $scope.players = pagination.initData(dataResponse.data.players, perPage)
         updateClasses()
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
 
     $scope.range = () ->
       new Array(pagination.totalPages)
@@ -93,37 +71,16 @@ angular.module('snookerLeague').controller "leagueEditController", [
         template: "newLeague"
         scope: $scope
         controller: [
-          "$scope"
-          "$http"
-          ($scope, $http) ->
-            $scope.league
+          '$scope', 'httpLeague'
+          ($scope, httpLeague) ->
             $scope.formClicked = false
             $scope.tittle = 'Edit'
             $scope.buttonTittle = 'Update'
 
             $scope.createForm = () ->
-              $http.patch "api/leagues/"+$scope.league.id,
-                league:
-                  name: $scope.league.name
-                  start_date: $scope.league.start_date
-                  end_date: $scope.league.end_date
-                  number_of_winners: $scope.league.number_of_winners
-                  number_of_dropots: $scope.league.number_of_dropots
-                  win_points: $scope.league.win_points
-                  loss_points: $scope.league.loss_points
-                  best_of: $scope.league.best_of
-              .success (data) ->
-                $scope.league.id = data.league.id
-                $scope.league.name = data.league.name
-                $scope.league.start_date = data.league.start_date
-                $scope.league.end_date = data.league.end_date
-                $scope.league.number_of_players = data.league.number_of_players
-                $scope.league.best_of = data.league.best_of
-                return
-              .error (data) ->
-                console.log('Error: ' + data)
-                return
-              $scope.closeThisDialog($scope.league)
+              httpLeague.updateOne($scope.league).then (dataResponse) ->
+                $scope.league = dataResponse.data
+                $scope.closeThisDialog(dataResponse.data)
         ]
 
       dialog.closePromise.then (data) ->

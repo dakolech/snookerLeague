@@ -1,3 +1,1 @@
-json.league do
-  json.partial! 'league', league: @league
-end
+json.partial! 'league', league: @league
