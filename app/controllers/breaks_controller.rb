@@ -17,7 +17,7 @@ class BreaksController < ApplicationController
 
   private
     def break_params
-      params.require(:break).permit(:player_id, :frame_id, :match_id, :points)
+      params.require(:break).permit(:player_id, :frame_id, :points)
     end
 
     def find_break

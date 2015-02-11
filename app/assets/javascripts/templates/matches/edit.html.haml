@@ -12,7 +12,7 @@
 
 %flash:messages
 
-%input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.date)"}
+%input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate()"}
 
 %table.match
   %tr
@@ -50,7 +50,7 @@
           %a{"href"=>"", "ng-click"=>"deleteBreak(break.id, frame.id, 2, $parent.$index)" }
             x
     %th
-      %a.btn.btn-default{"href"=>"", "ng-click"=>"saveFrame(frame.id, frame.player_1_points, frame.player_2_points)" }
+      %a.btn.btn-default{"href"=>"", "ng-click"=>"saveFrame($index, frame)" }
         Save
 
 

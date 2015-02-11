@@ -1,11 +1,6 @@
 class RoundsController < ApplicationController
   before_action :find_league, only: [:generate_empty, :generate_filled, :edit_all]
 
-  def index
-    @rounds = Round.where(league_id: params[:league_id])
-    @players = League.find(params[:league_id]).players
-  end
-
   def edit_all
   end
 

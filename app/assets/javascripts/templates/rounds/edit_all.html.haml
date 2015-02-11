@@ -3,10 +3,10 @@
 //= link_to 'Back to edit league',   edit_league_path(@league), class: 'btn btn-default'
 /api/leagues/:id/rounds/generate_filled
 
-%a{"ng-click"=>"generateEmpty()", "href"=>""}
+%a{"ng-click"=>"generateRounds('empty')", "href"=>""}
   Generate empty
 
-%a{"ng-click"=>"generateFilled()", "href"=>""}
+%a{"ng-click"=>"generateRounds('filled')", "href"=>""}
   Generate filled
 
 %a{"ng-href"=>"league/{{league.id}}/edit", "href"=>""}
@@ -23,11 +23,10 @@
       .roundTitle
         %h3.number{"ng-bind"=>"round.number + ' Round'"}
         .date
-          %input{"type"=>"date", "ng-model"=>"round.start_date", "ng-change"=>"updateStartDate(round.id, round.start_date)"}
-          %input{"type"=>"date", "ng-model"=>"round.end_date", "ng-change"=>"updateEndDate(round.id, round.end_date)"}
+          %input{"type"=>"date", "ng-model"=>"round.start_date", "ng-change"=>"updateRound($index, round)"}
+          %input{"type"=>"date", "ng-model"=>"round.end_date", "ng-change"=>"updateRound($index, round)"}
       .match{"ng-repeat"=>"match in round.matches"}
         %span.date{"ng-bind"=>"match.date | date:'yyyy-MM-dd'"}
-        //%input{"type"=>"date", "ng-model"=>"match.date", "ng-change"=>"updateMatchDate(match.id, match.date, round.id)"}
         %table
           %tr
             %td

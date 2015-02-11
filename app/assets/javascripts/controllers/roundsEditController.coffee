@@ -1,18 +1,11 @@
 angular.module('snookerLeague').controller "roundsEditController", [
-  '$scope', '$http', '$routeParams'
-  ($scope, $http, $routeParams) ->
+  '$scope', '$routeParams', 'httpRound', 'httpMatch'
+  ($scope, $routeParams, httpRound, httpMatch) ->
 
-    $scope.id = $routeParams.id
-
-    $http.get('api/leagues/'+$scope.id+'/rounds/edit_all.json')
-    .success (data) ->
-      $scope.league = data.league
+    httpRound.getEditAll($routeParams.id).then (dataResponse) ->
+      $scope.league = dataResponse.data.league
       checkPlayers()
       checkMatches()
-      return
-    .error (data) ->
-      console.log('Error: ' + data)
-      return
 
     $scope.updatePlayer = (round, match, player) ->
       if player == 1
@@ -21,66 +14,24 @@ angular.module('snookerLeague').controller "roundsEditController", [
         playerId = $scope.league.rounds[round].matches[match].player_2.id
       roundId = $scope.league.rounds[round].number
       matchId = $scope.league.rounds[round].matches[match].id
-      $http.patch('api/leagues/'+$scope.id+'/rounds/'+round+'/matches/'+matchId+'/update_player/'+player+'/'+playerId)
-      .success (data) ->
+      httpMatch.updatePlayer(matchId, player, playerId).then (dataResponse) ->
         if player == 1
-          $scope.league.rounds[round].matches[match].player_1.id = data.player.id
-          $scope.league.rounds[round].matches[match].player_1.name = data.player.name
+          $scope.league.rounds[round].matches[match].player_1 = dataResponse.data
         else
-          $scope.league.rounds[round].matches[match].player_2.id = data.player.id
-          $scope.league.rounds[round].matches[match].player_2.name = data.player.name
+          $scope.league.rounds[round].matches[match].player_2 = dataResponse.data
         checkPlayers()
         checkMatches()
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
 
-    $scope.generateFilled = ->
-      $http.get('api/leagues/'+$scope.id+'/rounds/generate_filled.json')
-      .success (data) ->
-        $scope.league = data.league
+    $scope.generateRounds = (how) ->
+      httpRound.generateRounds($routeParams.id, how).then (dataResponse) ->
+        $scope.league = dataResponse.data.league
         checkPlayers()
         checkMatches()
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
 
-    $scope.generateEmpty = ->
-      $http.get('api/leagues/'+$scope.id+'/rounds/generate_empty.json')
-      .success (data) ->
-        $scope.league = data.league
-        checkPlayers()
-        checkMatches()
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
-
-    $scope.updateStartDate = (id, date) ->
-      $http.patch('api/leagues/'+$scope.id+'/rounds/'+id, {round: {start_date: date, id: id}})
-       .success (data) ->
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
-
-    $scope.updateEndDate = (id, date) ->
-      $http.patch('api/leagues/'+$scope.id+'/rounds/'+id, {round: {end_date: date, id: id}})
-      .success (data) ->
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
-
-    $scope.updateMatchDate = (id, date, roundId) ->
-      $http.patch('api/leagues/'+$scope.id+'/rounds/'+roundId+'/matches/'+id, {match: {date: date, id: id}})
-      .success (data) ->
-        return
-      .error (data) ->
-        console.log('Error: ' + data)
-        return
+    $scope.updateRound = (index, round) ->
+      httpRound.updateOne($routeParams.id, round).then (dataResponse) ->
+        $scope.league.rounds[index].start_date = dataResponse.data.start_date
+        $scope.league.rounds[index].end_date = dataResponse.data.end_date
 
     checkPlayers = ->
       for round in $scope.league.rounds
