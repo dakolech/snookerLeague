@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "leagueController", [
-  '$scope', '$routeParams', 'flash', 'ngDialog', 'httpLeague'
-  ($scope, $routeParams, flash, ngDialog, httpLeague) ->
+  '$scope', '$routeParams', 'flash', 'ngDialog', 'httpLeague', 'leagueService'
+  ($scope, $routeParams, flash, ngDialog, httpLeague, leagueService) ->
 
     $scope.loading = true
     $scope.showAllText = false
@@ -11,16 +11,11 @@ angular.module('snookerLeague').controller "leagueController", [
 
     $scope.searchMatches = (id) ->
       $scope.showAll()
-      for round in $scope.league.rounds
-        for match in round.matches
-          if match.player_1.id != id && match.player_2.id != id
-            match.class = 'hidden'
-            $scope.showAllText = true
+      $scope.league.rounds = leagueService.hideMatches($scope.league.rounds, id)
+      $scope.showAllText = true
 
     $scope.showAll = () ->
-      for round in $scope.league.rounds
-        for match in round.matches
-          match.class = 'unhidden'
+      $scope.league.rounds = leagueService.unhideMatches($scope.league.rounds)
       $scope.showAllText = false
 
 

@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "leaguesIndexController", [
-  '$scope', 'flash', 'ngDialog', '$filter', 'httpLeague'
-  ($scope, flash, ngDialog, $filter, httpLeague) ->
+  '$scope', 'flash', 'ngDialog', '$filter', 'httpLeague', 'leagueService'
+  ($scope, flash, ngDialog, $filter, httpLeague, leagueService) ->
 
     $scope.reverse = true
     $scope.query = ''
@@ -16,13 +16,10 @@ angular.module('snookerLeague').controller "leaguesIndexController", [
       $scope.orderLeague "id", false
 
     $scope.deleteLeague = (leagueId) ->
-      indexLeague = -1
-      for league, index in $scope.leagues
-        if league.id == leagueId
-          indexLeague = index
+      indexLeague = leagueService.findLeagueIndex($scope.leagues, leagueId)
       if confirm('Are you sure you want to delete '+ $scope.leagues[indexLeague].name + '?')
         httpLeague.deleteOne(leagueId).then (dataResponse) ->
-          $scope.leagues.splice(indexLeague, 1)
+          $scope.leagues = leagueService.deleteLeague($scope.leagues, indexLeague)
           flash('League ' + dataResponse.data.name + ' was successfully deleted.')
 
     $scope.addNewLeague = ->

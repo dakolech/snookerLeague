@@ -1,6 +1,6 @@
 angular.module('snookerLeague').controller "leagueEditController", [
-  '$scope', '$routeParams', 'flash', '$filter', 'ngDialog', 'pagination', 'httpLeague'
-  ($scope, $routeParams, flash, $filter, ngDialog, pagination, httpLeague) ->
+  '$scope', '$routeParams', 'flash', '$filter', 'ngDialog', 'pagination', 'httpLeague', 'leagueService'
+  ($scope, $routeParams, flash, $filter, ngDialog, pagination, httpLeague, leagueService) ->
 
     $scope.reverseL = true
     orderBy = $filter('orderBy');
@@ -38,10 +38,7 @@ angular.module('snookerLeague').controller "leagueEditController", [
 
     $scope.removePlayerFromLeague = (playerId) ->
       httpLeague.removePlayer($routeParams.id, playerId).then (dataResponse) ->
-        indexPlayer = -1
-        for player, index in $scope.league_players
-          if player.id == playerId
-            indexPlayer = index
+        indexPlayer = leagueService.findPlayerIndex($scope.league_players, playerId)
         pagination.addOne($scope.league_players[indexPlayer])
         $scope.players = pagination.initData(pagination.allData, perPage)
         updateClasses()
