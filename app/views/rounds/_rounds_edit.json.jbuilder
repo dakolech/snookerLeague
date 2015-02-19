@@ -33,7 +33,7 @@ json.league do
 
   json.tables @league.tables do |table|
     json.position table.position
-    json.name table.player.full_name
+    json.name table.player.full_name if table.player
     json.number_of_matches table.number_of_matches
     json.points table.points
     json.number_of_wins table.number_of_wins
