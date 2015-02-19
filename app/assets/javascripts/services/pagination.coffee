@@ -41,7 +41,7 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
   @sort = (sortBy, reverse) ->
     if reverse
       sortBy = '-' + sortBy
-    @allData.sort(@dynamicSort(sortBy))
+    @allData.sort(dynamicSort(sortBy))
 
   @findWithId = (id) ->
     find = -1
@@ -71,7 +71,7 @@ angular.module('snookerLeague').service 'pagination', ($http) ->
     else
       @nextClass = ''
 
-  @dynamicSort = (property) ->
+  dynamicSort = (property) ->
     sortOrder = 1
     if property[0] is "-"
       sortOrder = -1

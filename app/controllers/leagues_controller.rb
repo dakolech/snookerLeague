@@ -3,7 +3,12 @@ class LeaguesController < ApplicationController
   before_action :find_player, only: [:add_player, :remove_player]
 
   def index
-    @leagues = League.all
+    if params[:search_query]
+      search_query = "%#{params[:search_query]}%".downcase
+      @leagues = League.where("name like ?", search_query)
+    else
+      @leagues = League.all
+    end
   end
 
   def show
