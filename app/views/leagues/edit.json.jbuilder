@@ -11,11 +11,7 @@ json.league do
 end
 
 json.league_players @league.players do |player|
-  json.id player.id
-  json.firstname player.firstname.capitalize if player.firstname
-  json.lastname player.lastname.capitalize if player.lastname
-  json.max_break player.max_break
-  json.email player.email
+  json.partial! 'league_players', player: player
 end
 
 json.players @players do |player|
