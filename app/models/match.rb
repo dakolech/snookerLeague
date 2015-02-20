@@ -6,10 +6,6 @@ class Match < ActiveRecord::Base
 
   default_scope { order('id ASC') }
 
-  #validates :player_1_frames, presence: true
-  #validates :player_2_frames, presence: true
-  #validates :date, presence: true
-
   def update_frames
     self.player_1_frames = 0
     self.player_2_frames = 0

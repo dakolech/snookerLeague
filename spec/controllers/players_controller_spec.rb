@@ -3,32 +3,25 @@ require 'rails_helper'
 RSpec.describe PlayersController, :type => :controller do
   player = FactoryGirl.create(:player)
 
-  describe "GET index" do
+  describe "GET index.json" do
+    before do
+      get :index, format: :json
+    end
+
     it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to be_success
     end
   end
 
 
-  describe "GET new" do
-    it "returns http success" do
-      get :new
-      expect(response).to have_http_status(:success)
-    end
-  end
 
-  describe "GET edit" do
-    it "returns http success" do
-      get :edit, { :id => player.id }
-      expect(response).to have_http_status(:success)
+  describe "GET show.json" do
+    before do
+      get :show, format: :json, :id => player.id
     end
-  end
 
-  describe "GET show" do
     it "returns http success" do
-      get :show, { :id => player.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to be_success
     end
   end
 

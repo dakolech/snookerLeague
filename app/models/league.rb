@@ -193,6 +193,7 @@ class League < ActiveRecord::Base
   def add_bye
     if self.players.size%2 == 1
       bye = Player.create!(firstname:     "bye",
+                           email: "bye@bye",
                            date_of_birth: self.start_date,
                            phone_number:  0,
                            max_break:     0)

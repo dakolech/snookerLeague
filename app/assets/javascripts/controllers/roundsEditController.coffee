@@ -11,7 +11,6 @@ angular.module('snookerLeague').controller "roundsEditController", [
         playerId = $scope.league.rounds[round].matches[match].player_1.id
       else
         playerId = $scope.league.rounds[round].matches[match].player_2.id
-      roundId = $scope.league.rounds[round].number
       matchId = $scope.league.rounds[round].matches[match].id
       httpMatch.updatePlayer(matchId, player, playerId).then (dataResponse) ->
         if player == 1

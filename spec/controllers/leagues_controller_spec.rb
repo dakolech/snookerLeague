@@ -3,32 +3,34 @@ require 'rails_helper'
 RSpec.describe LeaguesController, :type => :controller do
   league = FactoryGirl.create(:league)
 
-  describe "GET index" do
+  describe "GET index.json" do
+    before do
+      get :index, format: :json
+    end
+
     it "returns http success" do
-      get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to be_success
     end
   end
 
-  describe "GET show" do
-    it "returns http success" do
-      get :show, {:id => league}
-      expect(response).to have_http_status(:success)
+  describe "GET show.json" do
+    before do
+      get :show, format: :json, :id => league.id
     end
-  end
 
-  describe "GET new" do
     it "returns http success" do
-      get :new
-      expect(response).to have_http_status(:success)
+      expect(response).to be_success
     end
   end
 
 
-  describe "GET edit" do
+  describe "GET edit.json" do
+    before do
+      get :edit, format: :json, :id => league.id
+    end
+
     it "returns http success" do
-      get :edit, {:id => league}
-      expect(response).to have_http_status(:success)
+      expect(response).to be_success
     end
   end
 

@@ -4,9 +4,5 @@ class Round < ActiveRecord::Base
 
   default_scope { order('number ASC') }
 
-  #validates :start_date, presence: true
-  #validates :end_date, presence: true
-  #validates :number, presence: true
-
 
 end
