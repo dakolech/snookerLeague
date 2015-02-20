@@ -21,6 +21,10 @@ FactoryGirl.define do
       lastname "Fourth"
     end
 
+    trait :without_lastname do
+      firstname "String"
+    end
+
     firstname "asd"
     date_of_birth "2014-12-15"
     email "email@email"

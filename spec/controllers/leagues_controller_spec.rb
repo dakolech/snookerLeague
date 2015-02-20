@@ -9,6 +9,7 @@ RSpec.describe LeaguesController, :type => :controller do
   player_atrr2 = FactoryGirl.attributes_for(:player, :second)
   player_atrr3 = FactoryGirl.attributes_for(:player, :third)
   player_atrr4 = FactoryGirl.attributes_for(:player, :fourth)
+  let(:league_invalid) { { name: 'asd'} }
 
   describe "GET index.json" do
     before do
@@ -124,6 +125,14 @@ RSpec.describe LeaguesController, :type => :controller do
       it 'returns a created league' do
         post :create, format: :json, :league => league_attr
         expect(json['name']).to eq(league_attr[:name])
+      end
+    end
+
+    describe 'with invalid params' do
+      it 'not creates a new league' do
+        expect {
+          post :create, format: :json, :league => league_invalid
+        }.to_not change(League, :count)
       end
     end
   end

@@ -5,6 +5,7 @@ RSpec.describe PlayersController, :type => :controller do
 
   player_atrr = FactoryGirl.attributes_for(:player, :first)
   player_atrr2 = FactoryGirl.attributes_for(:player, :second)
+  let(:player_invalid) { { lastname: 'asd'} }
 
   describe "GET index.json" do
     before do
@@ -69,6 +70,14 @@ RSpec.describe PlayersController, :type => :controller do
       it 'returns a created player' do
         post :create, format: :json, :player => player_atrr
         expect(json['firstname']).to eq(player_atrr[:firstname])
+      end
+    end
+
+    describe 'with invalid params' do
+      it 'not creates a new player' do
+        expect {
+          post :create, format: :json, :player => player_invalid
+        }.to_not change(Player, :count)
       end
     end
   end
