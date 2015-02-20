@@ -6,7 +6,7 @@ FactoryGirl.define do
     end
 
     trait :second_league do
-      name "Second league"
+      name "Second league".titleize
     end
 
     start_date "2014-12-14"

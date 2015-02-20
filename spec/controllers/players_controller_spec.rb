@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe PlayersController, :type => :controller do
-  player = FactoryGirl.create(:player)
+  player_attr = FactoryGirl.attributes_for(:player, :first)
 
   describe "GET index.json" do
     before do
+      5.times do
+        Player.create! player_attr
+      end
       get :index, format: :json
     end
 
@@ -17,7 +20,8 @@ RSpec.describe PlayersController, :type => :controller do
 
   describe "GET show.json" do
     before do
-      get :show, format: :json, :id => player.id
+      @player = Player.create! player_attr
+      get :show, format: :json, :id => @player.id
     end
 
     it "returns http success" do

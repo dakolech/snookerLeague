@@ -1,6 +1,6 @@
 json.id @player.id
 json.firstname @player.firstname.capitalize
-json.lastname @player.lastname.capitalize
+json.lastname @player.lastname.capitalize if @player.lastname
 json.max_break @player.max_break
 json.league_break Break.where(player_id: @player.id).maximum("points")
 json.email @player.email
