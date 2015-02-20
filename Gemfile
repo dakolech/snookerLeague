@@ -40,6 +40,7 @@ gem 'angular-rails-templates'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'json_spec'
   #gem 'dotenv-rails'
 
   #gem 'pry'

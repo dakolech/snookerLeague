@@ -2,7 +2,7 @@
 
 json.league do
   json.id @league.id
-  json.name @league.name
+  json.name @league.name.titleize if @league.name
   json.start_date @league.start_date
   json.end_date @league.end_date
   json.best_of @league.best_of

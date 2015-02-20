@@ -12,6 +12,12 @@ class League < ActiveRecord::Base
   validates :win_points, presence: true
   validates :loss_points, presence: true
 
+  before_save :downcasing
+
+  def downcasing
+    self.name = self.name.downcase if self.name
+  end
+
   def generate_empty_rounds
     self.rounds.destroy_all
     self.tables.destroy_all

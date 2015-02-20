@@ -1,6 +1,14 @@
 FactoryGirl.define do
   factory :league do
-    name "MyString"
+
+    trait :my_string do
+      name "My String"
+    end
+
+    trait :second_league do
+      name "Second league"
+    end
+
     start_date "2014-12-14"
     end_date "2014-12-16"
     number_of_players 10
