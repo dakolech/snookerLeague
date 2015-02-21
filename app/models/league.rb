@@ -173,7 +173,7 @@ class League < ActiveRecord::Base
   def remove_bye
     if self.players.size%2 == 1
       self.players.where(:firstname => "bye").destroy_all
+      Player.where(:firstname => "bye").destroy_all
     end
-    Player.where(:firstname => "bye").destroy_all
   end
 end
