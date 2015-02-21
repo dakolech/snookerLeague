@@ -20,4 +20,14 @@ class Match < ActiveRecord::Base
 
     self.save
   end
+
+  def generate_frames(best_of)
+    best_of.times do
+      frame = Frame.create!(player_1_points: 0,
+                            player_2_points: 0)
+
+      self.frames << frame
+    end
+  end
+
 end

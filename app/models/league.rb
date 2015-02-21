@@ -30,12 +30,12 @@ class League < ActiveRecord::Base
                             end_date: self.end_date,
                             number: number + 1)
 
-      number_of_matches.times do |number2|
+      number_of_matches.times do
         match = Match.create!(date: self.start_date,
                               player_1_frames: 0,
                               player_2_frames: 0)
 
-        generate_frames(match, self.best_of)
+        match.generate_frames(self.best_of)
 
         round.matches << match
       end
@@ -75,7 +75,7 @@ class League < ActiveRecord::Base
           match.player_2 = second_array[number2]
         end
 
-        generate_frames(match, self.best_of)
+        match.generate_frames(self.best_of)
 
         round.matches << match
       end
@@ -92,14 +92,6 @@ class League < ActiveRecord::Base
 
   end
 
-  def generate_frames (match, best_of)
-    best_of.times do |number3|
-      frame = Frame.create!(player_1_points: 0,
-                            player_2_points: 0)
-
-      match.frames << frame
-    end
-  end
 
   def generate_tables
     self.players.each do |player|
@@ -122,39 +114,22 @@ class League < ActiveRecord::Base
 
     table = self.tables.find_by(player_id: player.id)
 
-
-    table.position = 0
-    table.number_of_matches = 0
-    table.points = 0
-    table.number_of_wins = 0
-    table.number_of_loss = 0
-    table.number_of_win_frames = 0
-    table.number_of_lose_frames = 0
-    table.number_of_win_small_points = 0
-    table.number_of_lose_small_points = 0
+    table.reset_all
 
     self.rounds.each do |round|
       round.matches.where(player_1_id: player.id).each do |match|
 
         if match.player_1_frames > match.player_2_frames
-          table.number_of_matches += 1
-          table.number_of_wins += 1
-          table.points += self.win_points
+          table.win_match(self.win_points)
         elsif match.player_2_frames > match.player_1_frames
-          table.number_of_matches += 1
-          table.number_of_loss += 1
-          table.points += self.loss_points
+          table.loss_match(self.loss_points)
         end
 
         match.frames.each do |frame|
           if frame.player_1_points > frame.player_2_points
-            table.number_of_win_frames += 1
-            table.number_of_win_small_points += frame.player_1_points
-            table.number_of_lose_small_points += frame.player_2_points
+            table.win_frame(frame.player_1_points, frame.player_2_points)
           elsif frame.player_2_points > frame.player_1_points
-            table.number_of_lose_frames += 1
-            table.number_of_win_small_points += frame.player_1_points
-            table.number_of_lose_small_points += frame.player_2_points
+            table.loss_frame(frame.player_1_points, frame.player_2_points)
           end
         end
       end
@@ -162,37 +137,25 @@ class League < ActiveRecord::Base
       round.matches.where(player_2_id: player.id).each do |match|
 
         if match.player_1_frames < match.player_2_frames
-          table.number_of_matches += 1
-          table.number_of_wins += 1
-          table.points += self.win_points
+          table.win_match(self.win_points)
         elsif match.player_1_frames > match.player_2_frames
-          table.number_of_matches += 1
-          table.number_of_loss += 1
-          table.points += self.loss_points
+          table.loss_match(self.loss_points)
         end
 
         match.frames.each do |frame|
           if frame.player_1_points < frame.player_2_points
-            table.number_of_win_frames += 1
-            table.number_of_win_small_points += frame.player_2_points
-            table.number_of_lose_small_points += frame.player_1_points
+            table.win_frame(frame.player_2_points, frame.player_1_points)
           elsif frame.player_1_points > frame.player_2_points
-            table.number_of_lose_frames += 1
-            table.number_of_win_small_points += frame.player_2_points
-            table.number_of_lose_small_points += frame.player_1_points
+            table.loss_frame(frame.player_2_points, frame.player_1_points)
           end
         end
       end
     end
-    table.diff_small_points = table.number_of_win_small_points - table.number_of_lose_small_points
-    table.save
   end
 
   def update_positions
     self.tables.order(points: :desc, diff_small_points: :desc).each_with_index do |table, i|
-      table.position = i + 1
-
-      table.save
+      table.update_position(i+1)
     end
   end
 
