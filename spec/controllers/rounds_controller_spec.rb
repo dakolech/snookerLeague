@@ -44,7 +44,7 @@ RSpec.describe RoundsController, :type => :controller do
     end
 
     describe 'with valid params' do
-      it 'updates a round' do
+      it 'updates a round date' do
         patch :update, format: :json, :id => @round.id, :league_id => @league.id, :round => round_attr
         expect(Round.find(@round.id).start_date).to eq(round_attr[:start_date].to_date)
       end
