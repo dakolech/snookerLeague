@@ -85,16 +85,15 @@ RSpec.describe PlayersController, :type => :controller do
   describe "PATCH update" do
     before do
       @player = Player.create! player_atrr
+      patch :update, format: :json, :id => @player.id, :player => player_atrr2
     end
 
     describe 'with valid params' do
       it 'updates a player' do
-        patch :update, format: :json, :id => @player.id, :player => player_atrr2
         expect(Player.find(@player.id).firstname.capitalize).to eq(player_atrr2[:firstname])
       end
 
       it 'returns a updated player' do
-        patch :update, format: :json, :id => @player.id, :player => player_atrr2
         expect(json['firstname']).to eq(player_atrr2[:firstname])
       end
     end

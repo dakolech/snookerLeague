@@ -45,15 +45,16 @@ RSpec.describe MatchesController, :type => :controller do
   end
 
   describe "PATCH update" do
+    before do
+      patch :update, format: :json, :id => @match.id, :match => match_attr
+    end
 
     describe 'with valid params' do
       it 'updates a match date' do
-        patch :update, format: :json, :id => @match.id, :match => match_attr
         expect(Match.find(@match.id).date).to eq(match_attr[:date].to_date)
       end
 
       it 'returns a updated match' do
-        patch :update, format: :json, :id => @match.id, :match => match_attr
         expect(json['date']).to eq(match_attr[:date])
       end
     end

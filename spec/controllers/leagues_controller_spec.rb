@@ -140,16 +140,15 @@ RSpec.describe LeaguesController, :type => :controller do
   describe "PATCH update" do
     before do
       @league = League.create! league_attr
+      patch :update, format: :json, :id => @league.id, :league => league_attr2
     end
 
     describe 'with valid params' do
       it 'updates a league' do
-        patch :update, format: :json, :id => @league.id, :league => league_attr2
         expect(League.find(@league.id).name.titleize).to eq(league_attr2[:name])
       end
 
       it 'returns a updated league' do
-        patch :update, format: :json, :id => @league.id, :league => league_attr2
         expect(json['name']).to eq(league_attr2[:name])
       end
     end

@@ -2,9 +2,11 @@ class BreaksController < ApplicationController
   before_action :find_break, only: [:update, :destroy]
 
   def create
-    @break = Break.new(break_params)
-    @break.points = 0
-    @break.save
+    if break_params[:player_id] && break_params[:frame_id]
+      @break = Break.new(break_params)
+      @break.points = 0
+      @break.save
+    end
   end
 
   def update

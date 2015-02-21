@@ -1,1 +1,3 @@
-json.partial! 'break'
+if @break
+  json.partial! 'break'
+end
